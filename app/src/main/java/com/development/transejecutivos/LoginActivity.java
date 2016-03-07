@@ -3,52 +3,36 @@ package com.development.transejecutivos;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
-
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.development.transejecutivos.adapters.JsonKeys;
 import com.development.transejecutivos.api_config.ApiConstants;
 import com.development.transejecutivos.misc.DialogCreator;
 import com.development.transejecutivos.models.User;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,8 +43,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[] {
-            "wmontiel", "fgonzalez" };
     private UserLoginTask mAuthTask = null;
 
     // UI references.
@@ -228,17 +210,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     new com.android.volley.Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Log.d("Response", response.toString());
                             validateResponseLogin(response);
                         }
                     },
                     new com.android.volley.Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Log.d("Error Volley", error.toString());
                             onCancelled();
                             DialogCreator dialogCreator = new DialogCreator(LoginActivity.this);
-                            dialogCreator.createCustomDialog("Se ha presentado un error, por favor intenta más tarde", "ACEPTAR");
+                            dialogCreator.createCustomDialog(getResources().getString(R.string.error_general), getResources().getString(R.string.accept_button));
                         }
                     }) {
 
@@ -246,20 +226,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         protected Map<String,String> getParams(){
                             Map<String,String> params = new HashMap<String, String>();
                             params.put("Content-Type", "application/x-www-form-urlencoded");
-                            params.put("username", mUsername);
-                            params.put("password", mPassword);
+                            params.put(JsonKeys.USERNAME, mUsername);
+                            params.put(JsonKeys.PASSWORD, mPassword);
 
                             return params;
                         }
             };
 
             requestQueue.add(stringRequest);
-
-
-
-
-
-
             return true;
         }
 
@@ -269,25 +243,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             try {
                 JSONObject resObj = new JSONObject(response);
-
-                String status = (String) resObj.get("error");
-                if (status == "false") {
-                    User user = new User(resObj.getString("idUser"),
-                                        resObj.getString("username"),
-                                        resObj.getString("name"),
-                                        resObj.getString("lastName"),
-                                        resObj.getString("email1"),
-                                        resObj.getString("type"),
-                                        resObj.getString("company"),
-                                        resObj.getString("api_key"),
-                                        resObj.getString("code"));
+                Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
+                if (!error) {
+                    User user = new User(resObj.getString(JsonKeys.USER_ID),
+                                        resObj.getString(JsonKeys.USER_USERNAME),
+                                        resObj.getString(JsonKeys.USER_NAME),
+                                        resObj.getString(JsonKeys.USER_LASTNAME),
+                                        resObj.getString(JsonKeys.USER_EMAIL),
+                                        resObj.getString(JsonKeys.USER_ROLE),
+                                        resObj.getString(JsonKeys.USER_COMPANY),
+                                        resObj.getString(JsonKeys.USER_APIKEY),
+                                        resObj.getString(JsonKeys.USER_CODE));
 
                     //Intent action = new Intent(getApplicationContext(), MainActivity.class);
                     //action.putExtra("user", user);
                     //startActivity(action);
                 } else {
-                    mPasswordView.setError(getString(R.string.error_incorrect_password));
-                    mPasswordView.requestFocus();
+                    Toast.makeText(getApplicationContext(), R.string.error_invalid_login, Toast.LENGTH_LONG).show();
                 }
             }
             catch (JSONException ex) {
@@ -296,16 +268,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(Boolean success) {
             mAuthTask = null;
             showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
+            super.onPostExecute(success);
         }
 
         @Override

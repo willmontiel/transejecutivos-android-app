@@ -10,6 +10,9 @@
     <string name="prompt_login_button_short">Iniciar Sesión</string>
     <string name="error_empty_username">No has enviado tu nombre de usuario</string>
     <string name="error_empty_password">No has enviado tu contraseña</string>
-    <string name="error_incorrect_password">Usuario o contraseña incorrecta</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_invalid_login">Usuario o contraseña incorrecta</string>
+
+    <!-- General Strings -->
+    <string name="error_general">Se ha presentado un error, por favor intenta más tarde</string>
+    <string name="accept_button">Aceptar</string>
 </resources>
