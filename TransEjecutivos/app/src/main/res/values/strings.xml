@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">TransEjecutivos</string>
+
+    <!-- Strings related to login -->
+    <string name="title_activity_login">Iniciar Sesión</string>
+    <string name="loginImage">Transportes Ejecutivos</string>
+    <string name="prompt_username">Usuario</string>
+    <string name="prompt_password">Contraseña</string>
+    <string name="prompt_login_button">Iniciar Sesión</string>
+    <string name="prompt_login_button_short">Iniciar Sesión</string>
+    <string name="error_empty_username">No has enviado tu nombre de usuario</string>
+    <string name="error_empty_password">No has enviado tu contraseña</string>
+    <string name="error_incorrect_password">Usuario o contraseña incorrecta</string>
+    <string name="error_field_required">This field is required</string>
+</resources>
