@@ -26,7 +26,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/email_login_form"
+            android:id="@+id/username_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -36,7 +36,7 @@
                 android:layout_height="50dp"
                 android:contentDescription="@string/loginImage"
                 android:id="@+id/imageView"
-                android:src="@drawable/complete-logo"
+                android:src="@drawable/complete_logo"
                 android:layout_gravity="center_horizontal" />
 
             <android.support.design.widget.TextInputLayout
@@ -63,9 +63,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
-                    android:imeActionId="@+id/username"
-                    android:imeActionLabel="@string/prompt_login_button_short"
-                    android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
                     android:maxLines="1"
                     android:singleLine="true" />

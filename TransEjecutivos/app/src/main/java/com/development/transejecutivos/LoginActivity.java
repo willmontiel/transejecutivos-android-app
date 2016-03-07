@@ -3,6 +3,7 @@ package com.development.transejecutivos;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,8 +31,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.development.transejecutivos.api_config.ApiConstants;
+import com.development.transejecutivos.misc.DialogCreator;
+import com.development.transejecutivos.models.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A login screen that offers login via email/password.
@@ -56,13 +75,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         // Set up the login form.
         mUsernameView = (EditText) findViewById(R.id.username);
-
         mPasswordView = (EditText) findViewById(R.id.password);
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
-                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                if (id == EditorInfo.IME_NULL) {
                     attemptLogin();
                     return true;
                 }
@@ -104,13 +122,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(password)) {
             mPasswordView.setError(getString(R.string.error_empty_password));
             focusView = mPasswordView;
             cancel = true;
         }
 
-        // Check for a valid email address.
+        // Check for a valid username, if the user entered one.
         if (TextUtils.isEmpty(username)) {
             mUsernameView.setError(getString(R.string.error_empty_username));
             focusView = mUsernameView;
@@ -202,25 +220,79 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.POST,
+                    ApiConstants.URL_LOGIN,
+                    new com.android.volley.Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("Response", response.toString());
+                            validateResponseLogin(response);
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Error Volley", error.toString());
+                            onCancelled();
+                            DialogCreator dialogCreator = new DialogCreator(LoginActivity.this);
+                            dialogCreator.createCustomDialog("Se ha presentado un error, por favor intenta más tarde", "ACEPTAR");
+                        }
+                    }) {
+
+                        @Override
+                        protected Map<String,String> getParams(){
+                            Map<String,String> params = new HashMap<String, String>();
+                            params.put("Content-Type", "application/x-www-form-urlencoded");
+                            params.put("username", mUsername);
+                            params.put("password", mPassword);
+
+                            return params;
+                        }
+            };
+
+            requestQueue.add(stringRequest);
+
+
+
+
+
+
+            return true;
+        }
+
+        protected void validateResponseLogin(String response) {
+            mAuthTask = null;
+            showProgress(false);
 
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
+                JSONObject resObj = new JSONObject(response);
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mUsername)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                String status = (String) resObj.get("error");
+                if (status == "false") {
+                    User user = new User(resObj.getString("idUser"),
+                                        resObj.getString("username"),
+                                        resObj.getString("name"),
+                                        resObj.getString("lastName"),
+                                        resObj.getString("email1"),
+                                        resObj.getString("type"),
+                                        resObj.getString("company"),
+                                        resObj.getString("api_key"),
+                                        resObj.getString("code"));
+
+                    //Intent action = new Intent(getApplicationContext(), MainActivity.class);
+                    //action.putExtra("user", user);
+                    //startActivity(action);
+                } else {
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
                 }
             }
-
-            // TODO: register the new account here.
-            return true;
+            catch (JSONException ex) {
+                ex.printStackTrace();
+            }
         }
 
         @Override
