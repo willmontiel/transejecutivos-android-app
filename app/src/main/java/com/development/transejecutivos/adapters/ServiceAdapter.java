@@ -1,6 +1,8 @@
 package com.development.transejecutivos.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,7 +41,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
     @Override
     public void onBindViewHolder(ServiceHolder holder, int position) {
         Service currentItem = this.services.get(position);
-        holder.setService(currentItem.getReference());
+        holder.setService(currentItem.getReference(), currentItem.getSource(), currentItem.getDestiny(), currentItem.getStartDate());
     }
 
     public void addAll(@NonNull ArrayList<Service> service) {
@@ -57,20 +59,28 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
     }
 
     public class ServiceHolder extends RecyclerView.ViewHolder {
-
         TextView text_view_reference;
+        TextView text_view_source;
+        TextView text_view_destiny;
+        TextView text_view_datetime;
+
         ServiceAdapter adapter;
 
         public ServiceHolder(View itemView, ServiceAdapter Adapter) {
             super(itemView);
             text_view_reference = (TextView) itemView.findViewById(R.id.text_view_reference);
+            text_view_source = (TextView) itemView.findViewById(R.id.text_view_source);
+            text_view_destiny = (TextView) itemView.findViewById(R.id.text_view_destiny);
+            text_view_datetime = (TextView) itemView.findViewById(R.id.text_view_datetime);
+
             adapter = Adapter;
         }
 
-        public void setService(String reference) {
-            Log.d("SA Reference", reference);
-
+        public void setService(String reference, String source, String destiny, String startdate) {
             text_view_reference.setText(reference);
+            text_view_source.setText(source);
+            text_view_destiny.setText(destiny);
+            text_view_datetime.setText(startdate);
         }
 
     }

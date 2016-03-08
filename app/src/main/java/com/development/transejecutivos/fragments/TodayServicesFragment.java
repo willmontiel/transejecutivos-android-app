@@ -58,11 +58,7 @@ public class TodayServicesFragment extends Fragment {
         adapter = new ServiceAdapter(getActivity());
         recycler.setAdapter(adapter);
 
-        Log.d("TS Fragment", "before create view");
-
         setupServicesList();
-
-        Log.d("TS Fragment", "After create view");
 
         return view;
     }
