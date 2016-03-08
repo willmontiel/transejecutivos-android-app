@@ -28,6 +28,7 @@ public class JsonKeys {
     /**
      * Services Json Keys
      */
+    public static final String SERVICES = "services";
     public static final String SERVICE_ID = "service_id";
     public static final String SERVICE_REFERENCE = "ref";
     public static final String SERVICE_CREATE_DATE = "date";
@@ -40,5 +41,6 @@ public class JsonKeys {
     public static final String SERVICE_PAX_CANT = "pax_cant";
     public static final String SERVICE_REPRESENT = "represent";
     public static final String SERVICE_SOURCE = "source";
+    public static final String SERVICE_DESTINY = "destiny";
     public static final String SERVICE_OBSERVATIONS = "service_observations";
 }

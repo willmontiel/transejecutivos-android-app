@@ -1,5 +1,6 @@
 package com.development.transejecutivos.adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -13,10 +14,12 @@ import com.development.transejecutivos.fragments.TodayServicesFragment;
 public class TabPagerAdapter extends FragmentPagerAdapter {
 
     int tabCount;
+    Context context;
 
-    public TabPagerAdapter(FragmentManager fm, int numberOfTabs) {
+    public TabPagerAdapter(FragmentManager fm, int numberOfTabs, Context context) {
         super(fm);
         this.tabCount = numberOfTabs;
+        this.context = context;
     }
 
     @Override
@@ -24,7 +27,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                TodayServicesFragment todayServicesFragment = new TodayServicesFragment();
+                TodayServicesFragment todayServicesFragment = new TodayServicesFragment(this.context);
                 return todayServicesFragment;
             case 1:
                 FutureServicesFragment futureServicesFragment = new FutureServicesFragment();

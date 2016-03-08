@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements TodayServicesFrag
         mainTabs.setTabMode(TabLayout.MODE_SCROLLABLE);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.main_pager);
-        final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(),mainTabs.getTabCount());
+        final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(),mainTabs.getTabCount(), getApplicationContext());
 
         viewPager.setAdapter(adapter);
 

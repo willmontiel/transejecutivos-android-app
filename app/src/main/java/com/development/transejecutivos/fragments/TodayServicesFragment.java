@@ -4,50 +4,40 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.development.transejecutivos.R;
+import com.development.transejecutivos.adapters.ServiceAdapter;
+import com.development.transejecutivos.deserializers.ServiceDeserializer;
+import com.development.transejecutivos.models.Service;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link TodayServicesFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link TodayServicesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 public class TodayServicesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    Context context;
+    ServiceAdapter adapter;
 
-    public TodayServicesFragment() {
-        // Required empty public constructor
+    public TodayServicesFragment(Context context) {
+        this.context = context;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TodayServicesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static TodayServicesFragment newInstance(String param1, String param2) {
-        TodayServicesFragment fragment = new TodayServicesFragment();
+    public static TodayServicesFragment newInstance(Context context) {
+        TodayServicesFragment fragment = new TodayServicesFragment(context);
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,24 +45,37 @@ public class TodayServicesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_today_services, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_today_services, container, false);
+        RecyclerView recycler = (RecyclerView) view.findViewById(R.id.today_services_recycler_view);
+
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recycler.setLayoutManager(layoutManager);
+        adapter = new ServiceAdapter(getActivity());
+        recycler.setAdapter(adapter);
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+
+    protected void setupServicesList() {
+            //ServiceDeserializer serviceDeserializer = new ServiceDeserializer(response);
+
+            ArrayList<Service> data = new ArrayList<>();
+
+            for (int i = 0; i < 10; i++) {
+                Service service =  new Service(i, "ref" + i, "date" + i, "sdate" + i, "edate" + i, "fly" + i, "aeroline" + i, "company" + i, "ptype" + i, "pxcant" + i, "represent" + i, "source" + i, "destiny" + i, "obs" + i);
+                data.add(service);
+            }
+
+            adapter.addAll(data);
     }
 
     @Override
@@ -103,7 +106,6 @@ public class TodayServicesFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }
