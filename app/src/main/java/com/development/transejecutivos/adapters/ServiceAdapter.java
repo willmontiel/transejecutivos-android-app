@@ -2,12 +2,11 @@ package com.development.transejecutivos.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.development.transejecutivos.R;
 import com.development.transejecutivos.models.Service;
 import com.development.transejecutivos.models.User;
@@ -54,7 +53,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
     @Override
     public int getItemCount() {
-        return 0;
+        return this.services.size();
     }
 
     public class ServiceHolder extends RecyclerView.ViewHolder {
@@ -69,6 +68,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         }
 
         public void setService(String reference) {
+            Log.d("SA Reference", reference);
+
             text_view_reference.setText(reference);
         }
 

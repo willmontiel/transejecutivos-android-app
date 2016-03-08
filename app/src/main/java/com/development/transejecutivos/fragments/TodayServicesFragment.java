@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,12 +48,9 @@ public class TodayServicesFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_today_services, container, false);
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.today_services_recycler_view);
-
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -60,7 +58,11 @@ public class TodayServicesFragment extends Fragment {
         adapter = new ServiceAdapter(getActivity());
         recycler.setAdapter(adapter);
 
+        Log.d("TS Fragment", "before create view");
+
         setupServicesList();
+
+        Log.d("TS Fragment", "After create view");
 
         return view;
     }
