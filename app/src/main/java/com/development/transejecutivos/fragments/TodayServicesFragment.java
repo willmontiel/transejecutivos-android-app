@@ -28,15 +28,14 @@ import java.util.ArrayList;
 public class TodayServicesFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
-    Context context;
     ServiceAdapter adapter;
 
-    public TodayServicesFragment(Context context) {
-        this.context = context;
+    public TodayServicesFragment() {
+
     }
 
-    public static TodayServicesFragment newInstance(Context context) {
-        TodayServicesFragment fragment = new TodayServicesFragment(context);
+    public static TodayServicesFragment newInstance() {
+        TodayServicesFragment fragment = new TodayServicesFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -60,6 +59,8 @@ public class TodayServicesFragment extends Fragment {
         recycler.setLayoutManager(layoutManager);
         adapter = new ServiceAdapter(getActivity());
         recycler.setAdapter(adapter);
+
+        setupServicesList();
 
         return view;
     }

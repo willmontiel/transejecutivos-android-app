@@ -5,6 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.development.transejecutivos.R;
 import com.development.transejecutivos.models.Service;
 import com.development.transejecutivos.models.User;
@@ -36,7 +39,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
     @Override
     public void onBindViewHolder(ServiceHolder holder, int position) {
-
+        Service currentItem = this.services.get(position);
+        holder.setService(currentItem.getReference());
     }
 
     public void addAll(@NonNull ArrayList<Service> service) {
@@ -54,8 +58,18 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
     }
 
     public class ServiceHolder extends RecyclerView.ViewHolder {
+
+        TextView text_view_reference;
+        ServiceAdapter adapter;
+
         public ServiceHolder(View itemView, ServiceAdapter Adapter) {
             super(itemView);
+            text_view_reference = (TextView) itemView.findViewById(R.id.text_view_reference);
+            adapter = Adapter;
+        }
+
+        public void setService(String reference) {
+            text_view_reference.setText(reference);
         }
 
     }

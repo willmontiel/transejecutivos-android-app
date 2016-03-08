@@ -27,7 +27,7 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case 0:
-                TodayServicesFragment todayServicesFragment = new TodayServicesFragment(this.context);
+                TodayServicesFragment todayServicesFragment = new TodayServicesFragment();
                 return todayServicesFragment;
             case 1:
                 FutureServicesFragment futureServicesFragment = new FutureServicesFragment();
