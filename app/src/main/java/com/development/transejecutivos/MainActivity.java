@@ -1,14 +1,23 @@
 package com.development.transejecutivos;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TabHost;
 
-public class MainActivity extends AppCompatActivity {
+import com.development.transejecutivos.adapters.TabPagerAdapter;
+import com.development.transejecutivos.fragments.FilterServicesFragment;
+import com.development.transejecutivos.fragments.FutureServicesFragment;
+import com.development.transejecutivos.fragments.TodayServicesFragment;
+
+public class MainActivity extends AppCompatActivity implements TodayServicesFragment.OnFragmentInteractionListener, FutureServicesFragment.OnFragmentInteractionListener, FilterServicesFragment.OnFragmentInteractionListener{
 
     private TabLayout mainTabs;
 
@@ -19,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TabLayout mainTabs = (TabLayout) findViewById(R.id.main_tabs);
+        mainTabs = (TabLayout) findViewById(R.id.main_tabs);
 
         mainTabs.addTab(mainTabs.newTab().setText("HOY"));
         mainTabs.addTab(mainTabs.newTab().setText("MAÑANA"));
@@ -27,24 +36,32 @@ public class MainActivity extends AppCompatActivity {
 
         mainTabs.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-        mainTabs.setOnTabSelectedListener(
-                new TabLayout.OnTabSelectedListener() {
-                    @Override
-                    public void onTabSelected(TabLayout.Tab tab) {
-                        // ...
-                    }
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.main_pager);
+        final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(),mainTabs.getTabCount());
 
-                    @Override
-                    public void onTabUnselected(TabLayout.Tab tab) {
-                        // ...
-                    }
+        viewPager.setAdapter(adapter);
 
-                    @Override
-                    public void onTabReselected(TabLayout.Tab tab) {
-                        // ...
-                    }
-                }
-        );
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mainTabs));
+
+        mainTabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                                               @Override
+                                               public void onTabSelected(TabLayout.Tab tab) {
+                                                   viewPager.setCurrentItem(tab.getPosition());
+                                               }
+
+                                               @Override
+                                               public void onTabUnselected(TabLayout.Tab tab) {
+
+                                               }
+
+                                               @Override
+                                               public void onTabReselected(TabLayout.Tab tab) {
+
+                                               }
+
+
+
+                                           });
     }
 
     @Override
@@ -69,4 +86,8 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }
