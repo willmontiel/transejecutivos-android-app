@@ -15,4 +15,10 @@
     <!-- General Strings -->
     <string name="error_general">Se ha presentado un error, por favor intenta más tarde</string>
     <string name="accept_button">Aceptar</string>
+
+    <!-- Main Menu -->
+    <string name="action_logout">Cerrar Sesión</string>
+
+    <!-- Activity Main-->
+    <string name="title_activity_main">Servicios</string>
 </resources>

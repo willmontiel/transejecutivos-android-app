@@ -3,6 +3,7 @@ package com.development.transejecutivos;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Loader;
@@ -255,9 +256,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                         resObj.getString(JsonKeys.USER_APIKEY),
                                         resObj.getString(JsonKeys.USER_CODE));
 
-                    //Intent action = new Intent(getApplicationContext(), MainActivity.class);
-                    //action.putExtra("user", user);
-                    //startActivity(action);
+                    Intent action = new Intent(getApplicationContext(), MainActivity.class);
+                    action.putExtra("user", user);
+                    startActivity(action);
                 } else {
                     Toast.makeText(getApplicationContext(), R.string.error_invalid_login, Toast.LENGTH_LONG).show();
                 }

@@ -16,6 +16,18 @@ public class User implements Serializable {
     String apikey;
     String code;
 
+    /**
+     * Create an user object
+     * @param idUser
+     * @param username
+     * @param name
+     * @param lastName
+     * @param email
+     * @param role
+     * @param company
+     * @param apikey
+     * @param code
+     */
     public User(String idUser, String username, String name, String lastName, String email, String role, String company, String apikey, String code) {
         this.idUser = idUser;
         this.username = username;
@@ -25,42 +37,6 @@ public class User implements Serializable {
         this.role = role;
         this.company = company;
         this.apikey = apikey;
-        this.code = code;
-    }
-
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    public void setApikey(String apikey) {
-        this.apikey = apikey;
-    }
-
-    public void setCode(String code) {
         this.code = code;
     }
 
