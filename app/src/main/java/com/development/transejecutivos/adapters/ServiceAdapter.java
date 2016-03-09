@@ -2,19 +2,20 @@ package com.development.transejecutivos.adapters;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.development.transejecutivos.R;
+import com.development.transejecutivos.models.Passenger;
 import com.development.transejecutivos.models.Service;
 import com.development.transejecutivos.models.User;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceHolder> {
 
     ArrayList<Service> services;
+    ArrayList<Passenger> passengers;
     Context context;
     User user;
 
@@ -31,6 +33,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         //this.user = user;
         this.context = context;
         this.services = new ArrayList<>();
+        this.passengers = new ArrayList<>();
     }
 
     @Override
@@ -43,16 +46,26 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
     @Override
     public void onBindViewHolder(ServiceHolder holder, int position) {
-        Service currentItem = this.services.get(position);
-        holder.setService(currentItem.getReference(), currentItem.getSource(), currentItem.getDestiny(), currentItem.getStartDate());
+        Service currentService = this.services.get(position);
+        Passenger currentPassenger = this.passengers.get(position);
+        holder.setService(currentService.getReference(), currentService.getSource(), currentService.getDestiny(), currentService.getStartDate(), currentService.getPaxCant(), currentService.getCompany(), currentService.getFly(), currentService.getAeroline());
+        holder.setPassenger(currentPassenger.getName(), currentPassenger.getLastName(), currentPassenger.getPhone(), currentPassenger.getEmail(), currentPassenger.getCity(), currentPassenger.getAddress());
     }
 
-    public void addAll(@NonNull ArrayList<Service> service) {
-        if (service == null) {
+    public void addAll(@NonNull ArrayList<Service> services, @NonNull ArrayList<Passenger> passengers) {
+        if (services == null) {
             throw new NullPointerException("The items cannot be null");
         }
+
+        if (passengers == null) {
+            throw new NullPointerException("The items cannot be null");
+        }
+
         this.services.clear();
-        this.services.addAll(service);
+        this.services.addAll(services);
+        this.passengers.clear();
+        this.passengers.addAll(passengers);
+
         notifyDataSetChanged();
     }
 
@@ -62,10 +75,17 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
     }
 
     public class ServiceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        TextView text_view_reference;
-        TextView text_view_source;
-        TextView text_view_destiny;
-        TextView text_view_datetime;
+        TextView txtview_destiny;
+        TextView txtview_source;
+        TextView txtview_datetime;
+        TextView txtview_reference;
+        TextView txtview_paxcant;
+        TextView txtview_passgname;
+        TextView txtview_passgphone;
+        TextView txtview_passgemail;
+        TextView txtview_passglocation;
+        TextView txtview_company;
+        TextView txtview_fly;
 
         private int mOriginalHeight = 0;
         private boolean mIsViewExpanded = false;
@@ -74,20 +94,67 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
         public ServiceHolder(View itemView, ServiceAdapter Adapter) {
             super(itemView);
-            text_view_reference = (TextView) itemView.findViewById(R.id.text_view_reference);
-            text_view_source = (TextView) itemView.findViewById(R.id.text_view_source);
-            text_view_destiny = (TextView) itemView.findViewById(R.id.text_view_destiny);
-            text_view_datetime = (TextView) itemView.findViewById(R.id.text_view_datetime);
+            txtview_destiny = (TextView) itemView.findViewById(R.id.txtview_destiny);
+            txtview_source = (TextView) itemView.findViewById(R.id.txtview_source);
+            txtview_datetime = (TextView) itemView.findViewById(R.id.txtview_datetime);
+            txtview_reference = (TextView) itemView.findViewById(R.id.txtview_reference);
+            txtview_paxcant = (TextView) itemView.findViewById(R.id.txtview_paxcant);
+            txtview_company = (TextView) itemView.findViewById(R.id.txtview_company);
+            txtview_fly = (TextView) itemView.findViewById(R.id.txtview_fly);
+
+            txtview_passgphone = (TextView) itemView.findViewById(R.id.txtview_passgphone);
+            txtview_passgname = (TextView) itemView.findViewById(R.id.txtview_passgname);
+            txtview_passgemail = (TextView) itemView.findViewById(R.id.txtview_passgemail);
+            txtview_passglocation = (TextView) itemView.findViewById(R.id.txtview_passglocation);
 
             adapter = Adapter;
 
             itemView.setOnClickListener(this);
         }
 
+        /**
+         *
+         * @param reference
+         * @param source
+         * @param destiny
+         * @param startdate
+         * @param paxCant
+         * @param company
+         * @param fly
+         * @param aeroline
+         */
+        public void setService(String reference, String source, String destiny, String startdate, String paxCant, String company, String fly, String aeroline) {
+            txtview_destiny.setText(destiny);
+            txtview_source.setText(source);
+            txtview_datetime.setText(startdate);
+            txtview_reference.setText(reference);
+            txtview_paxcant.setText(paxCant);
+            txtview_company.setText(company);
+            txtview_fly.setText(fly + ", " + aeroline);
+        }
+
+        /**
+         *
+         * @param name
+         * @param lastName
+         * @param phone
+         * @param email
+         * @param city
+         * @param address
+         */
+        public void setPassenger(String name, String lastName, String phone, String email, String city, String address) {
+            txtview_passgname.setText(name + " " + lastName);
+            txtview_passgphone.setText(phone);
+            txtview_passgemail.setText(email);
+            txtview_passglocation.setText(city + ", " + address);
+        }
+
         @Override
         public void onClick(final View view) {
             final View relativeloDetails =  view.findViewById(R.id.relativelayout_details);
             final View cardView =  view.findViewById(R.id.card_view_services_list);
+            final View expand =  view.findViewById(R.id.imgview_expand_icon);
+            final View contract =  view.findViewById(R.id.imgview_contract_icon);
 
             if (mOriginalHeight == 0) {
                 mOriginalHeight = view.getHeight();
@@ -96,13 +163,17 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             ValueAnimator valueAnimator;
             if (!mIsViewExpanded) {
                 mIsViewExpanded = true;
-                valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.5));
+                valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 0.8));
                 relativeloDetails.setVisibility(View.VISIBLE);
+                expand.setVisibility(View.INVISIBLE);
+                contract.setVisibility(View.VISIBLE);
             }
             else {
                 mIsViewExpanded = false;
-                valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 1.5), mOriginalHeight);
+                valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 0.8), mOriginalHeight);
                 relativeloDetails.setVisibility(View.INVISIBLE);
+                expand.setVisibility(View.VISIBLE);
+                contract.setVisibility(View.INVISIBLE);
             }
 
             valueAnimator.setDuration(300);
@@ -117,13 +188,5 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             });
             valueAnimator.start();
         }
-
-        public void setService(String reference, String source, String destiny, String startdate) {
-            text_view_reference.setText(reference);
-            text_view_source.setText(source);
-            text_view_destiny.setText(destiny);
-            text_view_datetime.setText(startdate);
-        }
-
     }
 }

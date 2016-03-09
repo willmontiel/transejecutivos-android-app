@@ -10,7 +10,7 @@
         android:id="@+id/card_view_services_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardCornerRadius="0dp"
+        card_view:cardCornerRadius="4dp"
         android:layout_margin="2dp" >
 
         <RelativeLayout
@@ -45,11 +45,19 @@
 
             <ImageView
                 android:id="@+id/imgview_expand_icon"
-                android:src="@android:drawable/ic_dialog_info"
+                android:layout_below="@+id/txtview_reference"
+                android:src="@android:drawable/arrow_down_float"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="100dp" />
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imgview_contract_icon"
+                android:layout_below="@+id/txtview_reference"
+                android:src="@android:drawable/arrow_up_float"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/img_view_driver_photo"
@@ -67,10 +75,12 @@
             android:id="@+id/relativelayout_details"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryLight"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:visibility="invisible" >
+            android:visibility="invisible"
+            card_view:cardCornerRadius="4dp"
+            android:layout_margin="2dp">
 
                 <TextView
                     android:id="@+id/txtview_paxcant"
@@ -79,32 +89,32 @@
                     android:layout_alignParentTop="true" />
 
                 <TextView
-                    android:id="@+id/txtview_name"
+                    android:id="@+id/txtview_passgname"
                     android:layout_below="@+id/txtview_paxcant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/txtview_phone"
-                    android:layout_below="@+id/txtview_name"
+                    android:id="@+id/txtview_passgphone"
+                    android:layout_below="@+id/txtview_passgname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/txtview_email"
-                    android:layout_below="@+id/txtview_phone"
+                    android:id="@+id/txtview_passgemail"
+                    android:layout_below="@+id/txtview_passgphone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/txtview_location"
-                    android:layout_below="@+id/txtview_email"
+                    android:id="@+id/txtview_passglocation"
+                    android:layout_below="@+id/txtview_passgemail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/txtview_company"
-                    android:layout_below="@+id/txtview_location"
+                    android:layout_below="@+id/txtview_passglocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

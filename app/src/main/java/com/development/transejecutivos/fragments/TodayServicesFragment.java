@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.development.transejecutivos.R;
 import com.development.transejecutivos.adapters.ServiceAdapter;
 import com.development.transejecutivos.deserializers.ServiceDeserializer;
+import com.development.transejecutivos.models.Passenger;
 import com.development.transejecutivos.models.Service;
 
 import org.json.JSONObject;
@@ -67,14 +68,18 @@ public class TodayServicesFragment extends Fragment {
     protected void setupServicesList() {
             //ServiceDeserializer serviceDeserializer = new ServiceDeserializer(response);
 
-            ArrayList<Service> data = new ArrayList<>();
+            ArrayList<Service> services = new ArrayList<>();
+            ArrayList<Passenger> passengers = new ArrayList<>();
 
             for (int i = 0; i < 10; i++) {
                 Service service =  new Service(i, "ref" + i, "date" + i, "sdate" + i, "edate" + i, "fly" + i, "aeroline" + i, "company" + i, "ptype" + i, "pxcant" + i, "represent" + i, "source" + i, "destiny" + i, "obs" + i);
-                data.add(service);
+                Passenger passenger = new Passenger(i, "code" + i, "Name" + i, "lastName" + i, "company" + i, "phone" + i, "email" + i, "address" + i, "city" + i);
+
+                passengers.add(passenger);
+                services.add(service);
             }
 
-            adapter.addAll(data);
+            adapter.addAll(services, passengers);
     }
 
     @Override
