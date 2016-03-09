@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 import com.development.transejecutivos.R;
 import com.development.transejecutivos.models.Passenger;
@@ -74,7 +75,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         return this.services.size();
     }
 
-    public class ServiceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ServiceHolder extends RecyclerView.ViewHolder {
         TextView txtview_destiny;
         TextView txtview_source;
         TextView txtview_datetime;
@@ -86,6 +87,12 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         TextView txtview_passglocation;
         TextView txtview_company;
         TextView txtview_fly;
+
+        View cardView;
+        View relativeloDetails;
+        ImageView expander;
+        ImageView contracter;
+        ImageView driver;
 
         private int mOriginalHeight = 0;
         private boolean mIsViewExpanded = false;
@@ -107,9 +114,54 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtview_passgemail = (TextView) itemView.findViewById(R.id.txtview_passgemail);
             txtview_passglocation = (TextView) itemView.findViewById(R.id.txtview_passglocation);
 
+            cardView =  itemView.findViewById(R.id.card_view_services_list);
+            relativeloDetails =  itemView.findViewById(R.id.relativelayout_details);
+
+            expander = (ImageView) itemView.findViewById(R.id.imgview_expand_icon);
+            contracter = (ImageView) itemView.findViewById(R.id.imgview_contract_icon);
+
+            driver = (ImageView) itemView.findViewById(R.id.img_view_driver_photo);
+
             adapter = Adapter;
 
-            itemView.setOnClickListener(this);
+            setClickListeners(itemView);
+        }
+
+        public void setClickListeners(final View itemView) {
+            txtview_destiny.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    collapse(itemView);
+                }
+            });
+
+            txtview_source.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    collapse(itemView);
+                }
+            });
+
+            expander.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    collapse(itemView);
+                }
+            });
+
+            contracter.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    collapse(itemView);
+                }
+            });
+
+            driver.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    collapse(itemView);
+                }
+            });
         }
 
         /**
@@ -149,31 +201,26 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtview_passglocation.setText(city + ", " + address);
         }
 
-        @Override
-        public void onClick(final View view) {
-            final View relativeloDetails =  view.findViewById(R.id.relativelayout_details);
-            final View cardView =  view.findViewById(R.id.card_view_services_list);
-            final View expand =  view.findViewById(R.id.imgview_expand_icon);
-            final View contract =  view.findViewById(R.id.imgview_contract_icon);
-
+        public void collapse(final View view) {
             if (mOriginalHeight == 0) {
                 mOriginalHeight = view.getHeight();
             }
 
             ValueAnimator valueAnimator;
+
             if (!mIsViewExpanded) {
                 mIsViewExpanded = true;
                 valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 0.8));
                 relativeloDetails.setVisibility(View.VISIBLE);
-                expand.setVisibility(View.INVISIBLE);
-                contract.setVisibility(View.VISIBLE);
+                expander.setVisibility(View.INVISIBLE);
+                contracter.setVisibility(View.VISIBLE);
             }
             else {
                 mIsViewExpanded = false;
                 valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 0.8), mOriginalHeight);
                 relativeloDetails.setVisibility(View.INVISIBLE);
-                expand.setVisibility(View.VISIBLE);
-                contract.setVisibility(View.INVISIBLE);
+                expander.setVisibility(View.VISIBLE);
+                contracter.setVisibility(View.INVISIBLE);
             }
 
             valueAnimator.setDuration(300);
@@ -186,6 +233,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
                     cardView.requestLayout();
                 }
             });
+
             valueAnimator.start();
         }
     }
