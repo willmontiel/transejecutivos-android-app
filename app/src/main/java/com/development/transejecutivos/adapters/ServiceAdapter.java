@@ -1,13 +1,16 @@
 package com.development.transejecutivos.adapters;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.development.transejecutivos.R;
 import com.development.transejecutivos.models.Service;
@@ -58,11 +61,14 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         return this.services.size();
     }
 
-    public class ServiceHolder extends RecyclerView.ViewHolder {
+    public class ServiceHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView text_view_reference;
         TextView text_view_source;
         TextView text_view_destiny;
         TextView text_view_datetime;
+
+        private int mOriginalHeight = 0;
+        private boolean mIsViewExpanded = false;
 
         ServiceAdapter adapter;
 
@@ -74,6 +80,42 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             text_view_datetime = (TextView) itemView.findViewById(R.id.text_view_datetime);
 
             adapter = Adapter;
+
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(final View view) {
+            final View relativeloDetails =  view.findViewById(R.id.relativelayout_details);
+            final View cardView =  view.findViewById(R.id.card_view_services_list);
+
+            if (mOriginalHeight == 0) {
+                mOriginalHeight = view.getHeight();
+            }
+
+            ValueAnimator valueAnimator;
+            if (!mIsViewExpanded) {
+                mIsViewExpanded = true;
+                valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.5));
+                relativeloDetails.setVisibility(View.VISIBLE);
+            }
+            else {
+                mIsViewExpanded = false;
+                valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 1.5), mOriginalHeight);
+                relativeloDetails.setVisibility(View.INVISIBLE);
+            }
+
+            valueAnimator.setDuration(300);
+            valueAnimator.setInterpolator(new LinearInterpolator());
+            valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                public void onAnimationUpdate(ValueAnimator animation) {
+                    Integer value = (Integer) animation.getAnimatedValue();
+
+                    cardView.getLayoutParams().height = value.intValue();
+                    cardView.requestLayout();
+                }
+            });
+            valueAnimator.start();
         }
 
         public void setService(String reference, String source, String destiny, String startdate) {
