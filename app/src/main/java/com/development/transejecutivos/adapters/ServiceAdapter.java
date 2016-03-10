@@ -3,7 +3,6 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +10,10 @@ import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.development.transejecutivos.R;
+import com.development.transejecutivos.models.Driver;
 import com.development.transejecutivos.models.Passenger;
 import com.development.transejecutivos.models.Service;
 import com.development.transejecutivos.models.User;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 /**
@@ -26,6 +23,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
     ArrayList<Service> services;
     ArrayList<Passenger> passengers;
+    ArrayList<Driver> drivers;
     Context context;
     User user;
 
@@ -49,11 +47,13 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
     public void onBindViewHolder(ServiceHolder holder, int position) {
         Service currentService = this.services.get(position);
         Passenger currentPassenger = this.passengers.get(position);
+        Driver currentDriver = this.drivers.get(position);
         holder.setService(currentService.getReference(), currentService.getSource(), currentService.getDestiny(), currentService.getStartDate(), currentService.getPaxCant(), currentService.getCompany(), currentService.getFly(), currentService.getAeroline());
         holder.setPassenger(currentPassenger.getName(), currentPassenger.getLastName(), currentPassenger.getPhone(), currentPassenger.getEmail(), currentPassenger.getCity(), currentPassenger.getAddress());
+        holder.setDriver(currentDriver.getIdDriver(), currentDriver.getCode(), currentDriver.getName(), currentDriver.getLastName(), currentDriver.getPhone(), currentDriver.getAddress(), currentDriver.getCity(), currentDriver.getEmail(), currentDriver.getCarType(), currentDriver.getCarBrand(), currentDriver.getCarModel(), currentDriver.getCarColor(), currentDriver.getCarriagePlate(), currentDriver.getStatus());
     }
 
-    public void addAll(@NonNull ArrayList<Service> services, @NonNull ArrayList<Passenger> passengers) {
+    public void addAll(@NonNull ArrayList<Service> services, @NonNull ArrayList<Passenger> passengers, @NonNull ArrayList<Driver> drivers) {
         if (services == null) {
             throw new NullPointerException("The items cannot be null");
         }
@@ -64,8 +64,12 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
         this.services.clear();
         this.services.addAll(services);
+
         this.passengers.clear();
         this.passengers.addAll(passengers);
+
+        this.drivers.clear();
+        this.drivers.addAll(drivers);
 
         notifyDataSetChanged();
     }
@@ -199,6 +203,27 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtview_passgphone.setText(phone);
             txtview_passgemail.setText(email);
             txtview_passglocation.setText(city + ", " + address);
+        }
+
+        /**
+         *
+         * @param idDriver
+         * @param code
+         * @param name
+         * @param lastName
+         * @param phone
+         * @param address
+         * @param city
+         * @param email
+         * @param carType
+         * @param carBrand
+         * @param carModel
+         * @param carColor
+         * @param carriagePlate
+         * @param status
+         */
+        public void setDriver(int idDriver, String code, String name, String lastName, String phone, String address, String city, String email, String carType, String carBrand, String carModel, String carColor, String carriagePlate, String status) {
+
         }
 
         public void collapse(final View view) {

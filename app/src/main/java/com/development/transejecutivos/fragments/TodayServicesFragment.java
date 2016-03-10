@@ -20,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 import com.development.transejecutivos.R;
 import com.development.transejecutivos.adapters.ServiceAdapter;
 import com.development.transejecutivos.deserializers.ServiceDeserializer;
+import com.development.transejecutivos.models.Driver;
 import com.development.transejecutivos.models.Passenger;
 import com.development.transejecutivos.models.Service;
 
@@ -70,16 +71,18 @@ public class TodayServicesFragment extends Fragment {
 
             ArrayList<Service> services = new ArrayList<>();
             ArrayList<Passenger> passengers = new ArrayList<>();
+            ArrayList<Driver> drivers = new ArrayList<>();
 
             for (int i = 0; i < 20; i++) {
                 Service service =  new Service(i, "ref" + i, "date" + i, "sdate" + i, "edate" + i, "fly" + i, "aeroline" + i, "company" + i, "ptype" + i, "pxcant" + i, "represent" + i, "source" + i, "destiny" + i, "obs" + i);
                 Passenger passenger = new Passenger(i, "code" + i, "Name" + i, "lastName" + i, "company" + i, "phone" + i, "email" + i, "address" + i, "city" + i);
+                Driver driver = new Driver(i, "code" + i, "name" + i, "lastName" + i, "phone" + i, "address" + i, "city" + i, "email" + i, "carType" + i, "carBrand" + i, "carModel" + i, "carColor" + i, "placa" + i, "status" + i);
 
                 passengers.add(passenger);
                 services.add(service);
             }
 
-            adapter.addAll(services, passengers);
+            adapter.addAll(services, passengers, drivers);
     }
 
     @Override

@@ -43,4 +43,35 @@ public class JsonKeys {
     public static final String SERVICE_SOURCE = "source";
     public static final String SERVICE_DESTINY = "destiny";
     public static final String SERVICE_OBSERVATIONS = "service_observations";
+
+    /**
+     * Passenger Json Keys
+     */
+    public static final String PASSENGER_ID = "passenger_id";
+    public static final String PASSENGER_CODE = "passenger_code";
+    public static final String PASSENGER_NAME = "passenger_name";
+    public static final String PASSENGER_LASTNAME = "passenger_lastname";
+    public static final String PASSENGER_COMPANY = "passenger_company";
+    public static final String PASSENGER_PHONE = "passenger_phone1";
+    public static final String PASSENGER_EMAIL = "passenger_email";
+    public static final String PASSENGER_ADDRESS = "passenger_address";
+    public static final String PASSENGER_CITY = "passenger_city";
+
+    /**
+     * Driver Json Keys
+     */
+    public static final String DRIVER_ID = "driver_id";
+    public static final String DRIVER_CODE = "driver_code";
+    public static final String DRIVER_NAME = "driver_name";
+    public static final String DRIVER_LASTNAME = "driver_lastname";
+    public static final String DRIVER_PHONE = "driver_phone1";
+    public static final String DRIVER_ADDRESS = "driver_address";
+    public static final String DRIVER_CITY = "driver_city";
+    public static final String DRIVER_EMAIL = "driver_email";
+    public static final String DRIVER_CAR_TYPE = "car_type";
+    public static final String DRIVER_CAR_BRAND = "car_brand";
+    public static final String DRIVER_CAR_MODEL = "car_model";
+    public static final String DRIVER_CAR_COLOR = "car_color";
+    public static final String DRIVER_CARRIAGE_PLATE = "car_license_plate";
+    public static final String DRIVER_STATUS = "driver_status";
 }
