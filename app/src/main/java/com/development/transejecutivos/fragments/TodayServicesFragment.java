@@ -14,10 +14,6 @@ public class TodayServicesFragment extends FragmentBase {
 
     }
 
-    /**
-     *
-     * @return
-     */
     public static TodayServicesFragment newInstance() {
         TodayServicesFragment fragment = new TodayServicesFragment();
         Bundle args = new Bundle();

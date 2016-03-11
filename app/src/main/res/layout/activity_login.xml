@@ -18,10 +18,12 @@
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
+        android:layout_gravity="center"
+        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:visibility="gone" />
+        android:visibility="gone"/>
 
     <ScrollView
         android:id="@+id/login_form"
@@ -90,7 +92,7 @@
                 android:elevation="10dp"
                 android:text="@string/prompt_login_button"
                 android:background="@color/colorPrimary"
-                android:textColor="@color/colorPrimaryLight" />
+                android:textColor="@color/colorPrimaryTextLight" />
 
         </LinearLayout>
     </ScrollView>

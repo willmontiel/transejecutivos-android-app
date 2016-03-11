@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Loader;
@@ -225,12 +224,7 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             onCancelled();
-                            //DialogCreator dialogCreator = new DialogCreator(LoginActivity.this);
-                            //dialogCreator.createCustomDialog(getResources().getString(R.string.error_general), getResources().getString(R.string.accept_button));
-                            Snackbar snackbar = Snackbar
-                                    .make(loginLayout, R.string.error_general, Snackbar.LENGTH_LONG);
-
-                            snackbar.show();
+                            setErrorSnackBar(loginLayout, getResources().getString(R.string.error_general));
                         }
                     }) {
 

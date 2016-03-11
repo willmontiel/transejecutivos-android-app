@@ -3,6 +3,7 @@ package com.development.transejecutivos.fragments;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ public class FilterServicesFragment extends FragmentBase {
 
     public static FilterServicesFragment newInstance() {
         FilterServicesFragment fragment = new FilterServicesFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
         return fragment;
     }
 
@@ -45,7 +48,6 @@ public class FilterServicesFragment extends FragmentBase {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
                 setupServicesList(dayOfMonth, month, year);
-
             }
         });
     }

@@ -27,8 +27,6 @@ public class FutureServicesFragment extends FragmentBase {
     public static FutureServicesFragment newInstance() {
         FutureServicesFragment fragment = new FutureServicesFragment();
         Bundle args = new Bundle();
-        //args.putString(ARG_PARAM1, param1);
-        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
