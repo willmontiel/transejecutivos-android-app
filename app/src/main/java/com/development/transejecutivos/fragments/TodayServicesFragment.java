@@ -37,6 +37,10 @@ public class TodayServicesFragment extends Fragment {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public static TodayServicesFragment newInstance() {
         TodayServicesFragment fragment = new TodayServicesFragment();
         Bundle args = new Bundle();
@@ -80,6 +84,7 @@ public class TodayServicesFragment extends Fragment {
 
                 passengers.add(passenger);
                 services.add(service);
+                drivers.add(driver);
             }
 
             adapter.addAll(services, passengers, drivers);

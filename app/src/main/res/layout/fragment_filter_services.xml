@@ -4,4 +4,21 @@
     android:layout_height="match_parent"
     tools:context="com.development.transejecutivos.fragments.FilterServicesFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <DatePicker
+            android:id="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|top" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/filter_services_recycler_view"
+            android:layout_below="@+id/datePicker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
 </FrameLayout>

@@ -33,6 +33,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         this.context = context;
         this.services = new ArrayList<>();
         this.passengers = new ArrayList<>();
+        this.drivers = new ArrayList<>();
     }
 
     @Override
@@ -48,9 +49,10 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         Service currentService = this.services.get(position);
         Passenger currentPassenger = this.passengers.get(position);
         Driver currentDriver = this.drivers.get(position);
+
         holder.setService(currentService.getReference(), currentService.getSource(), currentService.getDestiny(), currentService.getStartDate(), currentService.getPaxCant(), currentService.getCompany(), currentService.getFly(), currentService.getAeroline());
         holder.setPassenger(currentPassenger.getName(), currentPassenger.getLastName(), currentPassenger.getPhone(), currentPassenger.getEmail(), currentPassenger.getCity(), currentPassenger.getAddress());
-        holder.setDriver(currentDriver.getIdDriver(), currentDriver.getCode(), currentDriver.getName(), currentDriver.getLastName(), currentDriver.getPhone(), currentDriver.getAddress(), currentDriver.getCity(), currentDriver.getEmail(), currentDriver.getCarType(), currentDriver.getCarBrand(), currentDriver.getCarModel(), currentDriver.getCarColor(), currentDriver.getCarriagePlate(), currentDriver.getStatus());
+        holder.setDriver(currentDriver.getCode(), currentDriver.getName(), currentDriver.getLastName(), currentDriver.getPhone(), currentDriver.getAddress(), currentDriver.getCity(), currentDriver.getEmail(), currentDriver.getCarType(), currentDriver.getCarBrand(), currentDriver.getCarModel(), currentDriver.getCarColor(), currentDriver.getCarriagePlate(), currentDriver.getStatus());
     }
 
     public void addAll(@NonNull ArrayList<Service> services, @NonNull ArrayList<Passenger> passengers, @NonNull ArrayList<Driver> drivers) {
@@ -92,14 +94,25 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         TextView txtview_company;
         TextView txtview_fly;
 
+        TextView txtview_driver_name;
+        TextView txtview_driver_email;
+        TextView txtview_driver_phone;
+        TextView txtview_driver_address;
+        TextView txtview_car_type;
+        TextView txtview_car_detail;
+        TextView txtview_carriage_plate;
+        TextView txtview_driver_code;
+
         View cardView;
         View relativeloDetails;
+        View relativelayout_driver_details;
+
         ImageView expander;
         ImageView contracter;
         ImageView driver;
 
         private int mOriginalHeight = 0;
-        private boolean mIsViewExpanded = false;
+        private boolean mIsDetailsViewExpanded = false;
 
         ServiceAdapter adapter;
 
@@ -118,8 +131,18 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtview_passgemail = (TextView) itemView.findViewById(R.id.txtview_passgemail);
             txtview_passglocation = (TextView) itemView.findViewById(R.id.txtview_passglocation);
 
+            txtview_driver_name = (TextView) itemView.findViewById(R.id.txtview_driver_name);
+            txtview_driver_email = (TextView) itemView.findViewById(R.id.txtview_driver_email);
+            txtview_driver_phone = (TextView) itemView.findViewById(R.id.txtview_driver_phone);
+            txtview_driver_address = (TextView) itemView.findViewById(R.id.txtview_driver_address);
+            txtview_car_type = (TextView) itemView.findViewById(R.id.txtview_car_type);
+            txtview_car_detail = (TextView) itemView.findViewById(R.id.txtview_car_detail);
+            txtview_carriage_plate = (TextView) itemView.findViewById(R.id.txtview_carriage_plate);
+            txtview_driver_code = (TextView) itemView.findViewById(R.id.txtview_driver_code);
+
             cardView =  itemView.findViewById(R.id.card_view_services_list);
             relativeloDetails =  itemView.findViewById(R.id.relativelayout_details);
+            relativelayout_driver_details =  itemView.findViewById(R.id.relativelayout_driver_details);
 
             expander = (ImageView) itemView.findViewById(R.id.imgview_expand_icon);
             contracter = (ImageView) itemView.findViewById(R.id.imgview_contract_icon);
@@ -135,35 +158,35 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtview_destiny.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    collapse(itemView);
+                    collapse(itemView, relativeloDetails);
                 }
             });
 
             txtview_source.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    collapse(itemView);
+                    collapse(itemView, relativeloDetails);
                 }
             });
 
             expander.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    collapse(itemView);
+                    collapse(itemView, relativeloDetails);
                 }
             });
 
             contracter.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    collapse(itemView);
+                    collapse(itemView, relativeloDetails);
                 }
             });
 
             driver.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    collapse(itemView);
+                    collapse(itemView, relativelayout_driver_details);
                 }
             });
         }
@@ -207,7 +230,6 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
         /**
          *
-         * @param idDriver
          * @param code
          * @param name
          * @param lastName
@@ -222,30 +244,46 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
          * @param carriagePlate
          * @param status
          */
-        public void setDriver(int idDriver, String code, String name, String lastName, String phone, String address, String city, String email, String carType, String carBrand, String carModel, String carColor, String carriagePlate, String status) {
-
+        public void setDriver(String code, String name, String lastName, String phone, String address, String city, String email, String carType, String carBrand, String carModel, String carColor, String carriagePlate, String status) {
+            txtview_driver_name.setText(name + " " + lastName);
+            txtview_driver_email.setText(email);
+            txtview_driver_phone.setText(phone);
+            txtview_driver_address.setText(city + ", " + address);
+            txtview_car_type.setText(carBrand + ", " + carType);
+            txtview_car_detail.setText("Modelo: " + carModel + ", " + carColor);
+            txtview_carriage_plate.setText(carriagePlate);
+            txtview_driver_code.setText(code);
         }
 
-        public void collapse(final View view) {
+        public void collapse(final View view, final View layout) {
             if (mOriginalHeight == 0) {
                 mOriginalHeight = view.getHeight();
             }
 
             ValueAnimator valueAnimator;
 
-            if (!mIsViewExpanded) {
-                mIsViewExpanded = true;
-                valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 0.8));
-                relativeloDetails.setVisibility(View.VISIBLE);
-                expander.setVisibility(View.INVISIBLE);
+
+            if (!mIsDetailsViewExpanded) {
+                mIsDetailsViewExpanded = true;
+                valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.2));
+
+                relativeloDetails.setVisibility(View.GONE);
+                relativelayout_driver_details.setVisibility(View.GONE);
+
+                layout.setVisibility(View.VISIBLE);
+                expander.setVisibility(View.GONE);
                 contracter.setVisibility(View.VISIBLE);
             }
-            else {
-                mIsViewExpanded = false;
-                valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 0.8), mOriginalHeight);
-                relativeloDetails.setVisibility(View.INVISIBLE);
+            else  {
+                mIsDetailsViewExpanded = false;
+                valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 1.2), mOriginalHeight);
+
+                relativeloDetails.setVisibility(View.GONE);
+                relativelayout_driver_details.setVisibility(View.GONE);
+
+                layout.setVisibility(View.GONE);
                 expander.setVisibility(View.VISIBLE);
-                contracter.setVisibility(View.INVISIBLE);
+                contracter.setVisibility(View.GONE);
             }
 
             valueAnimator.setDuration(300);

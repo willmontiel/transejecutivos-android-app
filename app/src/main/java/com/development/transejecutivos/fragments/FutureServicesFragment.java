@@ -4,11 +4,19 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.development.transejecutivos.R;
+import com.development.transejecutivos.adapters.ServiceAdapter;
+import com.development.transejecutivos.models.Driver;
+import com.development.transejecutivos.models.Passenger;
+import com.development.transejecutivos.models.Service;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,35 +27,20 @@ import com.development.transejecutivos.R;
  * create an instance of this fragment.
  */
 public class FutureServicesFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    ServiceAdapter adapter;
 
     public FutureServicesFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FutureServicesFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FutureServicesFragment newInstance(String param1, String param2) {
+    public static FutureServicesFragment newInstance() {
         FutureServicesFragment fragment = new FutureServicesFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,24 +48,43 @@ public class FutureServicesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_future_services, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_future_services, container, false);
+        RecyclerView recycler = (RecyclerView) view.findViewById(R.id.future_services_recycler_view);
+
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recycler.setLayoutManager(layoutManager);
+        adapter = new ServiceAdapter(getActivity());
+        recycler.setAdapter(adapter);
+
+        setupServicesList();
+
+        return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+
+    protected void setupServicesList() {
+        //ServiceDeserializer serviceDeserializer = new ServiceDeserializer(response);
+
+        ArrayList<Service> services = new ArrayList<>();
+        ArrayList<Passenger> passengers = new ArrayList<>();
+        ArrayList<Driver> drivers = new ArrayList<>();
+
+        for (int i = 0; i < 20; i++) {
+            Service service =  new Service(i, "ref" + i, "date" + i, "sdate" + i, "edate" + i, "fly" + i, "aeroline" + i, "company" + i, "ptype" + i, "pxcant" + i, "represent" + i, "source" + i, "destiny" + i, "obs" + i);
+            Passenger passenger = new Passenger(i, "code" + i, "Name" + i, "lastName" + i, "company" + i, "phone" + i, "email" + i, "address" + i, "city" + i);
+            Driver driver = new Driver(i, "code" + i, "name" + i, "lastName" + i, "phone" + i, "address" + i, "city" + i, "email" + i, "carType" + i, "carBrand" + i, "carModel" + i, "carColor" + i, "placa" + i, "status" + i);
+
+            passengers.add(passenger);
+            services.add(service);
+            drivers.add(driver);
         }
+
+        adapter.addAll(services, passengers, drivers);
     }
 
     @Override

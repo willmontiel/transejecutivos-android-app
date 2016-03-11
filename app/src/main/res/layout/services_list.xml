@@ -84,7 +84,7 @@
             android:background="@color/colorPrimaryLight"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:padding="8dp">
 
                 <TextView
@@ -128,6 +128,75 @@
                     android:layout_below="@+id/txtview_company"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/relativelayout_driver_details"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:background="@color/colorPrimaryLight"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:visibility="gone"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/txtview_driver_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:id="@+id/txtview_driver_email"
+                android:layout_below="@+id/txtview_driver_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txtview_driver_phone"
+                android:layout_below="@+id/txtview_driver_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txtview_driver_address"
+                android:layout_below="@+id/txtview_driver_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txtview_car_type"
+                android:layout_below="@+id/txtview_driver_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txtview_car_detail"
+                android:layout_below="@+id/txtview_car_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txtview_carriage_plate"
+                android:layout_below="@+id/txtview_car_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:id="@+id/txtview_driver_code"
+                android:layout_below="@+id/txtview_carriage_plate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:id="@+id/imgview_car_photo"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:src="@drawable/driver"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="8dp" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
