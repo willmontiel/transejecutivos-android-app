@@ -3,23 +3,16 @@ package com.development.transejecutivos;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
-import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TabHost;
-
 import com.development.transejecutivos.adapters.TabPagerAdapter;
-import com.development.transejecutivos.fragments.FilterServicesFragment;
-import com.development.transejecutivos.fragments.FutureServicesFragment;
-import com.development.transejecutivos.fragments.TodayServicesFragment;
+import com.development.transejecutivos.fragments.FragmentBase;
 
-public class MainActivity extends AppCompatActivity implements TodayServicesFragment.OnFragmentInteractionListener, FutureServicesFragment.OnFragmentInteractionListener, FilterServicesFragment.OnFragmentInteractionListener{
+public class MainActivity extends AppCompatActivity implements FragmentBase.OnFragmentInteractionListener{
 
     private TabLayout mainTabs;
 
@@ -37,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements TodayServicesFrag
         mainTabs.addTab(mainTabs.newTab().setText("FILTRAR"));
 
         mainTabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+        mainTabs.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.main_pager);
         final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(),mainTabs.getTabCount(), getApplicationContext());
