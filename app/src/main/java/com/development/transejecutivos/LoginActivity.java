@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,6 +27,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.development.transejecutivos.adapters.JsonKeys;
 import com.development.transejecutivos.api_config.ApiConstants;
+import com.development.transejecutivos.misc.UserSessionManager;
 import com.development.transejecutivos.models.User;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,7 +38,6 @@ import java.util.Map;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends ActivityBase implements LoaderCallbacks<Cursor> {
-
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -57,6 +56,8 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        session = new UserSessionManager(getApplicationContext());
 
         loginLayout = findViewById(R.id.login_layout);
         inputLayoutUsername  = (TextInputLayout) findViewById(R.id.txt_input_layout_username);
@@ -256,19 +257,29 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
                 JSONObject resObj = new JSONObject(response);
                 Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
                 if (!error) {
-                    User user = new User(resObj.getString(JsonKeys.USER_ID),
-                                        resObj.getString(JsonKeys.USER_USERNAME),
-                                        resObj.getString(JsonKeys.USER_NAME),
-                                        resObj.getString(JsonKeys.USER_LASTNAME),
-                                        resObj.getString(JsonKeys.USER_EMAIL),
-                                        resObj.getString(JsonKeys.USER_ROLE),
-                                        resObj.getString(JsonKeys.USER_COMPANY),
-                                        resObj.getString(JsonKeys.USER_APIKEY),
-                                        resObj.getString(JsonKeys.USER_CODE));
+                    User user = new User();
+                    int idUser = (int) resObj.get(JsonKeys.USER_ID);
+                    user.setIdUser(idUser);
+                    user.setUsername(resObj.getString(JsonKeys.USER_USERNAME));
+                    user.setName(resObj.getString(JsonKeys.USER_NAME));
+                    user.setLastName(resObj.getString(JsonKeys.USER_LASTNAME));
+                    user.setEmail(resObj.getString(JsonKeys.USER_EMAIL));
+                    user.setRole(resObj.getString(JsonKeys.USER_ROLE));
+                    user.setCompany(resObj.getString(JsonKeys.USER_COMPANY));
+                    user.setApikey(resObj.getString(JsonKeys.USER_APIKEY));
+                    user.setCode(resObj.getString(JsonKeys.USER_CODE));
 
-                    Intent action = new Intent(getApplicationContext(), MainActivity.class);
-                    action.putExtra("user", user);
-                    startActivity(action);
+                    session.createUserLoginSession(user);
+
+                    // Starting MainActivity
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                    // Add new Flag to start new Activity
+                    i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+
+                    finish();
                 }
                 else {
                     setErrorSnackBar(loginLayout, getResources().getString(R.string.error_invalid_login));

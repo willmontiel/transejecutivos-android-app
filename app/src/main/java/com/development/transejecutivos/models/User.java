@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by william.montiel on 25/09/2015.
  */
 public class User implements Serializable {
-    String idUser;
+    int idUser;
     String username;
     String name;
     String lastName;
@@ -16,31 +16,43 @@ public class User implements Serializable {
     String apikey;
     String code;
 
-    /**
-     * Create an user object
-     * @param idUser
-     * @param username
-     * @param name
-     * @param lastName
-     * @param email
-     * @param role
-     * @param company
-     * @param apikey
-     * @param code
-     */
-    public User(String idUser, String username, String name, String lastName, String email, String role, String company, String apikey, String code) {
+    public void setIdUser(int idUser) {
         this.idUser = idUser;
+    }
+
+    public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setRole(String role) {
         this.role = role;
+    }
+
+    public void setCompany(String company) {
         this.company = company;
-        this.apikey = apikey;
+    }
+
+    public void setCode(String code) {
         this.code = code;
     }
 
-    public String getIdUser() {
+    public void setApikey(String apikey) {
+        this.apikey = apikey;
+    }
+
+    public int getIdUser() {
         return idUser;
     }
 
