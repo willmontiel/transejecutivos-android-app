@@ -37,7 +37,7 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
         mainTabs.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.main_pager);
-        final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(),mainTabs.getTabCount(), getApplicationContext());
+        final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(),mainTabs.getTabCount(), getApplicationContext(), user);
 
         viewPager.setAdapter(adapter);
 

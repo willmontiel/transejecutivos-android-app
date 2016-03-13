@@ -11,14 +11,17 @@ import android.widget.CalendarView;
 import android.widget.DatePicker;
 import com.development.transejecutivos.R;
 import com.development.transejecutivos.adapters.ServiceAdapter;
+import com.development.transejecutivos.models.User;
 
 public class FilterServicesFragment extends FragmentBase {
+
     public FilterServicesFragment() {
         // Required empty public constructor
     }
 
-    public static FilterServicesFragment newInstance() {
+    public static FilterServicesFragment newInstance(User user) {
         FilterServicesFragment fragment = new FilterServicesFragment();
+        fragment.setUser(user);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -28,7 +31,7 @@ public class FilterServicesFragment extends FragmentBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_filter_services, container, false);
+        view = inflater.inflate(R.layout.fragment_filter_services, container, false);
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.filter_services_recycler_view);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -37,17 +40,18 @@ public class FilterServicesFragment extends FragmentBase {
         adapter = new ServiceAdapter(getActivity());
         recycler.setAdapter(adapter);
 
-        initDatePicker(view);
+        initDatePicker();
 
         return view;
     }
 
-    public void initDatePicker(View view) {
+    public void initDatePicker() {
         DatePicker datePicker = (DatePicker) view.findViewById(R.id.datePicker);
         datePicker.getCalendarView().setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                setupServicesList(dayOfMonth, month, year);
+                String date = String.format("%02d", (month+1)) + "/" + dayOfMonth + "/" + year;
+                setupServicesList(date);
             }
         });
     }

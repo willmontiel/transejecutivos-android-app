@@ -15,8 +15,12 @@ import com.development.transejecutivos.adapters.ServiceAdapter;
 import com.development.transejecutivos.models.Driver;
 import com.development.transejecutivos.models.Passenger;
 import com.development.transejecutivos.models.Service;
+import com.development.transejecutivos.models.User;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class FutureServicesFragment extends FragmentBase {
 
@@ -24,8 +28,9 @@ public class FutureServicesFragment extends FragmentBase {
         // Required empty public constructor
     }
 
-    public static FutureServicesFragment newInstance() {
+    public static FutureServicesFragment newInstance(User user) {
         FutureServicesFragment fragment = new FutureServicesFragment();
+        fragment.setUser(user);
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -42,7 +47,15 @@ public class FutureServicesFragment extends FragmentBase {
         adapter = new ServiceAdapter(getActivity());
         recycler.setAdapter(adapter);
 
-        setupServicesList(1,2 ,3);
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+
+        c.add(Calendar.DAY_OF_YEAR, 1);
+        Date tomorrow = c.getTime();
+
+        String t = df.format(tomorrow);
+
+        setupServicesList(t);
 
         return view;
     }
