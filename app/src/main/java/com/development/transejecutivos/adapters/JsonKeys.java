@@ -48,13 +48,13 @@ public class JsonKeys {
     /**
      * Passenger Json Keys
      */
-    public static final String PASSENGER_ID = "passenger_id";
+    public static final String PASSENGER_ID = "admin_id";
     public static final String PASSENGER_CODE = "passenger_code";
-    public static final String PASSENGER_NAME = "passenger_name";
-    public static final String PASSENGER_LASTNAME = "passenger_lastname";
+    public static final String PASSENGER_NAME = "admin_name";
+    public static final String PASSENGER_LASTNAME = "admin_lastname";
     public static final String PASSENGER_COMPANY = "passenger_company";
-    public static final String PASSENGER_PHONE = "passenger_phone1";
-    public static final String PASSENGER_EMAIL = "passenger_email";
+    public static final String PASSENGER_PHONE = "admin_phone1";
+    public static final String PASSENGER_EMAIL = "admin_email";
     public static final String PASSENGER_ADDRESS = "passenger_address";
     public static final String PASSENGER_CITY = "passenger_city";
 

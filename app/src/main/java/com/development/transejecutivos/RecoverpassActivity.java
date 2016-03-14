@@ -141,7 +141,6 @@ public class RecoverpassActivity extends ActivityBase {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(i);
 

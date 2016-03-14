@@ -69,7 +69,6 @@
                 android:id="@+id/img_view_driver_photo"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:src="@drawable/driver"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
@@ -86,12 +85,17 @@
             android:layout_gravity="bottom"
             android:visibility="gone"
             android:padding="8dp">
+                <TextView
+                    android:id="@+id/txtview_enddate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true" />
 
                 <TextView
                     android:id="@+id/txtview_paxcant"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true" />
+                    android:layout_below="@+id/txtview_enddate"
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/txtview_passgname"
@@ -111,21 +115,34 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
+            <!--
                 <TextView
                     android:id="@+id/txtview_passglocation"
                     android:layout_below="@+id/txtview_passgemail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
-
+            -->
                 <TextView
                     android:id="@+id/txtview_company"
-                    android:layout_below="@+id/txtview_passglocation"
+                    android:layout_below="@+id/txtview_passgemail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txtview_represent"
+                    android:layout_below="@+id/txtview_company"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txtview_obs"
+                    android:layout_below="@+id/txtview_represent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/txtview_fly"
-                    android:layout_below="@+id/txtview_company"
+                    android:layout_below="@+id/txtview_obs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
         </RelativeLayout>

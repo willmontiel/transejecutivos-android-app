@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
@@ -73,13 +74,18 @@ public class FragmentBase extends Fragment {
                 }) {
 
             @Override
-            protected Map<String,String> getParams(){
+            public Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("Content-Type", "application/x-www-form-urlencoded");
-                params.put("Authorization", user.getApikey());
                 params.put(JsonKeys.DATE, date);
-
                 return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                headers.put("Authorization", user.getApikey());
+                return headers;
             }
         };
 
