@@ -10,9 +10,6 @@ import com.development.transejecutivos.R;
 import com.development.transejecutivos.adapters.ServiceAdapter;
 import com.development.transejecutivos.models.User;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 public class ServicesFragment extends FragmentBase {
     public ServicesFragment() {
 

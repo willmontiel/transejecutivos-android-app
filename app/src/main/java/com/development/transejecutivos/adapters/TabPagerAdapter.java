@@ -1,9 +1,9 @@
 package com.development.transejecutivos.adapters;
 
+import android.app.FragmentManager;
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.app.Fragment;
+import android.support.v13.app.FragmentPagerAdapter;
 import com.development.transejecutivos.fragments.FilterServicesFragment;
 import com.development.transejecutivos.fragments.ServicesFragment;
 import com.development.transejecutivos.models.User;

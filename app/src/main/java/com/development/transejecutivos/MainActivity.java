@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.development.transejecutivos.adapters.TabPagerAdapter;
 import com.development.transejecutivos.fragments.FragmentBase;
 
@@ -23,7 +24,11 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Log.d("APIKEY", "LALA");
+
         validateSession();
+
+        Log.d("APIKEY", user.getApikey());
 
         mainTabs = (TabLayout) findViewById(R.id.main_tabs);
 
@@ -34,7 +39,7 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
         mainTabs.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.main_pager);
-        final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(),mainTabs.getTabCount(), getApplicationContext(), user);
+        final PagerAdapter adapter = new TabPagerAdapter(getFragmentManager(),mainTabs.getTabCount(), getApplicationContext(), user);
 
         viewPager.setAdapter(adapter);
 
