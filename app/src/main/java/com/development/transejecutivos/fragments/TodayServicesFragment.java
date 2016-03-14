@@ -31,7 +31,7 @@ public class TodayServicesFragment extends FragmentBase {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_today_services, container, false);
+        view = inflater.inflate(R.layout.fragment_today_services, container, false);
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.today_services_recycler_view);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());

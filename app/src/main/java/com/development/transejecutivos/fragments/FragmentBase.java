@@ -19,14 +19,17 @@ import com.development.transejecutivos.R;
 import com.development.transejecutivos.adapters.JsonKeys;
 import com.development.transejecutivos.adapters.ServiceAdapter;
 import com.development.transejecutivos.api_config.ApiConstants;
+import com.development.transejecutivos.deserializers.ServiceDeserializer;
 import com.development.transejecutivos.models.Driver;
 import com.development.transejecutivos.models.Passenger;
 import com.development.transejecutivos.models.Service;
 import com.development.transejecutivos.models.User;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -84,28 +87,23 @@ public class FragmentBase extends Fragment {
     }
 
     public void processData(String response) {
-        ArrayList<Service> services = new ArrayList<>();
-        ArrayList<Passenger> passengers = new ArrayList<>();
-        ArrayList<Driver> drivers = new ArrayList<>();
-
         try {
             JSONObject resObj = new JSONObject(response);
             Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
             if (!error) {
-                for (int i = 0; i < 20; i++) {
-                    Service service =  new Service(i, "ref" + i, "date" + i, "sdate" + i, "edate" + i, "fly" + i, "aeroline" + i, "company" + i, "ptype" + i, "pxcant" + i, "represent" + i, "source" + i, "destiny" + i, "obs" + i);
-                    Passenger passenger = new Passenger(i, "code" + i, "Name" + i, "lastName" + i, "company" + i, "phone" + i, "email" + i, "address" + i, "city" + i);
-                    Driver driver = new Driver(i, "code" + i, "name" + i, "lastName" + i, "phone" + i, "address" + i, "city" + i, "email" + i, "carType" + i, "carBrand" + i, "carModel" + i, "carColor" + i, "placa" + i, "status" + i);
-
-                    passengers.add(passenger);
-                    services.add(service);
-                    drivers.add(driver);
+                JSONArray servicesData = resObj.getJSONArray(JsonKeys.SERVICES);;
+                if (servicesData.length() <= 0) {
+                    setErrorSnackBar(getResources().getString(R.string.no_services));
                 }
+                else {
+                    ServiceDeserializer serviceDeserializer = new ServiceDeserializer(servicesData);
+                    serviceDeserializer.deserialize();
 
-                adapter.addAll(services, passengers, drivers);
+                    adapter.addAll(serviceDeserializer.getServices(), serviceDeserializer.getPassengers(), serviceDeserializer.getDrivers());
+                }
             }
             else {
-                setErrorSnackBar(getResources().getString(R.string.error_invalid_login));
+                setErrorSnackBar(getResources().getString(R.string.error_general));
             }
         }
         catch (JSONException ex) {
