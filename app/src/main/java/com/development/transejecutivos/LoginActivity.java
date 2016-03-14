@@ -45,6 +45,7 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
     // UI references.
     private EditText mUsernameView;
     private EditText mPasswordView;
+    private TextView recoverPass;
     private TextInputLayout inputLayoutUsername;
     private TextInputLayout inputLayoutPassword;
     private View mProgressView;
@@ -66,6 +67,8 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
         mUsernameView = (EditText) findViewById(R.id.username);
         mPasswordView = (EditText) findViewById(R.id.password);
 
+        recoverPass = (TextView) findViewById(R.id.txt_recoverpass);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -82,6 +85,16 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
             @Override
             public void onClick(View view) {
                 attemptLogin();
+            }
+        });
+
+        recoverPass.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Starting RecoverpassActivity
+                Intent i = new Intent(getApplicationContext(), RecoverpassActivity.class);
+                startActivity(i);
+                finish();
             }
         });
 

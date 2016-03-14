@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:elevation="10dp"
-                android:text="@string/prompt_login_button"
+                android:text="@string/prompt_recoverpass_button"
                 android:background="@color/colorPrimary"
                 android:textColor="@color/colorPrimaryTextLight" />
         </LinearLayout>
