@@ -69,10 +69,12 @@
                 android:id="@+id/img_view_driver_photo"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginRight="8dp" />
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="0dp"
+                android:paddingBottom="0dp"
+                android:layout_alignParentBottom="true" />
 
         </RelativeLayout>
 

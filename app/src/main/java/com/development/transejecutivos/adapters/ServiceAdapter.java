@@ -216,6 +216,14 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
                     collapse(itemView, relativelayout_driver_details);
                 }
             });
+
+            relativeloDetails.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    collapse(itemView, relativeloDetails);
+                }
+            });
+
         }
 
         /**
@@ -287,9 +295,6 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             String durl = ApiConstants.URL_DRIVER_PHOTO + "cara" + code + ".jpg&ancho=100";
             String curl = ApiConstants.URL_CAR_PHOTO + "carro" + code + ".jpg&ancho=100";
 
-            Log.d("DURL: ", durl);
-            Log.d("CURL: ", curl);
-
             RequestQueue requestQueue = Volley.newRequestQueue(context);
 
             ImageRequest drequest = new ImageRequest(durl,
@@ -329,10 +334,9 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
             ValueAnimator valueAnimator;
 
-
             if (!mIsDetailsViewExpanded) {
                 mIsDetailsViewExpanded = true;
-                valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.3));
+                //valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.3));
 
                 relativeloDetails.setVisibility(View.GONE);
                 relativelayout_driver_details.setVisibility(View.GONE);
@@ -340,12 +344,20 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
                 layout.setVisibility(View.VISIBLE);
                 expander.setVisibility(View.GONE);
                 contracter.setVisibility(View.VISIBLE);
+
+                int heigth = layout.getLayoutParams().height;
+
+                valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + heigth);
             }
             else  {
                 mIsDetailsViewExpanded = false;
-                valueAnimator = ValueAnimator.ofInt(mOriginalHeight + (int) (mOriginalHeight * 1.3), mOriginalHeight);
+
+                int heigth = layout.getHeight();
+
+                valueAnimator = ValueAnimator.ofInt(mOriginalHeight + heigth, mOriginalHeight);
 
                 relativeloDetails.setVisibility(View.GONE);
+
                 relativelayout_driver_details.setVisibility(View.GONE);
 
                 layout.setVisibility(View.GONE);
@@ -353,6 +365,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
                 contracter.setVisibility(View.GONE);
             }
 
+            /**
             valueAnimator.setDuration(300);
             valueAnimator.setInterpolator(new LinearInterpolator());
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
@@ -365,6 +378,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             });
 
             valueAnimator.start();
+             **/
         }
     }
 }

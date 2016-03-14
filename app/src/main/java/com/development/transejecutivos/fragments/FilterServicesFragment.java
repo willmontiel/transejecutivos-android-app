@@ -47,10 +47,11 @@ public class FilterServicesFragment extends FragmentBase {
 
     public void initDatePicker() {
         DatePicker datePicker = (DatePicker) view.findViewById(R.id.datePicker);
-        datePicker.getCalendarView().setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+        datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                String date = String.format("%02d", (month+1)) + "/" + dayOfMonth + "/" + year;
+            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                String date = String.format("%02d", (monthOfYear+1)) + "/" + dayOfMonth + "/" + year;
                 setupServicesList(date);
             }
         });

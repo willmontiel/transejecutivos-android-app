@@ -5,12 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
-
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
@@ -21,17 +18,10 @@ import com.development.transejecutivos.adapters.JsonKeys;
 import com.development.transejecutivos.adapters.ServiceAdapter;
 import com.development.transejecutivos.api_config.ApiConstants;
 import com.development.transejecutivos.deserializers.ServiceDeserializer;
-import com.development.transejecutivos.models.Driver;
-import com.development.transejecutivos.models.Passenger;
-import com.development.transejecutivos.models.Service;
 import com.development.transejecutivos.models.User;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
