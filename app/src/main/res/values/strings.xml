@@ -4,7 +4,7 @@
     <!-- Strings related to login -->
     <string name="title_activity_login">Iniciar Sesión</string>
     <string name="loginImage">Transportes Ejecutivos</string>
-    <string name="prompt_username">Usuario</string>
+    <string name="prompt_username">Nombre de usuario</string>
     <string name="prompt_password">Contraseña</string>
     <string name="prompt_login_button">Iniciar Sesión</string>
     <string name="prompt_login_button_short">Iniciar Sesión</string>
@@ -32,4 +32,6 @@
 
     <!-- Recover Password-->
     <string name="prompt_recoverpass_button">Recuperar Contraseña</string>
+    <string name="recoverpass_success">Se ha enviado mail a tu correo eléctronico con instrucciones para recuperar tu contraseña</string>
+    <string name="recoverpass_failured">No hay un usuario registrado con el nombre de usuario digitado</string>
 </resources>

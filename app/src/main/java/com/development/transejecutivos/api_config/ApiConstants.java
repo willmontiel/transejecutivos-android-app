@@ -8,7 +8,9 @@ public class ApiConstants {
     public static final String API_VERSION = "v1";
     public static final String LOGIN = "login";
     public static final String SERVICES = "service";
+    public static final String RECOVERPASS = "recoverpassword";
 
     public static final String URL_LOGIN = URL_BASE + "/" + API_VERSION + "/" + LOGIN;
     public static final String URL_SERVICES = URL_BASE + "/" + API_VERSION + "/" + SERVICES;
+    public static final String URL_RECOVER_PASSWORD = URL_BASE + "/" + API_VERSION + "/" + RECOVERPASS;
 }

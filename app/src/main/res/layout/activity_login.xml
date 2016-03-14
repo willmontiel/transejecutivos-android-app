@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="vertical"
     android:id="@+id/login_layout"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -19,7 +19,6 @@
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
         android:layout_gravity="center"
-        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -28,16 +27,17 @@
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_gravity="center">
 
         <LinearLayout
             android:id="@+id/username_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_marginTop="40dp"
                 android:layout_width="180dp"
                 android:layout_height="124dp"
                 android:contentDescription="@string/loginImage"
@@ -102,7 +102,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="¿Has olvidado la contraseña?"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textSize="12sp"/>
 
         </LinearLayout>
     </ScrollView>
