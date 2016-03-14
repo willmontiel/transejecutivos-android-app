@@ -1,10 +1,15 @@
 package com.development.transejecutivos.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -32,6 +37,8 @@ public class FragmentBase extends Fragment {
     private OnFragmentInteractionListener mListener;
     ServiceAdapter adapter;
     View view;
+    View progressBar;
+    View layout;
     User user;
 
     public void setUser(User user) {
@@ -44,12 +51,14 @@ public class FragmentBase extends Fragment {
 
     }
 
-    public void setupServicesList(final String date) {
+
+    public void setupServiceList(final String date) {
+        showProgress(true, layout, progressBar);
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
-                ApiConstants.URL_SERVICES,
+                ApiConstants.URL_SERVICE,
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -60,6 +69,7 @@ public class FragmentBase extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         setErrorSnackBar(getResources().getString(R.string.error_general));
+                        showProgress(false, layout, progressBar);
                     }
                 }) {
 
@@ -82,7 +92,47 @@ public class FragmentBase extends Fragment {
         requestQueue.add(stringRequest);
     }
 
+    public void setupServicesList() {
+        showProgress(true, layout, progressBar);
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
+                ApiConstants.URL_SERVICES,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        processData(response);
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        setErrorSnackBar(getResources().getString(R.string.error_general));
+                        showProgress(false, layout, progressBar);
+                    }
+                }) {
+
+            @Override
+            public Map<String, String> getParams() {
+                Map<String,String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                headers.put("Authorization", user.getApikey());
+                return headers;
+            }
+        };
+
+        requestQueue.add(stringRequest);
+    }
+
     public void processData(String response) {
+        showProgress(false, layout, progressBar);
         try {
             JSONObject resObj = new JSONObject(response);
             Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
@@ -117,6 +167,42 @@ public class FragmentBase extends Fragment {
         snackBarView.setBackgroundColor(getResources().getColor(R.color.colorError));
         TextView txtv = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
         txtv.setGravity(Gravity.CENTER);
+    }
+
+    /**
+     * Shows the progress UI and hides the login form.
+     */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
+    public void showProgress(final boolean show, final View formView, final View progressView) {
+        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+        // for very easy animations. If available, use these APIs to fade-in
+        // the progress spinner.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+
+            formView.setVisibility(show ? View.GONE : View.VISIBLE);
+            formView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    formView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
+
+            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            progressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
+        } else {
+            // The ViewPropertyAnimator APIs are not available, so simply show
+            // and hide the relevant UI components.
+            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            formView.setVisibility(show ? View.GONE : View.VISIBLE);
+        }
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.development.transejecutivos.fragments;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +13,13 @@ import com.development.transejecutivos.models.User;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class TodayServicesFragment extends FragmentBase {
-    public TodayServicesFragment() {
+public class ServicesFragment extends FragmentBase {
+    public ServicesFragment() {
 
     }
 
-    public static TodayServicesFragment newInstance(User user) {
-        TodayServicesFragment fragment = new TodayServicesFragment();
+    public static ServicesFragment newInstance(User user) {
+        ServicesFragment fragment = new ServicesFragment();
         fragment.setUser(user);
         Bundle args = new Bundle();
         fragment.setArguments(args);
@@ -31,8 +30,11 @@ public class TodayServicesFragment extends FragmentBase {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_today_services, container, false);
-        RecyclerView recycler = (RecyclerView) view.findViewById(R.id.today_services_recycler_view);
+        view = inflater.inflate(R.layout.fragment_services, container, false);
+        RecyclerView recycler = (RecyclerView) view.findViewById(R.id.services_recycler_view);
+        layout =  view.findViewById(R.id.services_recycler_view);
+
+        progressBar = view.findViewById(R.id.service_progress);
 
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -40,11 +42,7 @@ public class TodayServicesFragment extends FragmentBase {
         adapter = new ServiceAdapter(getActivity());
         recycler.setAdapter(adapter);
 
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-        String today = df.format(c.getTime());
-
-        setupServicesList(today);
+        setupServicesList();
 
         return view;
     }

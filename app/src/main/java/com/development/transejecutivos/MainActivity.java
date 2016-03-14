@@ -25,12 +25,9 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
 
         validateSession();
 
-        Log.d("APIKEY: ", user.getApikey());
-
         mainTabs = (TabLayout) findViewById(R.id.main_tabs);
 
-        mainTabs.addTab(mainTabs.newTab().setText("HOY"));
-        mainTabs.addTab(mainTabs.newTab().setText("MAÑANA"));
+        mainTabs.addTab(mainTabs.newTab().setText("PRÓXIMOS SERVICIOS"));
         mainTabs.addTab(mainTabs.newTab().setText("FILTRAR"));
 
         mainTabs.setTabMode(TabLayout.MODE_SCROLLABLE);

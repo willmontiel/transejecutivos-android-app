@@ -34,6 +34,10 @@ public class FilterServicesFragment extends FragmentBase {
         view = inflater.inflate(R.layout.fragment_filter_services, container, false);
         RecyclerView recycler = (RecyclerView) view.findViewById(R.id.filter_services_recycler_view);
 
+        layout = view.findViewById(R.id.filter_services_container);
+
+        progressBar = view.findViewById(R.id.filter_service_progress);
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler.setLayoutManager(layoutManager);
@@ -52,7 +56,7 @@ public class FilterServicesFragment extends FragmentBase {
             @Override
             public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                 String date = String.format("%02d", (monthOfYear+1)) + "/" + dayOfMonth + "/" + year;
-                setupServicesList(date);
+                setupServiceList(date);
             }
         });
     }
