@@ -3,6 +3,7 @@ package com.development.transejecutivos;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -36,8 +37,11 @@ public class ActivityBase extends AppCompatActivity {
     public void validateSession() {
         session = new UserSessionManager(getApplicationContext());
 
-        if(session.checkLogin())
+        if(session.checkLogin()) {
+            Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(i);
             finish();
+        }
 
         user = session.getUserDetails();
     }

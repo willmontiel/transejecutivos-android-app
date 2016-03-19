@@ -8,7 +8,8 @@ public class Driver {
     String code;
     String name;
     String lastName;
-    String phone;
+    String phone1;
+    String phone2;
     String address;
     String city;
     String email;
@@ -20,12 +21,13 @@ public class Driver {
     String status;
 
     /**
-     * Creata a driver object
+     *
      * @param idDriver
      * @param code
      * @param name
      * @param lastName
-     * @param phone
+     * @param phone1
+     * @param phone2
      * @param address
      * @param city
      * @param email
@@ -36,12 +38,13 @@ public class Driver {
      * @param carriagePlate
      * @param status
      */
-    public Driver(int idDriver, String code, String name, String lastName, String phone, String address, String city, String email, String carType, String carBrand, String carModel, String carColor, String carriagePlate, String status) {
+    public Driver(int idDriver, String code, String name, String lastName, String phone1, String phone2, String address, String city, String email, String carType, String carBrand, String carModel, String carColor, String carriagePlate, String status) {
         this.idDriver = idDriver;
         this.code = code;
         this.name = name;
         this.lastName = lastName;
-        this.phone = phone;
+        this.phone1 = phone1;
+        this.phone2 = phone2;
         this.address = address;
         this.city = city;
         this.email = email;
@@ -69,8 +72,12 @@ public class Driver {
         return this.lastName;
     }
 
-    public String getPhone() {
-        return this.phone;
+    public String getPhone1() {
+        return this.phone1;
+    }
+
+    public String getPhone2() {
+        return this.phone2;
     }
 
     public String getAddress() {

@@ -24,11 +24,7 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Log.d("APIKEY", "LALA");
-
         validateSession();
-
-        Log.d("APIKEY", user.getApikey());
 
         mainTabs = (TabLayout) findViewById(R.id.main_tabs);
 

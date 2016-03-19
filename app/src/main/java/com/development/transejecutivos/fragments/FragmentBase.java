@@ -155,7 +155,7 @@ public class FragmentBase extends Fragment {
                     ServiceDeserializer serviceDeserializer = new ServiceDeserializer(servicesData);
                     serviceDeserializer.deserialize();
 
-                    adapter.addAll(serviceDeserializer.getServices(), serviceDeserializer.getPassengers(), serviceDeserializer.getDrivers());
+                    adapter.addAll(serviceDeserializer.getServices(), serviceDeserializer.getDrivers());
                 }
             }
             else {

@@ -8,46 +8,40 @@ public class Service {
     String reference;
     String createDate;
     String startDate;
-    String endDate;
     String fly;
     String aeroline;
     String company;
-    String passengerType;
     String paxCant;
-    String represent;
+    String pax;
     String source;
     String destiny;
     String observations;
 
     /**
-     * Create a service object
+     *
      * @param idService
      * @param reference
      * @param createDate
      * @param startDate
-     * @param endDate
      * @param fly
      * @param aeroline
      * @param company
-     * @param passengerType
      * @param paxCant
-     * @param represent
+     * @param pax
      * @param source
      * @param destiny
      * @param observations
      */
-    public Service(int idService, String reference, String createDate, String startDate, String endDate, String fly, String aeroline, String company, String passengerType, String paxCant, String represent, String source, String destiny, String observations) {
+    public Service(int idService, String reference, String createDate, String startDate, String fly, String aeroline, String company, String paxCant, String pax, String source, String destiny, String observations) {
         this.idService = idService;
         this.reference = reference;
         this.createDate = createDate;
         this.startDate = startDate;
-        this.endDate = endDate;
         this.fly = fly;
         this.aeroline = aeroline;
         this.company = company;
-        this.passengerType = passengerType;
         this.paxCant = paxCant;
-        this.represent = represent;
+        this.pax = pax;
         this.source = source;
         this.destiny = destiny;
         this.observations = observations;
@@ -69,10 +63,6 @@ public class Service {
         return this.startDate;
     }
 
-    public String getEndDate() {
-        return this.endDate;
-    }
-
     public String getFly() {
         return this.fly;
     }
@@ -85,16 +75,12 @@ public class Service {
         return this.company;
     }
 
-    public String getPassengerType() {
-        return this.passengerType;
-    }
-
     public String getPaxCant() {
         return this.paxCant;
     }
 
-    public String getRepresent() {
-        return this.represent;
+    public String getPax() {
+        return this.pax;
     }
 
     public String getSource() {

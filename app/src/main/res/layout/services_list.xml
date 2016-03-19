@@ -21,34 +21,28 @@
             android:layout_margin="6dp">
 
             <TextView
-                android:id="@+id/txtview_destiny"
+                android:id="@+id/txtview_source"
                 android:textColor="@color/colorPrimaryText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/txtview_source"
-                android:layout_below="@+id/txtview_destiny"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:id="@+id/txtview_datetime"
+                android:id="@+id/txtview_destiny"
                 android:layout_below="@+id/txtview_source"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/txtview_reference"
-                android:layout_below="@+id/txtview_datetime"
+                android:id="@+id/txtview_datetime"
+                android:layout_below="@+id/txtview_destiny"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <ImageView
                 android:id="@+id/imgview_expand_icon"
-                android:layout_below="@+id/txtview_reference"
+                android:layout_below="@+id/txtview_datetime"
                 android:src="@drawable/arrow_down"
                 android:visibility="visible"
                 android:layout_width="15dp"
@@ -57,7 +51,7 @@
 
             <ImageView
                 android:id="@+id/imgview_contract_icon"
-                android:layout_below="@+id/txtview_reference"
+                android:layout_below="@+id/txtview_datetime"
                 android:src="@drawable/arrow_up"
                 android:visibility="invisible"
                 android:layout_width="15dp"
@@ -87,57 +81,26 @@
             android:visibility="gone"
             android:padding="8dp">
                 <TextView
-                    android:id="@+id/txtview_enddate"
+                    android:id="@+id/txtview_reference"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true" />
 
                 <TextView
                     android:id="@+id/txtview_paxcant"
+                    android:layout_below="@+id/txtview_reference"
                     android:layout_width="wrap_content"
-                    android:layout_below="@+id/txtview_enddate"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/txtview_passgname"
+                    android:id="@+id/txtview_pax"
                     android:layout_below="@+id/txtview_paxcant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
-                    android:id="@+id/txtview_passgphone"
-                    android:layout_below="@+id/txtview_passgname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/txtview_passgemail"
-                    android:layout_below="@+id/txtview_passgphone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            <!--
-                <TextView
-                    android:id="@+id/txtview_passglocation"
-                    android:layout_below="@+id/txtview_passgemail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            -->
-                <TextView
-                    android:id="@+id/txtview_company"
-                    android:layout_below="@+id/txtview_passgemail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/txtview_represent"
-                    android:layout_below="@+id/txtview_company"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
                     android:id="@+id/txtview_obs"
-                    android:layout_below="@+id/txtview_represent"
+                    android:layout_below="@+id/txtview_pax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -177,14 +140,8 @@
                 android:layout_height="wrap_content"/>
 
             <TextView
-                android:id="@+id/txtview_driver_address"
-                android:layout_below="@+id/txtview_driver_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
                 android:id="@+id/txtview_car_type"
-                android:layout_below="@+id/txtview_driver_address"
+                android:layout_below="@+id/txtview_driver_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -197,12 +154,6 @@
             <TextView
                 android:id="@+id/txtview_carriage_plate"
                 android:layout_below="@+id/txtview_car_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:id="@+id/txtview_driver_code"
-                android:layout_below="@+id/txtview_carriage_plate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

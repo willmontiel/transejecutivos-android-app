@@ -34,4 +34,7 @@
     <string name="prompt_recoverpass_button">Recuperar Contraseña</string>
     <string name="recoverpass_success">Se ha enviado mail a tu correo eléctronico con instrucciones para recuperar tu contraseña</string>
     <string name="recoverpass_failured">No hay un usuario registrado con el nombre de usuario digitado</string>
+
+    <!-- Services List -->
+    <string name="url_fly">https://www.google.com.co/webhp?sourceid=chromeinstant&amp;ion=1&amp;espv=2&amp;ie=UTF-8#q=</string>
 </resources>

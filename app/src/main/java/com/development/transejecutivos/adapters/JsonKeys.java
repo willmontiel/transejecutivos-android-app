@@ -34,13 +34,11 @@ public class JsonKeys {
     public static final String SERVICE_REFERENCE = "ref";
     public static final String SERVICE_CREATE_DATE = "date";
     public static final String SERVICE_START_DATE = "start_date";
-    public static final String SERVICE_END_DATE = "end_date";
     public static final String SERVICE_FLY = "fly";
     public static final String SERVICE_AEROLINE = "aeroline";
     public static final String SERVICE_COMPANY = "company";
-    public static final String SERVICE_PASSG_TYPE = "passenger_type";
     public static final String SERVICE_PAX_CANT = "pax_cant";
-    public static final String SERVICE_REPRESENT = "represent";
+    public static final String SERVICE_PAX = "pax";
     public static final String SERVICE_SOURCE = "source";
     public static final String SERVICE_DESTINY = "destiny";
     public static final String SERVICE_OBSERVATIONS = "service_observations";
@@ -65,7 +63,8 @@ public class JsonKeys {
     public static final String DRIVER_CODE = "driver_code";
     public static final String DRIVER_NAME = "driver_name";
     public static final String DRIVER_LASTNAME = "driver_lastname";
-    public static final String DRIVER_PHONE = "driver_phone1";
+    public static final String DRIVER_PHONE1 = "driver_phone1";
+    public static final String DRIVER_PHONE2 = "driver_phone2";
     public static final String DRIVER_ADDRESS = "driver_address";
     public static final String DRIVER_CITY = "driver_city";
     public static final String DRIVER_EMAIL = "driver_email";
