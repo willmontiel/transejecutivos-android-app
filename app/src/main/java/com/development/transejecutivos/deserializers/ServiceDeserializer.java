@@ -40,8 +40,9 @@ public class ServiceDeserializer extends DeserializerValidator{
                     String source = validateString(JsonKeys.SERVICE_SOURCE, jsonObject);
                     String destiny = validateString(JsonKeys.SERVICE_DESTINY, jsonObject);
                     String observations = validateString(JsonKeys.SERVICE_OBSERVATIONS, jsonObject);
+                    String status = validateString(JsonKeys.SERVICE_STATUS, jsonObject);
 
-                    Service service = new Service(idService, reference, createDate, startDate, fly, aeroline, company, paxCant, pax, source, destiny, observations);
+                    Service service = new Service(idService, reference, createDate, startDate, fly, aeroline, company, paxCant, pax, source, destiny, observations, status);
 
                     int idDriver = validateInt(JsonKeys.DRIVER_ID, jsonObject);
                     String dcode = validateString(JsonKeys.DRIVER_CODE, jsonObject);

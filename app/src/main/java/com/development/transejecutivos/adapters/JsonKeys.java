@@ -45,6 +45,7 @@ public class JsonKeys {
     public static final String SERVICE_PAX = "pax";
     public static final String SERVICE_SOURCE = "source";
     public static final String SERVICE_DESTINY = "destiny";
+    public static final String SERVICE_STATUS = "service_status";
     public static final String SERVICE_OBSERVATIONS = "service_observations";
 
     /**

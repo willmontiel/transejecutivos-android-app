@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,6 +97,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         TextView txtview_pax;
         TextView txtview_fly;
         TextView txtview_obs;
+        TextView txtview_status;
+        TextView txtview_status_detail;
 
         ImageView img_view_driver_photo;
         ImageView imgview_car_photo;
@@ -137,6 +140,9 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtview_pax = (TextView) itemView.findViewById(R.id.txtview_pax);
             txtview_fly = (TextView) itemView.findViewById(R.id.txtview_fly);
             txtview_obs = (TextView) itemView.findViewById(R.id.txtview_obs);
+
+            txtview_status = (TextView) itemView.findViewById(R.id.txtview_status);
+            txtview_status_detail = (TextView) itemView.findViewById(R.id.txtview_status_detail);
 
             img_view_driver_photo = (ImageView) itemView.findViewById(R.id.img_view_driver_photo);
             imgview_car_photo = (ImageView) itemView.findViewById(R.id.imgview_car_photo);
@@ -223,6 +229,8 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtview_source_detail.setText("Origen: " + service.getSource());
             txtview_datetime_detail.setText("Fecha: " + service.getStartDate());
 
+            setServiceStatus(service.getStatus());
+
             if (!TextUtils.isEmpty(service.getPax())) {
                 txtview_pax.setText("Pasajeros: " + service.getPax());
             }
@@ -233,6 +241,25 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
 
             txtview_fly.setMovementMethod(LinkMovementMethod.getInstance());
             txtview_obs.setText("Observaciones: " + service.getObservations());
+        }
+
+        private void setServiceStatus(String status) {
+            int color = context.getResources().getColor(R.color.colorPrimaryText);
+
+            if (status.equals("orden")) {
+                color = context.getResources().getColor(R.color.colorPrimary);
+            }
+            else if (status.equals("cancelar")) {
+                color = context.getResources().getColor(R.color.colorError);
+            }
+            else if (status.equals("cotizacion")) {
+                color = context.getResources().getColor(R.color.colorPrimaryDark);
+            }
+
+            txtview_status.setText(status);
+            txtview_status.setTextColor(color);
+            txtview_status_detail.setText("Estado: " + status);
+            txtview_status_detail.setTextColor(color);
         }
 
         /**

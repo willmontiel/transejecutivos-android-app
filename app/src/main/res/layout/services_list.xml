@@ -40,9 +40,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+            <TextView
+                android:id="@+id/txtview_status"
+                android:layout_below="@+id/txtview_datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
             <ImageView
                 android:id="@+id/imgview_expand_icon"
-                android:layout_below="@+id/txtview_datetime"
+                android:layout_below="@+id/txtview_status"
                 android:src="@drawable/arrow_down"
                 android:visibility="visible"
                 android:layout_width="15dp"
@@ -51,7 +57,7 @@
 
             <ImageView
                 android:id="@+id/imgview_contract_icon"
-                android:layout_below="@+id/txtview_datetime"
+                android:layout_below="@+id/txtview_status"
                 android:src="@drawable/arrow_up"
                 android:visibility="invisible"
                 android:layout_width="15dp"
@@ -87,8 +93,14 @@
                     android:layout_alignParentTop="true" />
 
                 <TextView
-                    android:id="@+id/txtview_source_detail"
+                    android:id="@+id/txtview_status_detail"
                     android:layout_below="@+id/txtview_reference"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txtview_source_detail"
+                    android:layout_below="@+id/txtview_status_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

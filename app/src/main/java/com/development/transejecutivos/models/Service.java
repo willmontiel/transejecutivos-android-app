@@ -16,6 +16,7 @@ public class Service {
     String source;
     String destiny;
     String observations;
+    String status;
 
     /**
      *
@@ -31,8 +32,9 @@ public class Service {
      * @param source
      * @param destiny
      * @param observations
+     * @param status
      */
-    public Service(int idService, String reference, String createDate, String startDate, String fly, String aeroline, String company, String paxCant, String pax, String source, String destiny, String observations) {
+    public Service(int idService, String reference, String createDate, String startDate, String fly, String aeroline, String company, String paxCant, String pax, String source, String destiny, String observations, String status) {
         this.idService = idService;
         this.reference = reference;
         this.createDate = createDate;
@@ -45,6 +47,7 @@ public class Service {
         this.source = source;
         this.destiny = destiny;
         this.observations = observations;
+        this.status = status;
     }
 
     public int getIdService() {
@@ -93,5 +96,9 @@ public class Service {
 
     public String getObservations() {
         return this.observations;
+    }
+
+    public String getStatus() {
+        return this.status;
     }
 }
