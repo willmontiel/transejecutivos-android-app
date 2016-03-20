@@ -58,4 +58,7 @@
     <string name="error_empty_email1">No has enviado tu correo eléctronico</string>
     <string name="error_empty_phone1">No has enviado tu número de télefono</string>
     <string name="error_invalid_email">El correo eléctronico enviado es inválido</string>
+    <string name="error_invalid_profile_update">Ha ocurrido un error, por favor intenta más tarde</string>
+    <string name="snackbar_action_back">Regresar</string>
+    <string name="profile_update_success">Se ha actualizado tu perfil exitosamente</string>
 </resources>

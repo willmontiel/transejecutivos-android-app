@@ -89,6 +89,9 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
         TextView txtview_source;
         TextView txtview_datetime;
         TextView txtview_reference;
+        TextView txtview_destiny_detail;
+        TextView txtview_source_detail;
+        TextView txtview_datetime_detail;
         TextView txtview_paxcant;
         TextView txtview_pax;
         TextView txtview_fly;
@@ -125,6 +128,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtview_source = (TextView) itemView.findViewById(R.id.txtview_source);
             txtview_datetime = (TextView) itemView.findViewById(R.id.txtview_datetime);
             txtview_reference = (TextView) itemView.findViewById(R.id.txtview_reference);
+
+            txtview_destiny_detail = (TextView) itemView.findViewById(R.id.txtview_destiny_detail);
+            txtview_source_detail = (TextView) itemView.findViewById(R.id.txtview_source_detail);
+            txtview_datetime_detail = (TextView) itemView.findViewById(R.id.txtview_datetime_detail);
+
             txtview_paxcant = (TextView) itemView.findViewById(R.id.txtview_paxcant);
             txtview_pax = (TextView) itemView.findViewById(R.id.txtview_pax);
             txtview_fly = (TextView) itemView.findViewById(R.id.txtview_fly);
@@ -209,7 +217,11 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceAdapter.ServiceH
             txtview_source.setText(service.getSource());
             txtview_datetime.setText(service.getStartDate());
             txtview_reference.setText("Referencia: " + service.getReference());
-            txtview_paxcant.setText(service.getPaxCant() + " Pasajeros");
+            txtview_paxcant.setText(service.getPaxCant() + " Pasajero(s)");
+
+            txtview_destiny_detail.setText("Destino: " + service.getDestiny());
+            txtview_source_detail.setText("Origen: " + service.getSource());
+            txtview_datetime_detail.setText("Fecha: " + service.getStartDate());
 
             if (!TextUtils.isEmpty(service.getPax())) {
                 txtview_pax.setText("Pasajeros: " + service.getPax());

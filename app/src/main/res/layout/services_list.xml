@@ -87,8 +87,26 @@
                     android:layout_alignParentTop="true" />
 
                 <TextView
-                    android:id="@+id/txtview_paxcant"
+                    android:id="@+id/txtview_source_detail"
                     android:layout_below="@+id/txtview_reference"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txtview_destiny_detail"
+                    android:layout_below="@+id/txtview_source_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txtview_datetime_detail"
+                    android:layout_below="@+id/txtview_destiny_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/txtview_paxcant"
+                    android:layout_below="@+id/txtview_datetime_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
