@@ -11,7 +11,10 @@ public class JsonKeys {
     public static final String USER_NAME = "name";
     public static final String USER_LASTNAME = "lastname";
     public static final String USER_USERNAME = "username";
-    public static final String USER_EMAIL = "mail1";
+    public static final String USER_EMAIL1 = "email1";
+    public static final String USER_EMAIL2 = "email2";
+    public static final String USER_PHONE1 = "phone1";
+    public static final String USER_PHONE2 = "phone2";
     public static final String USER_ROLE = "type";
     public static final String USER_COMPANY = "company";
     public static final String USER_APIKEY = "api_key";

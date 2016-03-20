@@ -10,7 +10,10 @@ public class User implements Serializable {
     String username;
     String name;
     String lastName;
-    String email;
+    String email1;
+    String email2;
+    String phone1;
+    String phone2;
     String role;
     String company;
     String apikey;
@@ -32,8 +35,20 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setEmail1(String email) {
+        this.email1 = email;
+    }
+
+    public void setEmail2(String email) {
+        this.email2 = email;
+    }
+
+    public void setPhone1(String phone) {
+        this.phone1 = phone;
+    }
+
+    public void setPhone2(String phone) {
+        this.phone2 = phone;
     }
 
     public void setRole(String role) {
@@ -68,8 +83,20 @@ public class User implements Serializable {
         return lastName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getEmail1() {
+        return email1;
+    }
+
+    public String getEmail2() {
+        return email2;
+    }
+
+    public String getPhone1() {
+        return phone1;
+    }
+
+    public String getPhone2() {
+        return phone2;
     }
 
     public String getRole() {

@@ -19,6 +19,7 @@
 
     <!-- Main Menu -->
     <string name="action_logout">Cerrar Sesión</string>
+    <string name="action_profile">Mi Perfil</string>
 
     <!-- Activity Main-->
     <string name="title_activity_main">TransEjecutivos</string>
@@ -37,4 +38,24 @@
 
     <!-- Services List -->
     <string name="url_fly">https://www.google.com.co/webhp?sourceid=chromeinstant&amp;ion=1&amp;espv=2&amp;ie=UTF-8#q=</string>
+    <string name="action_new_service">Nuevo Servicio</string>
+
+    <!-- Tabs -->
+    <string name="main_tab">Dashboard</string>
+    <string name="filter_tab">Buscar Servicio</string>
+
+    <!-- Profile Activity -->
+    <string name="title_activity_profile">Mi Perfil</string>
+    <string name="prompt_name">Nombre</string>
+    <string name="prompt_lastname">Apellido</string>
+    <string name="prompt_profile_button">Editar Perfil</string>
+    <string name="prompt_email1">Correo Eléctronico</string>
+    <string name="prompt_email2">Correo Eléctronico Alternativo</string>
+    <string name="prompt_phone1">Télefono</string>
+    <string name="prompt_phone2">Télefono Alternativo</string>
+    <string name="error_empty_name">No has enviado tu nombre</string>
+    <string name="error_empty_lastname">No has enviado tu apellido</string>
+    <string name="error_empty_email1">No has enviado tu correo eléctronico</string>
+    <string name="error_empty_phone1">No has enviado tu número de télefono</string>
+    <string name="error_invalid_email">El correo eléctronico enviado es inválido</string>
 </resources>

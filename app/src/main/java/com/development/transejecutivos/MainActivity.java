@@ -1,12 +1,12 @@
 package com.development.transejecutivos;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,8 +28,8 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
 
         mainTabs = (TabLayout) findViewById(R.id.main_tabs);
 
-        mainTabs.addTab(mainTabs.newTab().setText("PRÓXIMOS SERVICIOS"));
-        mainTabs.addTab(mainTabs.newTab().setText("FILTRAR"));
+        mainTabs.addTab(mainTabs.newTab().setText(getResources().getString(R.string.main_tab)));
+        mainTabs.addTab(mainTabs.newTab().setText(getResources().getString(R.string.filter_tab)));
 
         mainTabs.setTabMode(TabLayout.MODE_SCROLLABLE);
         mainTabs.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -79,6 +79,14 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             session.logoutUser();
+            return true;
+        }
+        else if (id == R.id.action_profile) {
+            Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(i);
+            return true;
+        }
+        else if (id == R.id.action_new_service) {
             return true;
         }
 

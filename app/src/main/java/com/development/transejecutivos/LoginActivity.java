@@ -228,7 +228,10 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
                     user.setUsername(resObj.getString(JsonKeys.USER_USERNAME));
                     user.setName(resObj.getString(JsonKeys.USER_NAME));
                     user.setLastName(resObj.getString(JsonKeys.USER_LASTNAME));
-                    user.setEmail(resObj.getString(JsonKeys.USER_EMAIL));
+                    user.setEmail1(resObj.getString(JsonKeys.USER_EMAIL1));
+                    user.setEmail2(resObj.getString(JsonKeys.USER_EMAIL2));
+                    user.setPhone1(resObj.getString(JsonKeys.USER_PHONE1));
+                    user.setPhone2(resObj.getString(JsonKeys.USER_PHONE2));
                     user.setRole(resObj.getString(JsonKeys.USER_ROLE));
                     user.setCompany(resObj.getString(JsonKeys.USER_COMPANY));
                     user.setApikey(resObj.getString(JsonKeys.USER_APIKEY));

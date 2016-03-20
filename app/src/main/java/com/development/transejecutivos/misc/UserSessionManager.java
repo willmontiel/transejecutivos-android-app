@@ -48,7 +48,10 @@ public class UserSessionManager {
         editor.putString(JsonKeys.USER_NAME, user.getName());
         editor.putString(JsonKeys.USER_LASTNAME, user.getLastName());
         editor.putString(JsonKeys.USER_USERNAME, user.getUsername());
-        editor.putString(JsonKeys.USER_EMAIL, user.getEmail());
+        editor.putString(JsonKeys.USER_EMAIL1, user.getEmail1());
+        editor.putString(JsonKeys.USER_EMAIL2, user.getEmail2());
+        editor.putString(JsonKeys.USER_PHONE1, user.getPhone1());
+        editor.putString(JsonKeys.USER_PHONE2, user.getPhone2());
         editor.putString(JsonKeys.USER_COMPANY, user.getCompany());
         editor.putString(JsonKeys.USER_ROLE, user.getRole());
         editor.putString(JsonKeys.USER_CODE, user.getCode());
@@ -96,7 +99,10 @@ public class UserSessionManager {
         user.setName(pref.getString(JsonKeys.USER_NAME, null));
         user.setLastName(pref.getString(JsonKeys.USER_LASTNAME, null));
         user.setUsername(pref.getString(JsonKeys.USER_USERNAME, null));
-        user.setEmail(pref.getString(JsonKeys.USER_EMAIL, null));
+        user.setEmail1(pref.getString(JsonKeys.USER_EMAIL1, null));
+        user.setEmail2(pref.getString(JsonKeys.USER_EMAIL2, null));
+        user.setPhone1(pref.getString(JsonKeys.USER_PHONE1, null));
+        user.setPhone2(pref.getString(JsonKeys.USER_PHONE2, null));
         user.setRole(pref.getString(JsonKeys.USER_ROLE, null));
         user.setCode(pref.getString(JsonKeys.USER_CODE, null));
         user.setCompany(pref.getString(JsonKeys.USER_COMPANY, null));
