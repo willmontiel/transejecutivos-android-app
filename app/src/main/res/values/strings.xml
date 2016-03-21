@@ -41,7 +41,7 @@
     <string name="action_new_service">Nuevo Servicio</string>
 
     <!-- Tabs -->
-    <string name="main_tab">Dashboard</string>
+    <string name="main_tab">Servicios</string>
     <string name="filter_tab">Buscar Servicio</string>
 
     <!-- Profile Activity -->

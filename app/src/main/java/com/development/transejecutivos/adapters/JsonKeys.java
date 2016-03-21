@@ -34,6 +34,7 @@ public class JsonKeys {
      * Services Json Keys
      */
     public static final String SERVICES = "services";
+    public static final String DATES = "dates";
     public static final String SERVICE_ID = "service_id";
     public static final String SERVICE_REFERENCE = "ref";
     public static final String SERVICE_CREATE_DATE = "date";
@@ -79,4 +80,10 @@ public class JsonKeys {
     public static final String DRIVER_CAR_COLOR = "car_color";
     public static final String DRIVER_CARRIAGE_PLATE = "car_license_plate";
     public static final String DRIVER_STATUS = "driver_status";
+
+    /**
+     * Date Json Keys
+     */
+    public static final String DATE_DATA = "date";
 }
+

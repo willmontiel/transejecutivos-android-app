@@ -41,7 +41,7 @@ public class FilterServicesFragment extends FragmentBase {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recycler.setLayoutManager(layoutManager);
-        adapter = new ServiceAdapter(getActivity());
+        ServiceAdapter adapter = new ServiceAdapter(getActivity());
         recycler.setAdapter(adapter);
 
         initDatePicker();

@@ -12,7 +12,10 @@ import android.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
@@ -21,13 +24,22 @@ import com.android.volley.toolbox.Volley;
 import com.development.transejecutivos.R;
 import com.development.transejecutivos.adapters.JsonKeys;
 import com.development.transejecutivos.adapters.ServiceAdapter;
+import com.development.transejecutivos.adapters.ServiceExpandableListAdapter;
 import com.development.transejecutivos.api_config.ApiConstants;
 import com.development.transejecutivos.deserializers.ServiceDeserializer;
+import com.development.transejecutivos.models.Date;
+import com.development.transejecutivos.models.Driver;
+import com.development.transejecutivos.models.Service;
+import com.development.transejecutivos.models.ServiceData;
 import com.development.transejecutivos.models.User;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,7 +47,8 @@ import java.util.Map;
  */
 public class FragmentBase extends Fragment {
     private OnFragmentInteractionListener mListener;
-    ServiceAdapter adapter;
+    protected static ExpandableListView expandableListView;
+    protected static ServiceExpandableListAdapter adapter;
     View view;
     View progressBar;
     View layout;
@@ -69,7 +82,7 @@ public class FragmentBase extends Fragment {
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        processData(response);
+                        //processData(response);
                     }
                 },
                 new com.android.volley.Response.ErrorListener() {
@@ -100,19 +113,17 @@ public class FragmentBase extends Fragment {
     }
 
     public void setupServicesList() {
-        Log.d("APIKEY", user.getApikey());
-
 
         showProgress(true, layout, progressBar);
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
 
         StringRequest stringRequest = new StringRequest(
                 Request.Method.GET,
-                ApiConstants.URL_SERVICES,
+                ApiConstants.URL_SERVICES_GROUPED,
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        processData(response);
+                        processDataForGroup(response);
                     }
                 },
                 new com.android.volley.Response.ErrorListener() {
@@ -141,21 +152,25 @@ public class FragmentBase extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    public void processData(String response) {
+    public void processDataForGroup(String response) {
         showProgress(false, layout, progressBar);
         try {
+
+            Log.d("Response", response);
+
             JSONObject resObj = new JSONObject(response);
             Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
             if (!error) {
-                JSONArray servicesData = resObj.getJSONArray(JsonKeys.SERVICES);;
+                JSONArray servicesData = resObj.getJSONArray(JsonKeys.SERVICES);
+                JSONArray datesData = resObj.getJSONArray(JsonKeys.DATES);
                 if (servicesData.length() <= 0) {
                     setErrorSnackBar(getResources().getString(R.string.no_services));
                 }
                 else {
-                    ServiceDeserializer serviceDeserializer = new ServiceDeserializer(servicesData);
+                    ServiceDeserializer serviceDeserializer = new ServiceDeserializer(servicesData, datesData);
                     serviceDeserializer.deserialize();
 
-                    adapter.addAll(serviceDeserializer.getServices(), serviceDeserializer.getDrivers());
+                    setItems(serviceDeserializer.getServices(), serviceDeserializer.getDatesArray());
                 }
             }
             else {
@@ -165,6 +180,73 @@ public class FragmentBase extends Fragment {
         catch (JSONException ex) {
             ex.printStackTrace();
         }
+    }
+
+    // Setting headers and childs to expandable listview
+    void setItems(ArrayList<ArrayList<ServiceData>> servicesData, List<Date> dates) {
+
+        // Array list for header
+        ArrayList<String> header = new ArrayList<>();
+
+        // Hash map for both header and child
+        HashMap<String, ArrayList<ServiceData>> hashMap = new HashMap<>();
+
+        // Adding headers to list
+        for (int i = 0; i < dates.size(); i++) {
+            header.add(dates.get(i).getDate());
+            hashMap.put(header.get(i), servicesData.get(i));
+        }
+
+        adapter = new ServiceExpandableListAdapter(getActivity(), header, hashMap);
+
+        // Setting adpater over expandablelistview
+        expandableListView.setAdapter(adapter);
+
+        setListener();
+    }
+
+    // Setting different listeners to expandablelistview
+    void setListener() {
+
+        // This listener will show toast on group click
+        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+
+            @Override
+            public boolean onGroupClick(ExpandableListView listview, View view,
+                                        int group_pos, long id) {
+                return false;
+            }
+        });
+
+        // This listener will expand one group at one time
+        // You can remove this listener for expanding all groups
+        expandableListView
+                .setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+
+                    // Default position
+                    int previousGroup = -1;
+
+                    @Override
+                    public void onGroupExpand(int groupPosition) {
+                        if (groupPosition != previousGroup)
+
+                            // Collapse the expanded group
+                            expandableListView.collapseGroup(previousGroup);
+                        previousGroup = groupPosition;
+                    }
+
+                });
+
+        // This listener will show toast on child click
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+
+            @Override
+            public boolean onChildClick(ExpandableListView listview, View view,
+                                        int groupPos, int childPos, long id) {
+
+                return false;
+            }
+        });
     }
 
     public void setErrorSnackBar(String message) {

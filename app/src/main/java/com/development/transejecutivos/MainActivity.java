@@ -29,7 +29,7 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
         mainTabs = (TabLayout) findViewById(R.id.main_tabs);
 
         mainTabs.addTab(mainTabs.newTab().setText(getResources().getString(R.string.main_tab)));
-        mainTabs.addTab(mainTabs.newTab().setText(getResources().getString(R.string.filter_tab)));
+        //mainTabs.addTab(mainTabs.newTab().setText(getResources().getString(R.string.filter_tab)));
 
         mainTabs.setTabMode(TabLayout.MODE_SCROLLABLE);
         mainTabs.setTabGravity(TabLayout.GRAVITY_FILL);

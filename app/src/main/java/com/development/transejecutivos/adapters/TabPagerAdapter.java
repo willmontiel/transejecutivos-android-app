@@ -31,9 +31,10 @@ public class TabPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 ServicesFragment servicesFragment = ServicesFragment.newInstance(this.user);
                 return servicesFragment;
-            case 1:
+            /*case 1:
                 FilterServicesFragment filterServicesFragment = FilterServicesFragment.newInstance(this.user);
                 return filterServicesFragment;
+            */
             default:
                 return null;
         }

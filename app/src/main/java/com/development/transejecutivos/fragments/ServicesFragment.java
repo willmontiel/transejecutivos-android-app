@@ -6,9 +6,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
+import android.widget.Toast;
+
 import com.development.transejecutivos.R;
 import com.development.transejecutivos.adapters.ServiceAdapter;
+import com.development.transejecutivos.adapters.ServiceExpandableListAdapter;
+import com.development.transejecutivos.models.Service;
 import com.development.transejecutivos.models.User;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class ServicesFragment extends FragmentBase {
     public ServicesFragment() {
@@ -28,16 +37,16 @@ public class ServicesFragment extends FragmentBase {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_services, container, false);
-        RecyclerView recycler = (RecyclerView) view.findViewById(R.id.services_recycler_view);
-        layout =  view.findViewById(R.id.services_recycler_view);
+
+        layout = view.findViewById(R.id.service_expandable_listview);
+
+        expandableListView = (ExpandableListView) view.findViewById(R.id.service_expandable_listview);
+
+        // Setting group indicator null for custom indicator
+        expandableListView.setGroupIndicator(null);
+
 
         progressBar = view.findViewById(R.id.service_progress);
-
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recycler.setLayoutManager(layoutManager);
-        adapter = new ServiceAdapter(getActivity());
-        recycler.setAdapter(adapter);
 
         setupServicesList();
 
