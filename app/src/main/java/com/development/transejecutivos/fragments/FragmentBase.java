@@ -48,7 +48,8 @@ import java.util.Map;
 public class FragmentBase extends Fragment {
     private OnFragmentInteractionListener mListener;
     protected static ExpandableListView expandableListView;
-    protected static ServiceExpandableListAdapter adapter;
+    protected static ServiceExpandableListAdapter serviceExpandableListAdapter;
+    protected static ServiceAdapter serviceAdapter;
     View view;
     View progressBar;
     View layout;
@@ -82,7 +83,7 @@ public class FragmentBase extends Fragment {
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        //processData(response);
+                        processData(response);
                     }
                 },
                 new com.android.volley.Response.ErrorListener() {
@@ -152,11 +153,37 @@ public class FragmentBase extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    public void processDataForGroup(String response) {
+    public void processData(String response) {
         showProgress(false, layout, progressBar);
         try {
 
-            Log.d("Response", response);
+            JSONObject resObj = new JSONObject(response);
+            Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
+            if (!error) {
+                JSONArray servicesData = resObj.getJSONArray(JsonKeys.SERVICES);
+                if (servicesData.length() <= 0) {
+                    setErrorSnackBar(getResources().getString(R.string.no_services));
+                }
+                else {
+                    ServiceDeserializer serviceDeserializer = new ServiceDeserializer();
+                    serviceDeserializer.setResponseJsonArray(servicesData);
+                    serviceDeserializer.deserialize();
+
+                    serviceAdapter.addAll(serviceDeserializer.getServicesArrayList(), serviceDeserializer.getDriversArrayList());
+                }
+            }
+            else {
+                setErrorSnackBar(getResources().getString(R.string.error_general));
+            }
+        }
+        catch (JSONException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void processDataForGroup(String response) {
+        showProgress(false, layout, progressBar);
+        try {
 
             JSONObject resObj = new JSONObject(response);
             Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
@@ -167,8 +194,10 @@ public class FragmentBase extends Fragment {
                     setErrorSnackBar(getResources().getString(R.string.no_services));
                 }
                 else {
-                    ServiceDeserializer serviceDeserializer = new ServiceDeserializer(servicesData, datesData);
-                    serviceDeserializer.deserialize();
+                    ServiceDeserializer serviceDeserializer = new ServiceDeserializer();
+                    serviceDeserializer.setDatesJsonArray(datesData);
+                    serviceDeserializer.setServicesJsonArray(servicesData);
+                    serviceDeserializer.deserializeByGroup();
 
                     setItems(serviceDeserializer.getServices(), serviceDeserializer.getDatesArray());
                 }
@@ -197,10 +226,10 @@ public class FragmentBase extends Fragment {
             hashMap.put(header.get(i), servicesData.get(i));
         }
 
-        adapter = new ServiceExpandableListAdapter(getActivity(), header, hashMap);
+        serviceExpandableListAdapter = new ServiceExpandableListAdapter(getActivity(), header, hashMap);
 
         // Setting adpater over expandablelistview
-        expandableListView.setAdapter(adapter);
+        expandableListView.setAdapter(serviceExpandableListAdapter);
 
         setListener();
     }

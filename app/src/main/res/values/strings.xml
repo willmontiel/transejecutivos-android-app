@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TransEjecutivos</string>
+    <string name="app_name">Transportes Ejecutivos</string>
 
     <!-- Strings related to login -->
     <string name="title_activity_login">Iniciar Sesión</string>
@@ -61,4 +61,8 @@
     <string name="error_invalid_profile_update">Ha ocurrido un error, por favor intenta más tarde</string>
     <string name="snackbar_action_back">Regresar</string>
     <string name="profile_update_success">Se ha actualizado tu perfil exitosamente</string>
+
+    <!-- Dashboard Activity -->
+    <string name="title_activity_dashboard">Dashboard</string>
+    <string name="not_driver">Servicio sin conductor asignado</string>
 </resources>
