@@ -243,7 +243,7 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
                     onPostExecute(true);
 
                     // Starting MainActivity
-                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                     // Add new Flag to start new Activity

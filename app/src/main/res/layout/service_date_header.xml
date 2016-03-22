@@ -7,8 +7,9 @@
         android:id="@+id/header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:textColor="#ff00"
-        android:drawablePadding="10dp"
-        android:textSize="18sp" />
+        android:padding="12dp"
+        android:drawablePadding="5dp"
+        android:background="@color/colorBackground"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp" />
 </LinearLayout>

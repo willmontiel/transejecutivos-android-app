@@ -65,4 +65,5 @@
     <!-- Dashboard Activity -->
     <string name="title_activity_dashboard">Dashboard</string>
     <string name="not_driver">Servicio sin conductor asignado</string>
+    <string name="action_dashboard">Inicio</string>
 </resources>

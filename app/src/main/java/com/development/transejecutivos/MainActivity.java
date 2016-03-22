@@ -26,6 +26,16 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
 
         validateSession();
 
+        Bundle t = getIntent().getExtras();
+        int tab = 0;
+        if (t != null) {
+            tab = t.getInt("tab");
+        }
+
+        setTabs(tab);
+    }
+
+    private void setTabs(int tab) {
         mainTabs = (TabLayout) findViewById(R.id.main_tabs);
 
         mainTabs.addTab(mainTabs.newTab().setText(getResources().getString(R.string.main_tab)));
@@ -42,24 +52,23 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mainTabs));
 
         mainTabs.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                                               @Override
-                                               public void onTabSelected(TabLayout.Tab tab) {
-                                                   viewPager.setCurrentItem(tab.getPosition());
-                                               }
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
 
-                                               @Override
-                                               public void onTabUnselected(TabLayout.Tab tab) {
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
 
-                                               }
+            }
 
-                                               @Override
-                                               public void onTabReselected(TabLayout.Tab tab) {
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
-                                               }
+            }
+        });
 
-
-
-                                           });
+        viewPager.setCurrentItem(tab, false);
     }
 
     @Override
@@ -87,6 +96,11 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
             return true;
         }
         else if (id == R.id.action_new_service) {
+            return true;
+        }
+        else if (id == R.id.action_dashboard) {
+            Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
+            startActivity(i);
             return true;
         }
 

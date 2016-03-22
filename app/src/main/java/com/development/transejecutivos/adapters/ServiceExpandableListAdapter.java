@@ -133,6 +133,7 @@ public class ServiceExpandableListAdapter extends BaseExpandableListAdapter {
             header_text.setTypeface(null, Typeface.BOLD);
             header_text.setCompoundDrawablesWithIntrinsicBounds(0, 0,
                     R.drawable.arrow_up, 0);
+
         } else {
             // If group is not expanded then change the text back into normal
             // and change the icon

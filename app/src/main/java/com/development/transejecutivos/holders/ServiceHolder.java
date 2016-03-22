@@ -39,6 +39,7 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
     TextView txtview_obs;
 
     ImageView img_view_driver_photo;
+    ImageView imgview_car_driver;
     ImageView imgview_car_photo;
 
     TextView txtview_driver_name;
@@ -54,7 +55,6 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
 
     ImageView expander;
     ImageView contracter;
-    ImageView driver;
 
     private int mOriginalHeight = 0;
     private boolean mIsDetailsViewExpanded = false;
@@ -78,6 +78,7 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         txtview_obs = (TextView) itemView.findViewById(R.id.txtview_obs);
 
         img_view_driver_photo = (ImageView) itemView.findViewById(R.id.img_view_driver_photo);
+        imgview_car_driver = (ImageView) itemView.findViewById(R.id.imgview_car_driver);
         imgview_car_photo = (ImageView) itemView.findViewById(R.id.imgview_car_photo);
 
         txtview_driver_name = (TextView) itemView.findViewById(R.id.txtview_driver_name);
@@ -93,8 +94,6 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
 
         expander = (ImageView) itemView.findViewById(R.id.imgview_expand_icon);
         contracter = (ImageView) itemView.findViewById(R.id.imgview_contract_icon);
-
-        driver = (ImageView) itemView.findViewById(R.id.img_view_driver_photo);
 
         this.context = context;
 
@@ -130,7 +129,14 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        driver.setOnClickListener(new View.OnClickListener() {
+        img_view_driver_photo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                collapse(itemView, relativelayout_driver_details);
+            }
+        });
+
+        imgview_car_driver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 collapse(itemView, relativelayout_driver_details);
@@ -220,6 +226,7 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
                     @Override
                     public void onResponse(Bitmap bitmap) {
                         img_view_driver_photo.setImageBitmap(bitmap);
+                        imgview_car_driver.setImageBitmap(bitmap);
                     }
                 }, 0, 0, null,
                 new Response.ErrorListener() {

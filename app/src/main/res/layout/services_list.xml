@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/cardview_light_background"
+    android:background="@color/shadow"
     android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/card_view_services_list"
+        android:background="@color/colorSecondaryText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:cardCornerRadius="4dp"
@@ -177,11 +178,21 @@
                 android:layout_height="wrap_content"/>
 
             <ImageView
-                android:id="@+id/imgview_car_photo"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:id="@+id/imgview_car_driver"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@drawable/driver"
                 android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp" />
+
+            <ImageView
+                android:id="@+id/imgview_car_photo"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/driver"
+                android:layout_below="@+id/imgview_car_driver"
+                android:layout_marginTop="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginRight="8dp" />

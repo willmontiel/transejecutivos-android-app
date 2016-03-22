@@ -8,8 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.development.transejecutivos.R;
-import com.development.transejecutivos.models.DashboarMenu;
+import com.development.transejecutivos.models.DashboardMenu;
 
 /**
  * Created by developer on 3/21/16.
@@ -23,12 +24,12 @@ public class DashboardMenuAdapter extends BaseAdapter{
 
     @Override
     public int getCount() {
-        return DashboarMenu.ITEMS.length;
+        return DashboardMenu.ITEMS.length;
     }
 
     @Override
-    public DashboarMenu getItem(int position) {
-        return DashboarMenu.ITEMS[position];
+    public DashboardMenu getItem(int position) {
+        return DashboardMenu.ITEMS[position];
     }
 
     @Override
@@ -38,19 +39,21 @@ public class DashboardMenuAdapter extends BaseAdapter{
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
-
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.grid_item_menu, viewGroup, false);
         }
 
-        ImageView imagenCoche = (ImageView) view.findViewById(R.id.icon_image);
-        TextView nombreCoche = (TextView) view.findViewById(R.id.icon_name);
+        ImageView iconImage = (ImageView) view.findViewById(R.id.icon_image);
+        TextView iconName = (TextView) view.findViewById(R.id.icon_name);
 
-        final DashboarMenu item = getItem(position);
-        imagenCoche.setImageResource(item.getIdDrawable());
-        nombreCoche.setText(item.getName());
+        final DashboardMenu item = getItem(position);
+        Glide.with(iconImage.getContext())
+                .load(item.getIdDrawable())
+                .into(iconImage);
+
+        iconName.setText(item.getName());
 
         return view;
     }

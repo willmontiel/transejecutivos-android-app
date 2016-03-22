@@ -5,11 +5,13 @@ import com.development.transejecutivos.R;
 /**
  * Created by developer on 3/21/16.
  */
-public class DashboarMenu {
+public class DashboardMenu {
     private String name;
     private int idDrawable;
+    private int id;
 
-    public DashboarMenu(String name, int idDrawable) {
+    public DashboardMenu(int id, String name, int idDrawable) {
+        this.id = id;
         this.name = name;
         this.idDrawable = idDrawable;
     }
@@ -23,15 +25,15 @@ public class DashboarMenu {
     }
 
     public int getId() {
-        return name.hashCode();
+        return id;
     }
 
-    public static DashboarMenu[] ITEMS = {
-            new DashboarMenu("Mi Perfil", R.drawable.profile),
-            new DashboarMenu("Ver Servicios", R.drawable.services),
-            new DashboarMenu("Buscar Servicio", R.drawable.search),
-            new DashboarMenu("Solicitar Servicio", R.drawable.get_service),
-            new DashboarMenu("Cerrar Sesión", R.drawable.logout),
+    public static DashboardMenu[] ITEMS = {
+            new DashboardMenu(0, "Mi Perfil", R.drawable.profile),
+            new DashboardMenu(1, "Ver Servicios", R.drawable.services),
+            new DashboardMenu(2, "Buscar Servicio", R.drawable.search),
+            new DashboardMenu(3, "Solicitar Servicio", R.drawable.get_service),
+            new DashboardMenu(4, "Cerrar Sesión", R.drawable.logout),
     };
 
     /**
@@ -40,8 +42,8 @@ public class DashboarMenu {
      * @param id identificador
      * @return Coche
      */
-    public static DashboarMenu getItem(int id) {
-        for (DashboarMenu item : ITEMS) {
+    public static DashboardMenu getItem(int id) {
+        for (DashboardMenu item : ITEMS) {
             if (item.getId() == id) {
                 return item;
             }
