@@ -42,7 +42,7 @@ public class ServiceExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, ArrayList<ServiceData>> child;
 
     public ServiceExpandableListAdapter(Context context, List<String> listDataHeader,
-                                 HashMap<String, ArrayList<ServiceData>> listChildData) {
+                                        HashMap<String, ArrayList<ServiceData>> listChildData) {
         this._context = context;
         this.header = listDataHeader;
         this.child = listChildData;
