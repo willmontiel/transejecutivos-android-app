@@ -21,10 +21,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="center">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/filter_services_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <DatePicker
                 android:id="@+id/datePicker"
@@ -34,12 +35,22 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top" />
 
+            <Button
+                android:id="@+id/btn_search_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/prompt_search_service"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorPrimaryTextLight"
+                android:elevation="10dp"
+                />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/filter_services_recycler_view"
                 android:layout_below="@+id/datePicker"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-        </RelativeLayout>
+        </LinearLayout>
     </ScrollView>
 </FrameLayout>

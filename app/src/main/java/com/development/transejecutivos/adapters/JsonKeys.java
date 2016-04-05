@@ -85,5 +85,13 @@ public class JsonKeys {
      * Date Json Keys
      */
     public static final String DATE_DATA = "date";
+
+
+    /**
+     * Driver Location
+     */
+    public static final String DRIVER_LOCATION = "location";
+    public static final String DRIVER_LOCATION_LATITUDE = "latitude";
+    public static final String DRIVER_LOCATION_LONGITUDE = "longitude";
 }
 

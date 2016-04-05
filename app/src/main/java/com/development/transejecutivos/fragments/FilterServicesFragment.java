@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
 import com.development.transejecutivos.R;
@@ -44,20 +45,25 @@ public class FilterServicesFragment extends FragmentBase {
         serviceAdapter = new ServiceAdapter(getActivity());
         recycler.setAdapter(serviceAdapter);
 
-        initDatePicker();
+
+        Button btn_search_service = (Button) view.findViewById(R.id.btn_search_service);
+
+        btn_search_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchService();
+            }
+        });
 
         return view;
     }
 
-    public void initDatePicker() {
+    public void searchService() {
         DatePicker datePicker = (DatePicker) view.findViewById(R.id.datePicker);
 
-        datePicker.init(datePicker.getYear(), datePicker.getMonth(), datePicker.getDayOfMonth(), new DatePicker.OnDateChangedListener() {
-            @Override
-            public void onDateChanged(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                String date = String.format("%02d", (monthOfYear+1)) + "/" + dayOfMonth + "/" + year;
-                setupServiceList(date);
-            }
-        });
+        String date = String.format("%02d", (datePicker.getMonth() + 1)) + "/" + String.format("%02d", (datePicker.getDayOfMonth())) + "/" + datePicker.getYear();
+
+        Log.d("DATE", date);
+        setupServiceList(date);
     }
 }

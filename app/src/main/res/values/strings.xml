@@ -66,4 +66,14 @@
     <string name="title_activity_dashboard">Transportes Ejecutivos</string>
     <string name="not_driver">Servicio sin conductor asignado</string>
     <string name="action_dashboard">Inicio</string>
+    <string name="prompt_search_service">Buscar Servicio</string>
+
+    <!-- Driver Location-->
+    <string name="title_activity_driverlocation">Ubicación del Conductor</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyDIGGDg7xIEn4J5qH0SmgJEGjOMwd0qLNA
+    </string>
+    <string name="prompt_driver_location">Ver Ubicación del Conductor</string>
+    <string name="title_driver_location">Ubicación del conductor</string>
+    <string name="title_user_location">Tu Ubicación</string>
 </resources>

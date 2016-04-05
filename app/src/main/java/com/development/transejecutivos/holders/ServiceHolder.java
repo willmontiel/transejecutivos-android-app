@@ -2,6 +2,7 @@ package com.development.transejecutivos.holders;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -16,7 +17,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.Volley;
+import com.development.transejecutivos.DriverlocationActivity;
+import com.development.transejecutivos.ProfileActivity;
 import com.development.transejecutivos.R;
+import com.development.transejecutivos.adapters.JsonKeys;
 import com.development.transejecutivos.api_config.ApiConstants;
 import com.development.transejecutivos.models.Driver;
 import com.development.transejecutivos.models.Service;
@@ -61,6 +65,10 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
 
     Context context;
 
+    TextView txtview_driver_location;
+
+    Service service;
+
     public ServiceHolder(View itemView, Context context) {
         super(itemView);
         txtview_destiny = (TextView) itemView.findViewById(R.id.txtview_destiny);
@@ -94,6 +102,8 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
 
         expander = (ImageView) itemView.findViewById(R.id.imgview_expand_icon);
         contracter = (ImageView) itemView.findViewById(R.id.imgview_contract_icon);
+
+        txtview_driver_location = (TextView) itemView.findViewById(R.id.txtview_driver_location);
 
         this.context = context;
 
@@ -150,6 +160,14 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
             }
         });
 
+        txtview_driver_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, DriverlocationActivity.class);
+                i.putExtra(JsonKeys.SERVICE_ID, service.getIdService());
+                context.startActivity(i);
+            }
+        });
     }
 
     public void setServiceData(ServiceData serviceData) {
@@ -165,6 +183,7 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
      * @param service
      */
     public void setService(Service service) {
+        this.service = service;
         txtview_destiny.setText(service.getDestiny());
         txtview_source.setText(service.getSource());
         txtview_datetime.setText(service.getStartDate());
