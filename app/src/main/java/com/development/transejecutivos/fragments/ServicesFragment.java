@@ -52,4 +52,10 @@ public class ServicesFragment extends FragmentBase {
 
         return view;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setupServicesList();
+    }
 }

@@ -18,6 +18,15 @@ public class User implements Serializable {
     String company;
     String apikey;
     String code;
+    int first_time;
+
+    public int getFirst_time() {
+        return first_time;
+    }
+
+    public void setFirst_time(int first_time) {
+        this.first_time = first_time;
+    }
 
     public void setIdUser(int idUser) {
         this.idUser = idUser;

@@ -26,6 +26,10 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
 
         validateSession();
 
+        configureTabs();
+    }
+
+    private void configureTabs() {
         Bundle t = getIntent().getExtras();
         int tab = 0;
         if (t != null) {

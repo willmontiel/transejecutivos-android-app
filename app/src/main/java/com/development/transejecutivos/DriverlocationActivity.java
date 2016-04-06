@@ -31,6 +31,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -98,7 +99,13 @@ public class DriverlocationActivity extends FragmentActivity implements OnMapRea
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
+        //mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        mMap.getUiSettings().isMyLocationButtonEnabled();
+        mMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+        mMap.getUiSettings().setZoomGesturesEnabled(true);
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+        mMap.setTrafficEnabled(true);
+        mMap.getUiSettings().setCompassEnabled(true);
     }
 
     @Override
@@ -113,7 +120,7 @@ public class DriverlocationActivity extends FragmentActivity implements OnMapRea
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient.isConnected() && mGoogleApiClient != null) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
         }
     }
@@ -126,6 +133,8 @@ public class DriverlocationActivity extends FragmentActivity implements OnMapRea
                 LatLng userLocation = new LatLng( mLastLocation.getLatitude(),  mLastLocation.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(userLocation).title(getResources().getString(R.string.title_user_location)));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
+                mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
+
                 getDriverLocation();
             }
             else {
@@ -153,13 +162,15 @@ public class DriverlocationActivity extends FragmentActivity implements OnMapRea
                             if (!error) {
                                 JSONObject loc = (JSONObject) resObj.get(JsonKeys.DRIVER_LOCATION);
 
-                                double lat = loc.getDouble(JsonKeys.DRIVER_LOCATION_LATITUDE);
-                                double lon = loc.getDouble(JsonKeys.DRIVER_LOCATION_LONGITUDE);
+                                int l = loc.getInt(JsonKeys.DRIVER_LOCATION);
 
-                                if (lat != 0 && lon != 0) {
+                                if (l == 1) {
+                                    double lat = loc.getDouble(JsonKeys.DRIVER_LOCATION_LATITUDE);
+                                    double lon = loc.getDouble(JsonKeys.DRIVER_LOCATION_LONGITUDE);
                                     LatLng driverLocation = new LatLng(lat, lon);
                                     mMap.addMarker(new MarkerOptions().position(driverLocation).title(getResources().getString(R.string.title_driver_location)));
                                     mMap.moveCamera(CameraUpdateFactory.newLatLng(driverLocation));
+                                    mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
                                 }
 
                                 //getDriverLocation();
