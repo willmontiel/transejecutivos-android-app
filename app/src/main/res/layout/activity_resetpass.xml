@@ -13,8 +13,6 @@
     android:background="@color/colorBackground"
     tools:context="com.development.transejecutivos.ResetpassActivity">
 
-    <!-- Login progress -->
-
     <ProgressBar
         android:id="@+id/resetpass_progress"
         style="?android:attr/progressBarStyleLarge"

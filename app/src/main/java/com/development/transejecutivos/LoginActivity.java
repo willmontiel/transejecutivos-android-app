@@ -257,7 +257,7 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
                         startActivity(i);
                     }
 
-                    onPostExecute(true);
+                    //onPostExecute(true);
 
                     finish();
                 }
@@ -274,7 +274,7 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
         @Override
         protected void onPostExecute(Boolean success) {
             mAuthTask = null;
-            showProgress(false, mLoginFormView, mProgressView);
+            //showProgress(false, mLoginFormView, mProgressView);
             super.onPostExecute(success);
         }
 
