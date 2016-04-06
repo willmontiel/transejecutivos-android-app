@@ -19,6 +19,15 @@ public class User implements Serializable {
     String apikey;
     String code;
     int first_time;
+    int notifications;
+
+    public int getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(int notifications) {
+        this.notifications = notifications;
+    }
 
     public int getFirst_time() {
         return first_time;

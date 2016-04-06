@@ -19,6 +19,7 @@ public class Driver {
     String carColor;
     String carriagePlate;
     String status;
+    int location;
 
     /**
      *
@@ -38,7 +39,7 @@ public class Driver {
      * @param carriagePlate
      * @param status
      */
-    public Driver(int idDriver, String code, String name, String lastName, String phone1, String phone2, String address, String city, String email, String carType, String carBrand, String carModel, String carColor, String carriagePlate, String status) {
+    public Driver(int idDriver, String code, String name, String lastName, String phone1, String phone2, String address, String city, String email, String carType, String carBrand, String carModel, String carColor, String carriagePlate, String status, int location) {
         this.idDriver = idDriver;
         this.code = code;
         this.name = name;
@@ -54,6 +55,7 @@ public class Driver {
         this.carColor = carColor;
         this.carriagePlate = carriagePlate;
         this.status = status;
+        this.location = location;
     }
 
     public int getIdDriver() {
@@ -114,5 +116,9 @@ public class Driver {
 
     public String getStatus() {
         return this.status;
+    }
+
+    public int getLocation() {
+        return this.location;
     }
 }

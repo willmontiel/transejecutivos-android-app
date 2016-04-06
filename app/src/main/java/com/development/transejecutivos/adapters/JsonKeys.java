@@ -24,6 +24,7 @@ public class JsonKeys {
     public static final String PASSWORD = "password";
     public static final String PASSWORD2 = "password2";
     public static final String USER_FIRSTIME = "first_time";
+    public static final String USER_NOTIFICATIONS = "notifications";
 
     /**
      * General Json Keys
@@ -82,6 +83,7 @@ public class JsonKeys {
     public static final String DRIVER_CAR_COLOR = "car_color";
     public static final String DRIVER_CARRIAGE_PLATE = "car_license_plate";
     public static final String DRIVER_STATUS = "driver_status";
+    public static final String DRIVER_LOC = "driver_location";
 
     /**
      * Date Json Keys

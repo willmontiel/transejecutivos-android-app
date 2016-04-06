@@ -71,9 +71,9 @@
     <!-- Driver Location-->
     <string name="title_activity_driverlocation">Ubicación del Conductor</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyDtAR9fShr07BPB9qOp_9hAClgwrxUcooA
+        AIzaSyDIGGDg7xIEn4J5qH0SmgJEGjOMwd0qLNA
     </string>
-    <string name="x">AIzaSyDIGGDg7xIEn4J5qH0SmgJEGjOMwd0qLNA</string>
+    <string name="x">AIzaSyDtAR9fShr07BPB9qOp_9hAClgwrxUcooA</string>
     <string name="prompt_driver_location">Ver Ubicación del Conductor</string>
     <string name="title_driver_location">Ubicación del conductor</string>
     <string name="title_user_location">Tu Ubicación</string>
@@ -87,4 +87,5 @@
     <string name="error_reset_password">No se pudo cambiar la contraseña, por favor intenta más tarde</string>
     <string name="success_reset_password">Se ha cambiado la contraseña exitosamente, por favor inicie sesión</string>
     <string name="prompt_reset_password_button">Cambiar Contraseña</string>
+    <string name="prompt_notifications">Deseo recibir notificaciones por correo</string>
 </resources>

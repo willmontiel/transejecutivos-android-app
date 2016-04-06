@@ -101,6 +101,7 @@ public class ServiceDeserializer extends DeserializerValidator{
                         String carColor = validateString(JsonKeys.DRIVER_CAR_COLOR, jsonServiceObject);
                         String carriagePlate = validateString(JsonKeys.DRIVER_CARRIAGE_PLATE, jsonServiceObject);
                         String dstatus = validateString(JsonKeys.DRIVER_STATUS, jsonServiceObject);
+                        int location = validateInt(JsonKeys.DRIVER_LOC, jsonServiceObject);
 
                         serviceData.setIdDriver(idDriver);
                         serviceData.setCode(dcode);
@@ -117,6 +118,7 @@ public class ServiceDeserializer extends DeserializerValidator{
                         serviceData.setCarColor(carColor);
                         serviceData.setCarriagePlate(carriagePlate);
                         serviceData.setStatus(dstatus);
+                        serviceData.setLocation(location);
 
 
                         currentServicesArray.add(serviceData);
@@ -168,8 +170,9 @@ public class ServiceDeserializer extends DeserializerValidator{
                     String carColor = validateString(JsonKeys.DRIVER_CAR_COLOR, jsonObject);
                     String carriagePlate = validateString(JsonKeys.DRIVER_CARRIAGE_PLATE, jsonObject);
                     String dstatus = validateString(JsonKeys.DRIVER_STATUS, jsonObject);
+                    int location = validateInt(JsonKeys.DRIVER_LOC, jsonObject);
 
-                    Driver driver = new Driver(idDriver, dcode, dname, dlastname, dphone1, dphone2, daddress, dcity, demail, carType, carBrand, carModel, carColor, carriagePlate, dstatus);
+                    Driver driver = new Driver(idDriver, dcode, dname, dlastname, dphone1, dphone2, daddress, dcity, demail, carType, carBrand, carModel, carColor, carriagePlate, dstatus, location);
 
                     this.servicesArrayList.add(service);
                     this.driversArrayList.add(driver);

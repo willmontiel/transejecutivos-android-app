@@ -159,22 +159,13 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
                 collapse(itemView, relativeloDetails);
             }
         });
-
-        txtview_driver_location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(context, DriverlocationActivity.class);
-                i.putExtra(JsonKeys.SERVICE_ID, service.getIdService());
-                context.startActivity(i);
-            }
-        });
     }
 
     public void setServiceData(ServiceData serviceData) {
         Service service = new Service(serviceData.getIdService(), serviceData.getReference(), serviceData.getCreateDate(), serviceData.getStartDate(), serviceData.getFly(), serviceData.getAeroline(), serviceData.getCompany(), serviceData.getPaxCant(), serviceData.getPax(), serviceData.getSource(), serviceData.getDestiny(), serviceData.getObservations(), serviceData.getStatus());
         setService(service);
 
-        Driver driver = new Driver(serviceData.getIdDriver(), serviceData.getCode(), serviceData.getName(), serviceData.getLastName(), serviceData.getPhone1(), serviceData.getPhone2(), serviceData.getAddress(), serviceData.getCity(), serviceData.getEmail(), serviceData.getCarType(), serviceData.getCarBrand(), serviceData.getCarModel(), serviceData.getCarColor(), serviceData.getCarriagePlate(), serviceData.getStatus());
+        Driver driver = new Driver(serviceData.getIdDriver(), serviceData.getCode(), serviceData.getName(), serviceData.getLastName(), serviceData.getPhone1(), serviceData.getPhone2(), serviceData.getAddress(), serviceData.getCity(), serviceData.getEmail(), serviceData.getCarType(), serviceData.getCarBrand(), serviceData.getCarModel(), serviceData.getCarColor(), serviceData.getCarriagePlate(), serviceData.getStatus(), serviceData.getLocation());
         setDriver(driver);
     }
 
@@ -233,6 +224,18 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
 
         if (!TextUtils.isEmpty(driver.getCarriagePlate())) {
             txtview_carriage_plate.setText("Placa: " + driver.getCarriagePlate());
+        }
+
+        if (driver.getLocation() == 1) {
+            txtview_driver_location.setText(this.context.getResources().getString(R.string.prompt_driver_location));
+            txtview_driver_location.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(context, DriverlocationActivity.class);
+                    i.putExtra(JsonKeys.SERVICE_ID, service.getIdService());
+                    context.startActivity(i);
+                }
+            });
         }
 
         String durl = ApiConstants.URL_DRIVER_PHOTO + "cara" + driver.getCode() + ".jpg&ancho=100";

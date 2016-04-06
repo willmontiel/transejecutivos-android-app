@@ -31,9 +31,18 @@ public class ServiceData {
     String carColor;
     String carriagePlate;
     String status;
+    int location;
 
     public ServiceData() {
 
+    }
+
+    public int getLocation() {
+        return location;
+    }
+
+    public void setLocation(int location) {
+        this.location = location;
     }
 
     public int getIdService() {

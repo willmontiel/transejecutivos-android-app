@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -50,6 +51,7 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
     private TextInputLayout inputLayoutPhone1;
     private TextInputLayout inputLayoutPhone2;
     private TextInputLayout inputLayoutPassword;
+    private TextInputLayout inputLayoutNotifications;
 
     private EditText txtName;
     private EditText txtLastName;
@@ -58,6 +60,8 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
     private EditText txtPhone1;
     private EditText txtPhone2;
     private EditText txtPassword;
+
+    private CheckBox chk_notifications;
 
 
     @Override
@@ -94,6 +98,7 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
         inputLayoutPhone1  = (TextInputLayout) findViewById(R.id.txtinput_layout_phone1);
         inputLayoutPhone2  = (TextInputLayout) findViewById(R.id.txtinput_layout_phone2);
         inputLayoutPassword  = (TextInputLayout) findViewById(R.id.txtinput_layout_password);
+        inputLayoutNotifications  = (TextInputLayout) findViewById(R.id.txtinput_layout_notifications);
 
         txtName = (EditText) findViewById(R.id.name);
         txtLastName = (EditText) findViewById(R.id.lastname);
@@ -102,6 +107,7 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
         txtPhone1 = (EditText) findViewById(R.id.phone1);
         txtPhone2 = (EditText) findViewById(R.id.phone2);
         txtPassword = (EditText) findViewById(R.id.password);
+        chk_notifications = (CheckBox) findViewById(R.id.chk_notifications);
     }
 
     private void setProfileValues() {
@@ -111,6 +117,13 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
         txtEmail2.setText(user.getEmail2());
         txtPhone1.setText(user.getPhone1());
         txtPhone2.setText(user.getPhone2());
+
+        boolean checked = false;
+        if (user.getNotifications() == 1) {
+            checked = true;
+        }
+
+        chk_notifications.setChecked(checked);
     }
 
     private void attempt() {
@@ -126,6 +139,7 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
         inputLayoutPhone1.setError(null);
         inputLayoutPhone2.setError(null);
         inputLayoutPassword.setError(null);
+        inputLayoutNotifications.setError(null);
 
         // Store values at the time of the login attempt.
         String name = txtName.getText().toString();
@@ -135,6 +149,10 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
         String phone1 = txtPhone1.getText().toString();
         String phone2 = txtPhone2.getText().toString();
         String password = txtPassword.getText().toString();
+        int notifications = 0;
+        if (chk_notifications.isChecked()) {
+            notifications = 1;
+        }
 
         boolean cancel;
 
@@ -149,7 +167,7 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
 
         if (!cancel) {
             showProgress(true, mProfileForm, mProfileProgress);
-            mAuthTask = new ProfileTask(name, lastName, email1, email2, phone1, phone2, password);
+            mAuthTask = new ProfileTask(name, lastName, email1, email2, phone1, phone2, password, notifications);
             mAuthTask.execute((Void) null);
         }
     }
@@ -211,8 +229,9 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
         private final String phone1;
         private final String phone2;
         private final String password;
+        private final int notifications;
 
-        public ProfileTask(String name, String lastName, String email1, String email2, String phone1, String phone2, String password) {
+        public ProfileTask(String name, String lastName, String email1, String email2, String phone1, String phone2, String password, int notifications) {
             this.name = name;
             this.lastName = lastName;
             this.email1 = email1;
@@ -220,6 +239,7 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
             this.phone1 = phone1;
             this.phone2 = phone2;
             this.password = password;
+            this.notifications = notifications;
         }
 
         @Override
@@ -262,6 +282,7 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
                     params.put(JsonKeys.USER_PHONE1, phone1);
                     params.put(JsonKeys.USER_PHONE2, phone2);
                     params.put(JsonKeys.PASSWORD, password);
+                    params.put(JsonKeys.USER_NOTIFICATIONS, "" + notifications);
 
                     return params;
                 }
@@ -292,6 +313,7 @@ public class ProfileActivity extends ActivityBase implements LoaderManager.Loade
                     user.setCompany(resObj.getString(JsonKeys.USER_COMPANY));
                     user.setApikey(resObj.getString(JsonKeys.USER_APIKEY));
                     user.setCode(resObj.getString(JsonKeys.USER_CODE));
+                    user.setNotifications(resObj.getInt(JsonKeys.USER_NOTIFICATIONS));
 
                     session.createUserLoginSession(user);
 

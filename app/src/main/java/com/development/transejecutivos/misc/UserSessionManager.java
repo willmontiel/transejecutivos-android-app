@@ -56,6 +56,7 @@ public class UserSessionManager {
         editor.putString(JsonKeys.USER_ROLE, user.getRole());
         editor.putString(JsonKeys.USER_CODE, user.getCode());
         editor.putString(JsonKeys.USER_APIKEY, user.getApikey());
+        editor.putInt(JsonKeys.USER_NOTIFICATIONS, user.getNotifications());
 
         // commit changes
         editor.commit();
@@ -107,6 +108,7 @@ public class UserSessionManager {
         user.setCode(pref.getString(JsonKeys.USER_CODE, null));
         user.setCompany(pref.getString(JsonKeys.USER_COMPANY, null));
         user.setApikey(pref.getString(JsonKeys.USER_APIKEY, null));
+        user.setNotifications(pref.getInt(JsonKeys.USER_NOTIFICATIONS, 0));
 
         // return user
         return user;
