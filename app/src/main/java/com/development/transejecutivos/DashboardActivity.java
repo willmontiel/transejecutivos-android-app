@@ -27,6 +27,12 @@ public class DashboardActivity extends ActivityBase implements AdapterView.OnIte
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        isLocationServiceEnabled();
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         DashboardMenu item = (DashboardMenu) parent.getItemAtPosition(position);
         Intent i;

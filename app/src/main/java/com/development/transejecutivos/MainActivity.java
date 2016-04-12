@@ -29,6 +29,12 @@ public class MainActivity extends ActivityBase implements FragmentBase.OnFragmen
         configureTabs();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        isLocationServiceEnabled();
+    }
+
     private void configureTabs() {
         Bundle t = getIntent().getExtras();
         int tab = 0;

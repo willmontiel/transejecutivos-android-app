@@ -63,7 +63,6 @@ public class FilterServicesFragment extends FragmentBase {
 
         String date = String.format("%02d", (datePicker.getMonth() + 1)) + "/" + String.format("%02d", (datePicker.getDayOfMonth())) + "/" + datePicker.getYear();
 
-        Log.d("DATE", date);
         setupServiceList(date);
     }
 }
