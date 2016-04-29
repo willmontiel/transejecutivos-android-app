@@ -23,7 +23,7 @@
 
             <TextView
                 android:id="@+id/txtview_source"
-                android:textColor="@color/colorPrimaryText"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -32,12 +32,14 @@
             <TextView
                 android:id="@+id/txtview_destiny"
                 android:layout_below="@+id/txtview_source"
+                android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/txtview_datetime"
                 android:layout_below="@+id/txtview_destiny"
+                android:layout_marginTop="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
@@ -76,33 +78,37 @@
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/relativelayout_details"
+            android:background="@color/cardview_light_background"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:background="@color/colorBackground"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:visibility="gone"
             android:padding="8dp">
                 <TextView
                     android:id="@+id/txtview_reference"
+                    android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true" />
 
                 <TextView
                     android:id="@+id/txtview_source_detail"
+                    android:textColor="@color/colorPrimary"
                     android:layout_below="@+id/txtview_reference"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/txtview_destiny_detail"
+                    android:textColor="@color/colorPrimary"
                     android:layout_below="@+id/txtview_source_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/txtview_datetime_detail"
+                    android:layout_marginTop="16dp"
                     android:layout_below="@+id/txtview_destiny_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -121,6 +127,7 @@
 
                 <TextView
                     android:id="@+id/txtview_obs"
+                    android:textColor="@color/colorError"
                     android:layout_below="@+id/txtview_pax"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
