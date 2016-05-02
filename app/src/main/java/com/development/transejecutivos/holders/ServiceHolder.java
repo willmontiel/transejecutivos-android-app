@@ -4,10 +4,12 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,6 +61,7 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
 
     ImageView expander;
     ImageView contracter;
+    ImageView imgview_call_driver;
 
     private int mOriginalHeight = 0;
     private boolean mIsDetailsViewExpanded = false;
@@ -84,6 +87,8 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         txtview_pax = (TextView) itemView.findViewById(R.id.txtview_pax);
         txtview_fly = (TextView) itemView.findViewById(R.id.txtview_fly);
         txtview_obs = (TextView) itemView.findViewById(R.id.txtview_obs);
+
+        imgview_call_driver = (ImageView) itemView.findViewById(R.id.imgview_call_driver);
 
         img_view_driver_photo = (ImageView) itemView.findViewById(R.id.img_view_driver_photo);
         imgview_car_driver = (ImageView) itemView.findViewById(R.id.imgview_car_driver);
@@ -203,7 +208,7 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
      *
      * @param driver
      */
-    public void setDriver(Driver driver) {
+    public void setDriver(final Driver driver) {
         if (!TextUtils.isEmpty(driver.getName()) || !TextUtils.isEmpty(driver.getLastName())) {
             txtview_driver_name.setText(driver.getName() + " " + driver.getLastName());
         }
@@ -225,6 +230,24 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         if (!TextUtils.isEmpty(driver.getCarriagePlate())) {
             txtview_carriage_plate.setText("Placa: " + driver.getCarriagePlate());
         }
+
+        imgview_call_driver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    String tel1 = driver.getPhone1();
+                    if (!TextUtils.isEmpty(tel1)) {
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:" + tel1));
+                        context.startActivity(callIntent);
+                    }
+                }
+                catch (SecurityException ex) {
+                    Log.d("LALA", ex.toString());
+                }
+
+            }
+        });
 
         if (driver.getLocation() == 1) {
             txtview_driver_location.setText(this.context.getResources().getString(R.string.prompt_driver_location));
