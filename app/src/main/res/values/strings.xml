@@ -22,14 +22,7 @@
     <string name="action_profile">Mi Perfil</string>
 
     <!-- Activity Main-->
-    <string name="title_activity_main">TransEjecutivos</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="action_settings">Settings</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_recoverpass">RecoverpassActivity</string>
+    <string name="title_activity_main">Transportes Ejecutivos</string>
 
     <!-- Recover Password-->
     <string name="prompt_recoverpass_button">Recuperar Contraseña</string>
@@ -71,7 +64,7 @@
     <!-- Driver Location-->
     <string name="title_activity_driverlocation">Ubicación del Conductor</string>
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
-        AIzaSyDIGGDg7xIEn4J5qH0SmgJEGjOMwd0qLNA
+         AIzaSyA8GTl86Z4sxrokL58617uNMV95kVlnvRs
     </string>
     <string name="x">AIzaSyDtAR9fShr07BPB9qOp_9hAClgwrxUcooA</string>
     <string name="prompt_driver_location">Ver Ubicación del Conductor</string>
@@ -88,4 +81,5 @@
     <string name="success_reset_password">Se ha cambiado la contraseña exitosamente, por favor inicie sesión</string>
     <string name="prompt_reset_password_button">Cambiar Contraseña</string>
     <string name="prompt_notifications">Deseo recibir notificaciones por correo</string>
+    <string name="title_activity_recoverpass">Recuperar Contraseña</string>
 </resources>
