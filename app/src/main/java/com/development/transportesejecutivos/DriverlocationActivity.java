@@ -2,6 +2,7 @@ package com.development.transportesejecutivos;
 
 import android.content.Intent;
 import android.location.Location;
+import android.os.Handler;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
@@ -37,8 +39,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static java.lang.Thread.sleep;
+import java.util.concurrent.TimeUnit;
 
 public class DriverlocationActivity extends FragmentActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
@@ -130,9 +131,9 @@ public class DriverlocationActivity extends FragmentActivity implements OnMapRea
                 LatLng userLocation = new LatLng( mLastLocation.getLatitude(),  mLastLocation.getLongitude());
                 mMap.addMarker(new MarkerOptions().position(userLocation).title(getResources().getString(R.string.title_user_location)));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(userLocation));
-                mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
+                mMap.moveCamera(CameraUpdateFactory.zoomTo(16));
 
-                getDriverLocation();
+                refreshMap();
             }
             else {
                 mGoogleApiClient.connect();
@@ -165,12 +166,12 @@ public class DriverlocationActivity extends FragmentActivity implements OnMapRea
                                     double lat = loc.getDouble(JsonKeys.DRIVER_LOCATION_LATITUDE);
                                     double lon = loc.getDouble(JsonKeys.DRIVER_LOCATION_LONGITUDE);
                                     LatLng driverLocation = new LatLng(lat, lon);
-                                    mMap.addMarker(new MarkerOptions().position(driverLocation).title(getResources().getString(R.string.title_driver_location)));
-                                    mMap.moveCamera(CameraUpdateFactory.newLatLng(driverLocation));
-                                    mMap.moveCamera(CameraUpdateFactory.zoomTo(14));
-                                }
 
-                                //getDriverLocation();
+                                    mMap.addMarker(new MarkerOptions().position(driverLocation).title(getResources().getString(R.string.title_driver_location)));
+                                    //mMap.moveCamera(CameraUpdateFactory.newLatLng(driverLocation));
+                                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(driverLocation, 16));
+                                    mMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+                                }
                             }
                             else {
                                 setErrorSnackBar(container, getResources().getString(R.string.error_general));
@@ -197,7 +198,24 @@ public class DriverlocationActivity extends FragmentActivity implements OnMapRea
             }
         };
 
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(10),//time out in 10second
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,//DEFAULT_MAX_RETRIES = 1;
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         requestQueue.add(stringRequest);
+    }
+
+    public void refreshMap() {
+        final Handler h = new Handler();
+        final int delay = 5000; //milliseconds
+
+        h.postDelayed(new Runnable(){
+            public void run(){
+                getDriverLocation();
+                h.postDelayed(this, delay);
+            }
+        }, delay);
     }
 
 

@@ -82,4 +82,9 @@
     <string name="prompt_reset_password_button">Cambiar Contraseña</string>
     <string name="prompt_notifications">Deseo recibir notificaciones por correo</string>
     <string name="title_activity_recoverpass">Recuperar Contraseña</string>
+    <string name="prompt_see_driver_data">Detalle de Conductor</string>
+    <string name="prompt_see_service_details">Detalle de servicio</string>
+    <string name="prompt_back_to_general">Regresar</string>
+    <string name="prompt_version">1.1.1</string>
+    <string name="prompt_call_driver">Llamar conductor</string>
 </resources>

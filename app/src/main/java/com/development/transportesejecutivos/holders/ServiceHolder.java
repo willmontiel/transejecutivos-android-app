@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,7 +44,6 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
     TextView txtview_fly;
     TextView txtview_obs;
 
-    ImageView img_view_driver_photo;
     ImageView imgview_car_driver;
     ImageView imgview_car_photo;
 
@@ -57,17 +57,18 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
     View cardView;
     View relativeloDetails;
     View relativelayout_driver_details;
+    View relativelayout_general;
 
-    ImageView expander;
-    ImageView contracter;
-    ImageView imgview_call_driver;
+    Button btn_see_driver_data;
+    Button btn_see_service_details;
+    Button btn_back_to_general_from_details;
+    Button btn_driver_location;
 
-    private int mOriginalHeight = 0;
+    Button btn_call_driver;
+
     private boolean mIsDetailsViewExpanded = false;
 
     Context context;
-
-    TextView txtview_driver_location;
 
     Service service;
 
@@ -87,9 +88,6 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         txtview_fly = (TextView) itemView.findViewById(R.id.txtview_fly);
         txtview_obs = (TextView) itemView.findViewById(R.id.txtview_obs);
 
-        imgview_call_driver = (ImageView) itemView.findViewById(R.id.imgview_call_driver);
-
-        img_view_driver_photo = (ImageView) itemView.findViewById(R.id.img_view_driver_photo);
         imgview_car_driver = (ImageView) itemView.findViewById(R.id.imgview_car_driver);
         imgview_car_photo = (ImageView) itemView.findViewById(R.id.imgview_car_photo);
 
@@ -103,11 +101,13 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         cardView =  itemView.findViewById(R.id.card_view_services_list);
         relativeloDetails =  itemView.findViewById(R.id.relativelayout_details);
         relativelayout_driver_details =  itemView.findViewById(R.id.relativelayout_driver_details);
+        relativelayout_general =  itemView.findViewById(R.id.relativelayout_general);
 
-        expander = (ImageView) itemView.findViewById(R.id.imgview_expand_icon);
-        contracter = (ImageView) itemView.findViewById(R.id.imgview_contract_icon);
-
-        txtview_driver_location = (TextView) itemView.findViewById(R.id.txtview_driver_location);
+        btn_see_driver_data = (Button) itemView.findViewById(R.id.btn_see_driver_data);
+        btn_see_service_details = (Button) itemView.findViewById(R.id.btn_see_service_details);
+        btn_back_to_general_from_details = (Button) itemView.findViewById(R.id.btn_back_to_general_from_details);
+        btn_call_driver = (Button) itemView.findViewById(R.id.btn_call_driver);
+        btn_driver_location = (Button) itemView.findViewById(R.id.btn_driver_location);
 
         this.context = context;
 
@@ -129,21 +129,21 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        expander.setOnClickListener(new View.OnClickListener() {
+        btn_see_service_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 collapse(itemView, relativeloDetails);
             }
         });
 
-        contracter.setOnClickListener(new View.OnClickListener() {
+        btn_back_to_general_from_details.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 collapse(itemView, relativeloDetails);
             }
         });
 
-        img_view_driver_photo.setOnClickListener(new View.OnClickListener() {
+        btn_see_driver_data.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 collapse(itemView, relativelayout_driver_details);
@@ -190,17 +190,25 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         txtview_datetime_detail.setText(service.getStartDate());
 
         //setServiceStatus(service.getStatus());
-
         if (!TextUtils.isEmpty(service.getPax())) {
-            txtview_pax.setText("Pasajeros: " + service.getPax());
+            int pax = Integer.parseInt(service.getPax());
+            if (pax > 1) {
+                txtview_pax.setText(service.getPax() + " Pasajeros");
+                txtview_pax.setVisibility(View.VISIBLE);
+            }
         }
 
         if (!TextUtils.isEmpty(service.getFly()) && !TextUtils.isEmpty(service.getAeroline())) {
             txtview_fly.setText(Html.fromHtml("Vuelo: <a href=\"" + this.context.getResources().getString(R.string.url_fly) + service.getFly() + "\">" + service.getFly() + ", " + service.getAeroline() + "</a>"));
+            txtview_obs.setVisibility(View.VISIBLE);
         }
 
         txtview_fly.setMovementMethod(LinkMovementMethod.getInstance());
-        txtview_obs.setText("Observaciones: " + service.getObservations());
+
+        if (!TextUtils.isEmpty(service.getObservations())) {
+            txtview_obs.setText("Observaciones: " + service.getObservations());
+            txtview_obs.setVisibility(View.VISIBLE);
+        }
     }
 
     /**
@@ -230,7 +238,7 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
             txtview_carriage_plate.setText("Placa: " + driver.getCarriagePlate());
         }
 
-        imgview_call_driver.setOnClickListener(new View.OnClickListener() {
+        btn_call_driver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
@@ -249,8 +257,7 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         });
 
         if (driver.getLocation() == 1) {
-            txtview_driver_location.setText(this.context.getResources().getString(R.string.prompt_driver_location));
-            txtview_driver_location.setOnClickListener(new View.OnClickListener() {
+            btn_driver_location.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(context, DriverlocationActivity.class);
@@ -258,6 +265,8 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
                     context.startActivity(i);
                 }
             });
+
+            btn_driver_location.setVisibility(View.VISIBLE);
         }
 
         String durl = ApiConstants.URL_DRIVER_PHOTO + "cara" + driver.getCode() + ".jpg&ancho=100";
@@ -269,13 +278,13 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap bitmap) {
-                        img_view_driver_photo.setImageBitmap(bitmap);
+                        //img_view_driver_photo.setImageBitmap(bitmap);
                         imgview_car_driver.setImageBitmap(bitmap);
                     }
                 }, 0, 0, null,
                 new Response.ErrorListener() {
                     public void onErrorResponse(VolleyError error) {
-                        img_view_driver_photo.setImageResource(R.drawable.driver);
+                        //img_view_driver_photo.setImageResource(R.drawable.driver);
                     }
                 });
 
@@ -318,57 +327,20 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
     }
 
     public void collapse(final View view, final View layout) {
-        if (mOriginalHeight == 0) {
-            mOriginalHeight = view.getHeight();
-        }
-
-        ValueAnimator valueAnimator;
-
         if (!mIsDetailsViewExpanded) {
             mIsDetailsViewExpanded = true;
-            //valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + (int) (mOriginalHeight * 1.3));
-
             relativeloDetails.setVisibility(View.GONE);
             relativelayout_driver_details.setVisibility(View.GONE);
-
+            relativelayout_general.setVisibility(View.GONE);
             layout.setVisibility(View.VISIBLE);
-            expander.setVisibility(View.GONE);
-            contracter.setVisibility(View.VISIBLE);
-
-            int heigth = layout.getLayoutParams().height;
-
-            valueAnimator = ValueAnimator.ofInt(mOriginalHeight, mOriginalHeight + heigth);
         }
         else  {
             mIsDetailsViewExpanded = false;
-
-            int heigth = layout.getHeight();
-
-            valueAnimator = ValueAnimator.ofInt(mOriginalHeight + heigth, mOriginalHeight);
-
             relativeloDetails.setVisibility(View.GONE);
-
             relativelayout_driver_details.setVisibility(View.GONE);
-
             layout.setVisibility(View.GONE);
-            expander.setVisibility(View.VISIBLE);
-            contracter.setVisibility(View.GONE);
+            relativelayout_general.setVisibility(View.VISIBLE);
         }
-
-        /**
-         valueAnimator.setDuration(300);
-         valueAnimator.setInterpolator(new LinearInterpolator());
-         valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-         public void onAnimationUpdate(ValueAnimator animation) {
-         Integer value = (Integer) animation.getAnimatedValue();
-
-         cardView.getLayoutParams().height = value.intValue();
-         cardView.requestLayout();
-         }
-         });
-
-         valueAnimator.start();
-         **/
     }
 
     public View getItemView() {

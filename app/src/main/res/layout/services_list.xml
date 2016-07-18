@@ -17,6 +17,7 @@
         android:padding="10dp" >
 
         <RelativeLayout
+            android:id="@+id/relativelayout_general"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="6dp">
@@ -43,36 +44,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-
-
-            <ImageView
-                android:id="@+id/imgview_expand_icon"
+            <Button
+                android:id="@+id/btn_see_service_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="10dp"
                 android:layout_below="@+id/txtview_datetime"
-                android:src="@drawable/arrow_down"
-                android:visibility="visible"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="10dp"/>
+                android:elevation="10dp"
+                android:text="@string/prompt_see_service_details"
+                android:background="@color/blue"
+                android:textColor="@color/colorPrimaryTextLight" />
 
-            <ImageView
-                android:id="@+id/imgview_contract_icon"
-                android:layout_below="@+id/txtview_datetime"
-                android:src="@drawable/arrow_up"
-                android:visibility="invisible"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginTop="10dp" />
-
-            <ImageView
-                android:id="@+id/img_view_driver_photo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="0dp"
-                android:paddingBottom="0dp"
-                android:layout_alignParentBottom="true" />
+            <Button
+                android:id="@+id/btn_see_driver_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_below="@+id/btn_see_service_details"
+                android:elevation="10dp"
+                android:text="@string/prompt_see_driver_data"
+                android:background="@color/green"
+                android:textColor="@color/colorPrimaryTextLight" />
 
         </RelativeLayout>
 
@@ -85,10 +78,12 @@
             android:layout_gravity="bottom"
             android:visibility="gone"
             android:padding="8dp">
+
                 <TextView
                     android:id="@+id/txtview_reference"
-                    android:textColor="@color/colorPrimaryDark"
                     android:layout_width="wrap_content"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="18dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true" />
 
@@ -111,11 +106,14 @@
                     android:layout_marginTop="16dp"
                     android:layout_below="@+id/txtview_destiny_detail"
                     android:layout_width="wrap_content"
+                    android:textSize="20dp"
+                    android:textColor="@color/green"
                     android:layout_height="wrap_content"/>
 
                 <TextView
                     android:id="@+id/txtview_paxcant"
                     android:layout_below="@+id/txtview_datetime_detail"
+                    android:visibility="gone"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -127,6 +125,7 @@
 
                 <TextView
                     android:id="@+id/txtview_obs"
+                    android:visibility="gone"
                     android:textColor="@color/colorError"
                     android:layout_below="@+id/txtview_pax"
                     android:layout_width="wrap_content"
@@ -134,16 +133,28 @@
 
                 <TextView
                     android:id="@+id/txtview_fly"
+                    android:visibility="gone"
                     android:layout_below="@+id/txtview_obs"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
+
+                <Button
+                    android:id="@+id/btn_back_to_general_from_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_below="@+id/txtview_fly"
+                    android:elevation="10dp"
+                    android:text="@string/prompt_back_to_general"
+                    android:background="@color/blue"
+                    android:textColor="@color/colorPrimaryTextLight" />
         </RelativeLayout>
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/relativelayout_driver_details"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:background="@color/colorBackground"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:visibility="gone"
@@ -153,6 +164,8 @@
                 android:id="@+id/txtview_driver_name"
                 android:text="@string/not_driver"
                 android:layout_width="wrap_content"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="18dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true" />
 
@@ -186,21 +199,30 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/txtview_driver_location"
-                android:layout_below="@+id/txtview_carriage_plate"
-                android:clickable="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-            <ImageView
-                android:id="@+id/imgview_call_driver"
-                android:layout_below="@+id/txtview_driver_location"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn_driver_location"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/sym_action_call"
-                android:layout_centerInParent="true"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@+id/txtview_carriage_plate"
+                android:elevation="10dp"
+                android:visibility="gone"
+                android:text="@string/prompt_driver_location"
+                android:background="@color/blue"
+                android:textColor="@color/colorPrimaryTextLight" />
+
+            <Button
+                android:id="@+id/btn_call_driver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@+id/btn_driver_location"
+                android:elevation="10dp"
+                android:text="@string/prompt_call_driver"
+                android:background="@color/orange"
+                android:textColor="@color/colorPrimaryTextLight" />
 
             <ImageView
                 android:id="@+id/imgview_car_driver"
