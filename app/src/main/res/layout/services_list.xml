@@ -200,16 +200,28 @@
                 android:layout_height="wrap_content"/>
 
             <Button
-                android:id="@+id/btn_driver_location"
+                android:id="@+id/btn_back_to_general_from_driver"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_below="@+id/txtview_carriage_plate"
                 android:elevation="10dp"
+                android:text="@string/prompt_back_to_general"
+                android:background="@color/blue"
+                android:textColor="@color/colorPrimaryTextLight" />
+
+            <Button
+                android:id="@+id/btn_driver_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_below="@+id/btn_back_to_general_from_driver"
+                android:elevation="10dp"
                 android:visibility="gone"
                 android:text="@string/prompt_driver_location"
-                android:background="@color/blue"
+                android:background="@color/green"
                 android:textColor="@color/colorPrimaryTextLight" />
 
             <Button
@@ -222,6 +234,7 @@
                 android:elevation="10dp"
                 android:text="@string/prompt_call_driver"
                 android:background="@color/orange"
+                android:visibility="gone"
                 android:textColor="@color/colorPrimaryTextLight" />
 
             <ImageView

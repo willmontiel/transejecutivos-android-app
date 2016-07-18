@@ -63,8 +63,8 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
     Button btn_see_service_details;
     Button btn_back_to_general_from_details;
     Button btn_driver_location;
-
     Button btn_call_driver;
+    Button btn_back_to_general_from_driver;
 
     private boolean mIsDetailsViewExpanded = false;
 
@@ -108,6 +108,7 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         btn_back_to_general_from_details = (Button) itemView.findViewById(R.id.btn_back_to_general_from_details);
         btn_call_driver = (Button) itemView.findViewById(R.id.btn_call_driver);
         btn_driver_location = (Button) itemView.findViewById(R.id.btn_driver_location);
+        btn_back_to_general_from_driver = (Button) itemView.findViewById(R.id.btn_back_to_general_from_driver);
 
         this.context = context;
 
@@ -137,6 +138,13 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         });
 
         btn_back_to_general_from_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                collapse(itemView, relativeloDetails);
+            }
+        });
+
+        btn_back_to_general_from_driver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 collapse(itemView, relativeloDetails);
@@ -220,8 +228,6 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
             txtview_driver_name.setText(driver.getName() + " " + driver.getLastName());
         }
 
-        txtview_driver_email.setText(driver.getEmail());
-
         if (!TextUtils.isEmpty(driver.getPhone1()) || !TextUtils.isEmpty(driver.getPhone2())) {
             txtview_driver_phone.setText(driver.getPhone1() + ", " + driver.getPhone2());
         }
@@ -236,37 +242,39 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
 
         if (!TextUtils.isEmpty(driver.getCarriagePlate())) {
             txtview_carriage_plate.setText("Placa: " + driver.getCarriagePlate());
-        }
 
-        btn_call_driver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    String tel1 = driver.getPhone1();
-                    if (!TextUtils.isEmpty(tel1)) {
-                        Intent callIntent = new Intent(Intent.ACTION_CALL);
-                        callIntent.setData(Uri.parse("tel:" + tel1));
-                        context.startActivity(callIntent);
-                    }
-                }
-                catch (SecurityException ex) {
-                    Log.d("LALA", ex.toString());
-                }
-
-            }
-        });
-
-        if (driver.getLocation() == 1) {
-            btn_driver_location.setOnClickListener(new View.OnClickListener() {
+            btn_call_driver.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent i = new Intent(context, DriverlocationActivity.class);
-                    i.putExtra(JsonKeys.SERVICE_ID, service.getIdService());
-                    context.startActivity(i);
+                    try {
+                        String tel1 = driver.getPhone1();
+                        if (!TextUtils.isEmpty(tel1)) {
+                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            callIntent.setData(Uri.parse("tel:" + tel1));
+                            context.startActivity(callIntent);
+                        }
+                    }
+                    catch (SecurityException ex) {
+                        Log.d("LALA", ex.toString());
+                    }
+
                 }
             });
 
-            btn_driver_location.setVisibility(View.VISIBLE);
+            btn_call_driver.setVisibility(View.VISIBLE);
+
+            if (driver.getLocation() == 1) {
+                btn_driver_location.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(context, DriverlocationActivity.class);
+                        i.putExtra(JsonKeys.SERVICE_ID, service.getIdService());
+                        context.startActivity(i);
+                    }
+                });
+
+                btn_driver_location.setVisibility(View.VISIBLE);
+            }
         }
 
         String durl = ApiConstants.URL_DRIVER_PHOTO + "cara" + driver.getCode() + ".jpg&ancho=100";
@@ -327,6 +335,14 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
     }
 
     public void collapse(final View view, final View layout) {
+        /*
+        mIsDetailsViewExpanded = true;
+        relativeloDetails.setVisibility(View.GONE);
+        relativelayout_driver_details.setVisibility(View.GONE);
+        relativelayout_general.setVisibility(View.GONE);
+        layout.setVisibility(View.VISIBLE);
+        */
+
         if (!mIsDetailsViewExpanded) {
             mIsDetailsViewExpanded = true;
             relativeloDetails.setVisibility(View.GONE);
