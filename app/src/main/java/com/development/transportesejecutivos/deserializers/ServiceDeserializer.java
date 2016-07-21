@@ -70,6 +70,7 @@ public class ServiceDeserializer extends DeserializerValidator{
                         String source = validateString(JsonKeys.SERVICE_SOURCE, jsonServiceObject);
                         String destiny = validateString(JsonKeys.SERVICE_DESTINY, jsonServiceObject);
                         String observations = validateString(JsonKeys.SERVICE_OBSERVATIONS, jsonServiceObject);
+                        int shareLocation = validateInt(JsonKeys.SERVICE_SHARE_LOCATION, jsonServiceObject);
 
                         serviceData.setIdService(idService);
                         serviceData.setReference(reference);
@@ -83,6 +84,7 @@ public class ServiceDeserializer extends DeserializerValidator{
                         serviceData.setSource(source);
                         serviceData.setDestiny(destiny);
                         serviceData.setObservations(observations);
+                        serviceData.setShareLocation(shareLocation);
 
                         int idDriver = validateInt(JsonKeys.DRIVER_ID, jsonServiceObject);
                         String dcode = validateString(JsonKeys.DRIVER_CODE, jsonServiceObject);
@@ -150,8 +152,9 @@ public class ServiceDeserializer extends DeserializerValidator{
                     String destiny = validateString(JsonKeys.SERVICE_DESTINY, jsonObject);
                     String observations = validateString(JsonKeys.SERVICE_OBSERVATIONS, jsonObject);
                     String status = validateString(JsonKeys.SERVICE_STATUS, jsonObject);
+                    int shareLocation = validateInt(JsonKeys.SERVICE_SHARE_LOCATION, jsonObject);
 
-                    Service service = new Service(idService, reference, createDate, startDate, fly, aeroline, company, paxCant, pax, source, destiny, observations, status);
+                    Service service = new Service(idService, reference, createDate, startDate, fly, aeroline, company, paxCant, pax, source, destiny, observations, status, shareLocation);
 
                     int idDriver = validateInt(JsonKeys.DRIVER_ID, jsonObject);
                     String dcode = validateString(JsonKeys.DRIVER_CODE, jsonObject);

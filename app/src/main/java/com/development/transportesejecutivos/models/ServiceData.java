@@ -32,6 +32,7 @@ public class ServiceData {
     String carriagePlate;
     String status;
     int location;
+    int shareLocation;
 
     public ServiceData() {
 
@@ -259,5 +260,13 @@ public class ServiceData {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getShareLocation() {
+        return shareLocation;
+    }
+
+    public void setShareLocation(int shareLocation) {
+        this.shareLocation = shareLocation;
     }
 }

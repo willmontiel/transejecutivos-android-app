@@ -1,5 +1,6 @@
 package com.development.transportesejecutivos;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -65,5 +66,10 @@ public class DashboardActivity extends ActivityBase implements AdapterView.OnIte
                 break;
         }
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,7 +31,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
@@ -41,7 +43,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class DriverlocationActivity extends FragmentActivity implements OnMapReadyCallback,
+public class DriverlocationActivity extends ActionBarActivity implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private GoogleMap mMap;
@@ -58,11 +60,15 @@ public class DriverlocationActivity extends FragmentActivity implements OnMapRea
     protected static int UPDATE_INTERVAL = 10000; // 10 sec
     protected static int FATEST_INTERVAL = 5000; // 5 sec
     protected static int DISPLACEMENT = 10; // 10 meters
+    Marker marker = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_driverlocation);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         validateSession();
 
@@ -166,11 +172,7 @@ public class DriverlocationActivity extends FragmentActivity implements OnMapRea
                                     double lat = loc.getDouble(JsonKeys.DRIVER_LOCATION_LATITUDE);
                                     double lon = loc.getDouble(JsonKeys.DRIVER_LOCATION_LONGITUDE);
                                     LatLng driverLocation = new LatLng(lat, lon);
-
-                                    mMap.addMarker(new MarkerOptions().position(driverLocation).title(getResources().getString(R.string.title_driver_location)));
-                                    //mMap.moveCamera(CameraUpdateFactory.newLatLng(driverLocation));
-                                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(driverLocation, 16));
-                                    mMap.moveCamera(CameraUpdateFactory.zoomTo(16));
+                                    moveDriverMarker(driverLocation);
                                 }
                             }
                             else {
@@ -204,6 +206,17 @@ public class DriverlocationActivity extends FragmentActivity implements OnMapRea
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
         requestQueue.add(stringRequest);
+    }
+
+    public void moveDriverMarker(LatLng driverLocation) {
+        if (this.marker == null) {
+            this.marker = mMap.addMarker(new MarkerOptions().position(driverLocation).title(getResources().getString(R.string.title_driver_location)).icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+        }
+
+        this.marker.setPosition(driverLocation);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(driverLocation));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(driverLocation, 16));
+        mMap.moveCamera(CameraUpdateFactory.zoomTo(16));
     }
 
     public void refreshMap() {

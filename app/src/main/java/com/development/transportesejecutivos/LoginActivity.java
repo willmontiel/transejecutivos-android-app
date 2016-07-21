@@ -165,7 +165,7 @@ public class LoginActivity extends ActivityBase implements LoaderCallbacks<Curso
 
     @Override
     public void onBackPressed() {
-
+        finish();
     }
 
     /**

@@ -17,6 +17,7 @@ public class Service {
     String destiny;
     String observations;
     String status;
+    int shareLocation;
 
     /**
      *
@@ -33,8 +34,9 @@ public class Service {
      * @param destiny
      * @param observations
      * @param status
+     * @param shareLocation
      */
-    public Service(int idService, String reference, String createDate, String startDate, String fly, String aeroline, String company, String paxCant, String pax, String source, String destiny, String observations, String status) {
+    public Service(int idService, String reference, String createDate, String startDate, String fly, String aeroline, String company, String paxCant, String pax, String source, String destiny, String observations, String status, int shareLocation) {
         this.idService = idService;
         this.reference = reference;
         this.createDate = createDate;
@@ -48,6 +50,7 @@ public class Service {
         this.destiny = destiny;
         this.observations = observations;
         this.status = status;
+        this.shareLocation = shareLocation;
     }
 
     public int getIdService() {
@@ -100,5 +103,9 @@ public class Service {
 
     public String getStatus() {
         return this.status;
+    }
+
+    public int getShareLocation() {
+        return this.shareLocation;
     }
 }

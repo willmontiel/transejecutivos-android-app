@@ -57,7 +57,7 @@
 
     <!-- Dashboard Activity -->
     <string name="title_activity_dashboard">Transportes Ejecutivos</string>
-    <string name="not_driver">Servicio sin conductor asignado</string>
+    <string name="not_driver">Servicio sin conductor</string>
     <string name="action_dashboard">Inicio</string>
     <string name="prompt_search_service">Buscar Servicio</string>
 
@@ -85,6 +85,12 @@
     <string name="prompt_see_driver_data">Detalle de Conductor</string>
     <string name="prompt_see_service_details">Detalle de servicio</string>
     <string name="prompt_back_to_general">Regresar</string>
-    <string name="prompt_version">1.1.1</string>
+    <string name="prompt_version">Versión 1.1.1</string>
     <string name="prompt_call_driver">Llamar conductor</string>
+    <string name="prompt_share_location">Compartir mi ubicación</string>
+
+    <!-- Share Location-->
+    <string name="share_location_subject">Estoy viajando con Transportes Ejecutivos</string>
+    <string name="share_location_content">Estoy viajando con Transportes Ejecutivos, para ver mi ubicación visita: http://www.transportesejecutivos.com/getlocation.php?id=</string>
+    <string name="share_location_title">Compartir en</string>
 </resources>

@@ -23,12 +23,18 @@
             android:layout_margin="6dp">
 
             <TextView
-                android:id="@+id/txtview_source"
+                android:id="@+id/txtview_datetime"
+                android:layout_alignParentTop="true"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:textSize="18sp" />
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/txtview_source"
+                android:layout_below="@+id/txtview_datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/txtview_destiny"
@@ -37,12 +43,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/txtview_datetime"
-                android:layout_below="@+id/txtview_destiny"
-                android:layout_marginTop="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <Button
                 android:id="@+id/btn_see_service_details"
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="10dp"
-                android:layout_below="@+id/txtview_datetime"
+                android:layout_below="@+id/txtview_destiny"
                 android:elevation="10dp"
                 android:text="@string/prompt_see_service_details"
                 android:background="@color/blue"
@@ -60,22 +60,31 @@
                 android:id="@+id/btn_see_driver_data"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:layout_below="@+id/btn_see_service_details"
                 android:elevation="10dp"
                 android:text="@string/prompt_see_driver_data"
                 android:background="@color/green"
                 android:textColor="@color/colorPrimaryTextLight" />
 
+            <Button
+                android:id="@+id/btn_share_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:layout_below="@+id/btn_see_driver_data"
+                android:elevation="10dp"
+                android:text="@string/prompt_share_location"
+                android:visibility="gone"
+                android:background="@color/orange"
+                android:textColor="@color/colorPrimaryTextLight" />
+
         </RelativeLayout>
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:id="@+id/relativelayout_details"
-            android:background="@color/cardview_light_background"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:visibility="gone"
             android:padding="8dp">
 
@@ -151,12 +160,10 @@
                     android:textColor="@color/colorPrimaryTextLight" />
         </RelativeLayout>
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:id="@+id/relativelayout_driver_details"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
             android:visibility="gone"
             android:padding="8dp">
 
