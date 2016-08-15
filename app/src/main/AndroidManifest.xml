@@ -32,7 +32,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RecoverpassActivity"
             android:label="@string/title_activity_recoverpass"
@@ -56,10 +56,14 @@
             android:label="@string/title_activity_driverlocation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".ResetpassActivity"
+        <activity
+            android:name=".ResetpassActivity"
             android:label="@string/title_activity_resetpass"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ServicerequestActivity"
+            android:label="@string/title_request_service_activity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
