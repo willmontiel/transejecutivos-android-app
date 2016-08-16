@@ -2,52 +2,45 @@ package com.development.transportesejecutivos.fragments;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
+import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.development.transportesejecutivos.R;
-import com.development.transportesejecutivos.adapters.JsonKeys;
-import com.development.transportesejecutivos.api_config.ApiConstants;
-import com.development.transportesejecutivos.misc.PlaceJSONParser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
-public class ServiceRequestPart1Fragment extends FragmentBase {
-    private OnFragmentInteractionListener mListener;
-    PlacesTask placesTask;
-    ParserTask parserTask;
+public class ServiceRequestPart1Fragment extends FragmentBase implements AdapterView.OnItemClickListener {
 
     Button btn_next;
-    EditText editxt_address;
-    AutoCompleteTextView atvPlaces;
+    AutoCompleteTextView autoCompView;
+
+    private static final String LOG_TAG = "GP Autocomplete";
+    private static final String PLACES_API_BASE = "https://maps.googleapis.com/maps/api/place";
+    private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
+    private static final String OUT_JSON = "/json";
+
+    private static final String API_KEY = "AIzaSyAa1bDK_oCzAnpDUbYm5vVJ84S4b01LDLc";
 
     public ServiceRequestPart1Fragment() {
         // Required empty public constructor
@@ -64,201 +57,121 @@ public class ServiceRequestPart1Fragment extends FragmentBase {
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_service_request_part1, container, false);
 
         btn_next = (Button) view.findViewById(R.id.button_next);
-        //editxt_address = (EditText) view.findViewById(R.id.edittext_address);
-        atvPlaces = (AutoCompleteTextView) view.findViewById(R.id.atv_places);
-        atvPlaces.setThreshold(1);
+        autoCompView = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTxtView_places);
 
-        setOnClickListeners();
+        autoCompView.setAdapter(new GooglePlacesAutocompleteAdapter(getActivity().getApplicationContext(), R.layout.list_item));
+        autoCompView.setOnItemClickListener(this);
 
         return view;
     }
 
-
-    public void setOnClickListeners() {
-        atvPlaces.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                placesTask = new PlacesTask();
-                placesTask.execute(s.toString());
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+    public void onItemClick(AdapterView adapterView, View view, int position, long id) {
+        String str = (String) adapterView.getItemAtPosition(position);
+        Toast.makeText(getActivity().getApplicationContext(), str, Toast.LENGTH_SHORT).show();
     }
 
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+    public static ArrayList autocomplete(String input) {
+        ArrayList resultList = null;
+
+        HttpURLConnection conn = null;
+        StringBuilder jsonResults = new StringBuilder();
+        try {
+            StringBuilder sb = new StringBuilder(PLACES_API_BASE + TYPE_AUTOCOMPLETE + OUT_JSON);
+            sb.append("?key=" + API_KEY);
+            sb.append("&input=" + URLEncoder.encode(input, "utf8"));
+
+            URL url = new URL(sb.toString());
+
+            Log.d("LALA", url.toString());
+
+            conn = (HttpURLConnection) url.openConnection();
+            InputStreamReader in = new InputStreamReader(conn.getInputStream());
+
+            // Load the results into a StringBuilder
+            int read;
+            char[] buff = new char[1024];
+            while ((read = in.read(buff)) != -1) {
+                jsonResults.append(buff, 0, read);
+            }
+        } catch (MalformedURLException e) {
+            Log.d(LOG_TAG, "Error processing Places API URL", e);
+            return resultList;
+        } catch (IOException e) {
+            Log.d(LOG_TAG, "Error connecting to Places API", e);
+            return resultList;
+        } finally {
+            if (conn != null) {
+                conn.disconnect();
+            }
         }
-    }
 
-    /** A method to download json data from url */
-    private String downloadUrl(String strUrl) throws IOException {
-        String data = "";
-        InputStream iStream = null;
-        HttpURLConnection urlConnection = null;
-        try{
-            URL url = new URL(strUrl);
+        try {
+            // Create a JSON object hierarchy from the results
+            JSONObject jsonObj = new JSONObject(jsonResults.toString());
+            JSONArray predsJsonArray = jsonObj.getJSONArray("predictions");
 
-            // Creating an http connection to communicate with url
-            urlConnection = (HttpURLConnection) url.openConnection();
-
-            // Connecting to url
-            urlConnection.connect();
-
-            // Reading data from url
-            iStream = urlConnection.getInputStream();
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(iStream));
-
-            StringBuffer sb = new StringBuffer();
-
-            Log.d("LALA", "RESULT");
-            Log.d("LALA", sb.toString());
-
-            String line = "";
-            while( ( line = br.readLine()) != null){
-                sb.append(line);
+            // Extract the Place descriptions from the results
+            resultList = new ArrayList(predsJsonArray.length());
+            for (int i = 0; i < predsJsonArray.length(); i++) {
+                System.out.println(predsJsonArray.getJSONObject(i).getString("description"));
+                System.out.println("============================================================");
+                resultList.add(predsJsonArray.getJSONObject(i).getString("description"));
             }
-
-            data = sb.toString();
-
-            br.close();
-
-        } catch(Exception e){
-            Log.d("Exception", e.toString());
-        } finally{
-            iStream.close();
-            urlConnection.disconnect();
+        } catch (JSONException e) {
+            Log.e(LOG_TAG, "Cannot process JSON results", e);
         }
-        return data;
+
+        return resultList;
     }
 
-    // Fetches all places from GooglePlaces AutoComplete Web Service
-    private class PlacesTask extends AsyncTask<String, Void, String> {
+    class GooglePlacesAutocompleteAdapter extends ArrayAdapter implements Filterable {
+        private ArrayList resultList;
 
-        @Override
-        protected String doInBackground(String... place) {
-
-            // For storing data from web service
-            String data = "";
-
-            // Obtain browser key from https://code.google.com/apis/console
-            String key = "key=" + getResources().getString(R.string.google_maps_key);
-
-            String input="";
-
-            try {
-                input = "input=" + URLEncoder.encode(place[0], "utf-8");
-            } catch (UnsupportedEncodingException e1) {
-                e1.printStackTrace();
-            }
-
-            // place type to be searched
-            String types = "types=geocode";
-
-            // Sensor enabled
-            String sensor = "sensor=false";
-
-            // Building the parameters to the web service
-            String parameters = input+"&"+types+"&"+sensor+"&"+key;
-
-            // Output format
-            String output = "json";
-
-            // Building the url to the web service
-            String url = "https://maps.googleapis.com/maps/api/place/autocomplete/"+output+"?"+parameters;
-
-            Log.d("LALA", "URL");
-            Log.d("LALA", url);
-
-            try{
-                // Fetching the data from we service
-                data = downloadUrl(url);
-            }catch(Exception e){
-                Log.d("Background Task",e.toString());
-            }
-            return data;
+        public GooglePlacesAutocompleteAdapter(Context context, int textViewResourceId) {
+            super(context, textViewResourceId);
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            // Creating ParserTask
-            parserTask = new ParserTask();
-
-            // Starting Parsing the JSON string returned by Web Service
-            parserTask.execute(result);
-        }
-    }
-    /** A class to parse the Google Places in JSON format */
-    private class ParserTask extends AsyncTask<String, Integer, List<HashMap<String,String>>>{
-
-        JSONObject jObject;
-
-        @Override
-        protected List<HashMap<String, String>> doInBackground(String... jsonData) {
-
-            List<HashMap<String, String>> places = null;
-
-            PlaceJSONParser placeJsonParser = new PlaceJSONParser();
-
-            try{
-                jObject = new JSONObject(jsonData[0]);
-
-                // Getting the parsed data as a List construct
-                places = placeJsonParser.parse(jObject);
-
-            }catch(Exception e){
-                Log.d("Exception",e.toString());
-            }
-            return places;
+        public int getCount() {
+            return resultList.size();
         }
 
         @Override
-        protected void onPostExecute(List<HashMap<String, String>> result) {
+        public String getItem(int index) {
+            return resultList.get(index).toString();
+        }
 
-            String[] from = new String[] { "description"};
-            int[] to = new int[] { android.R.id.text1 };
+        @Override
+        public Filter getFilter() {
+            Filter filter = new Filter() {
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+                    FilterResults filterResults = new FilterResults();
+                    if (constraint != null) {
+                        // Retrieve the autocomplete results.
+                        resultList = autocomplete(constraint.toString());
 
-            // Creating a SimpleAdapter for the AutoCompleteTextView
-            SimpleAdapter adapter = new SimpleAdapter(getActivity().getBaseContext(), result, android.R.layout.simple_list_item_1, from, to);
+                        // Assign the data to the FilterResults
+                        filterResults.values = resultList;
+                        filterResults.count = resultList.size();
+                    }
+                    return filterResults;
+                }
 
-            // Setting the adapter
-            atvPlaces.setAdapter(adapter);
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+                    if (results != null && results.count > 0) {
+                        notifyDataSetChanged();
+                    } else {
+                        notifyDataSetInvalidated();
+                    }
+                }
+            };
+            return filter;
         }
     }
 }

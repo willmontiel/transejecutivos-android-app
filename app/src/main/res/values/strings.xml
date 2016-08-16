@@ -100,4 +100,6 @@
     <string name="prompt_request_service1_button">Siguiente</string>
     <string name="prompt_request_service1_title">¿A donde quieres ir?</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_google_places_autocomplete">GooglePlacesAutocompleteActivity
+    </string>
 </resources>

@@ -1,5 +1,7 @@
 package com.development.transportesejecutivos.misc;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +35,9 @@ public class PlaceJSONParser {
         List<HashMap<String, String>> placesList = new ArrayList<HashMap<String,String>>();
         HashMap<String, String> place = null;
 
+        //Log.d("LALA", "jPlaces");
+        //Log.d("LALA", jPlaces.toString());
+
         /** Taking each place, parses and adds to list object */
         for(int i=0; i<placesCount;i++){
             try {
@@ -58,6 +63,13 @@ public class PlaceJSONParser {
         String description = "";
 
         try {
+
+            Log.d("LALA", "jPlace");
+            Log.d("LALA", jPlace.toString());
+
+            Log.d("LALA", jPlace.getString("description"));
+            Log.d("LALA", jPlace.getString("id"));
+            Log.d("LALA", jPlace.getString("reference"));
 
             description = jPlace.getString("description");
             id = jPlace.getString("id");

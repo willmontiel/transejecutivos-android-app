@@ -42,33 +42,26 @@
                 android:layout_marginBottom="@dimen/xlg_text"
                 android:text="@string/prompt_request_service1_title"/>
 
-            <com.development.transportesejecutivos.misc.CustomAutoCompleteTextView
-                android:id="@+id/atv_places"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:hint="@string/prompt_find_address" />
 
-            <!--
-                        <android.support.design.widget.TextInputLayout
-                            android:id="@+id/txtinput_layout_address"
-                            app:errorTextAppearance="@style/ErrorText"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:errorEnabled="true" >
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/txtinput_layout_address"
+                    app:errorTextAppearance="@style/ErrorText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorEnabled="true" >
 
-                            <EditText
-                                android:id="@+id/edittext_address"
-                                android:theme="@style/EditTextStyle"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:hint="@string/prompt_find_address"
-                                android:inputType="text"
-                                android:maxLines="1"
-                                android:singleLine="true" />
+                    <AutoCompleteTextView
+                        android:id="@+id/autoCompleteTxtView_places"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/EditTextStyle"
+                        android:ems="10"
+                        android:hint="@string/prompt_find_address" >
 
-                        </android.support.design.widget.TextInputLayout>
-            -->
+                        <requestFocus />
+                    </AutoCompleteTextView>
+
+                </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/button_next"
