@@ -41,5 +41,8 @@ public class ApiConstants {
     public static final String URL_GOOGLE_OUTPUT = "json";
     public static final String URL_GOOGLE_API_TYPE = "place";
     public static final String URL_GOOGLE_API_PLACE_TYPE = "autocomplete";
+    public static final String GOOGLE_PLACES_API_KEY = "AIzaSyAa1bDK_oCzAnpDUbYm5vVJ84S4b01LDLc";
+
+    public static final String URL_GOOGLE_PLACES_API = URL_GOOGLE_BASE + "/" + URL_GOOGLE_API_TYPE + "/" + URL_GOOGLE_API_PLACE_TYPE + "/" + URL_GOOGLE_OUTPUT;
 
 }

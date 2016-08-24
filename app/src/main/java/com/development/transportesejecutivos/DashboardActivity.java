@@ -56,7 +56,7 @@ public class DashboardActivity extends ActivityBase implements AdapterView.OnIte
                 break;
 
             case 3:
-                i = new Intent(getApplicationContext(), ServicerequestActivity.class);
+                i = new Intent(getApplicationContext(), DestinyActivity.class);
                 startActivity(i);
                 break;
 

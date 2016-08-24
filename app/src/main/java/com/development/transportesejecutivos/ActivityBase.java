@@ -22,6 +22,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import com.development.transportesejecutivos.misc.UserSessionManager;
 import com.development.transportesejecutivos.models.User;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /**
  * Created by william.montiel on 11/03/2016.
@@ -219,5 +221,12 @@ public class ActivityBase extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void checkGooglePlayServices(){
+        int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
+            GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,this, 200).show();
+        }
     }
 }

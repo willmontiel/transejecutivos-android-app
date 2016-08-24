@@ -1,11 +1,7 @@
 package com.development.transportesejecutivos;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-
-import com.development.transportesejecutivos.fragments.ServiceRequestPart1Fragment;
 
 public class ServicerequestActivity extends ActivityBase {
 
@@ -22,12 +18,15 @@ public class ServicerequestActivity extends ActivityBase {
     }
 
     protected void setFragment() {
+        /*
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         ServiceRequestPart1Fragment serviceRequestPart1Fragment = new ServiceRequestPart1Fragment();
+        ServiceRequestPart1Fragment.setContext(getApplicationContext());
         serviceRequestPart1Fragment.setUser(user);
         fragmentTransaction.add(R.id.fragment_container, serviceRequestPart1Fragment, "Service Request Fragment Part 1");
         fragmentTransaction.commit();
+        */
     }
 }
 

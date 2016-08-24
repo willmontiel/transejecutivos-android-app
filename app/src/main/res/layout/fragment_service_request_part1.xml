@@ -48,13 +48,15 @@
                     app:errorTextAppearance="@style/ErrorText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:dropDownAnchor="@+id/header"
                     app:errorEnabled="true" >
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCompleteTxtView_places"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:theme="@style/EditTextStyle"
+                        android:theme="@style/Autocomplete"
+                        android:dropDownWidth="wrap_content"
                         android:ems="10"
                         android:hint="@string/prompt_find_address" >
 

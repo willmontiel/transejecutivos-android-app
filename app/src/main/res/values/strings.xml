@@ -99,7 +99,8 @@
     <string name="prompt_find_address">Escribe la dirección o el lugar</string>
     <string name="prompt_request_service1_button">Siguiente</string>
     <string name="prompt_request_service1_title">¿A donde quieres ir?</string>
+    <string name="google_api_places_api">AIzaSyAa1bDK_oCzAnpDUbYm5vVJ84S4b01LDLc</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_google_places_autocomplete">GooglePlacesAutocompleteActivity
-    </string>
+    <string name="title_activity_google_places_autocomplete">GooglePlacesAutocompleteActivity</string>
+    <string name="title_set_destiny">Solicitar servicio</string>
 </resources>
