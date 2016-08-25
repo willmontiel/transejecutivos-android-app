@@ -33,6 +33,11 @@ public class ActivityBase extends AppCompatActivity {
     UserSessionManager session;
     User user;
 
+    /**
+     * Create a Snackbar
+     * @param view
+     * @param message
+     */
     public void setErrorSnackBar(View view, String message) {
         Snackbar snackbar = Snackbar
                 .make(view, message, Snackbar.LENGTH_LONG);

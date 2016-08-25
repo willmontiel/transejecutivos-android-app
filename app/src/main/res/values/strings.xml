@@ -94,13 +94,17 @@
     <string name="share_location_content">Estoy viajando con Transportes Ejecutivos, para ver mi ubicación visita: http://www.transportesejecutivos.com/getlocation.php?id=</string>
     <string name="share_location_title">Compartir en</string>
 
-    <!-- Request Service -->
+    <!-- Service destiny -->
     <string name="title_request_service_activity">Solicitar servicio</string>
     <string name="prompt_find_address">Escribe la dirección o el lugar</string>
     <string name="prompt_request_service1_button">Siguiente</string>
     <string name="prompt_request_service1_title">¿A donde quieres ir?</string>
-    <string name="google_api_places_api">AIzaSyAa1bDK_oCzAnpDUbYm5vVJ84S4b01LDLc</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_google_places_autocomplete">GooglePlacesAutocompleteActivity</string>
-    <string name="title_set_destiny">Solicitar servicio</string>
+    <string name="title_set_destiny">Seleccionar destino</string>
+
+    <!-- Request Service -->
+    <string name="error_empty_destiny">Por favor selecciona un destino</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

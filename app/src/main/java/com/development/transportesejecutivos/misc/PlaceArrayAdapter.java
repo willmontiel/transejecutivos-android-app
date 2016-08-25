@@ -1,6 +1,8 @@
 package com.development.transportesejecutivos.misc;
 
 import android.content.Context;
+import android.text.TextPaint;
+import android.text.style.CharacterStyle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
@@ -19,7 +21,7 @@ import java.util.Iterator;
 import java.util.concurrent.TimeUnit;
 
 public class PlaceArrayAdapter extends ArrayAdapter<PlaceArrayAdapter.PlaceAutocomplete> implements Filterable {
-    private static final String TAG = "PlaceArrayAdapter";
+    private static final String TAG = "LALA";
     private GoogleApiClient mGoogleApiClient;
     private AutocompleteFilter mPlaceFilter;
     private LatLngBounds mBounds;
@@ -78,7 +80,12 @@ public class PlaceArrayAdapter extends ArrayAdapter<PlaceArrayAdapter.PlaceAutoc
             ArrayList resultList = new ArrayList<>(autocompletePredictions.getCount());
             while (iterator.hasNext()) {
                 AutocompletePrediction prediction = iterator.next();
-                resultList.add(new PlaceAutocomplete(prediction.getPlaceId(), prediction.getDescription()));
+                resultList.add(new PlaceAutocomplete(prediction.getPlaceId(), prediction.getPrimaryText(new CharacterStyle() {
+                    @Override
+                    public void updateDrawState(TextPaint tp) {
+
+                    }
+                })));
             }
             // Buffer release
             autocompletePredictions.release();

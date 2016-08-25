@@ -98,5 +98,13 @@ public class JsonKeys {
     public static final String DRIVER_LOCATION = "location";
     public static final String DRIVER_LOCATION_LATITUDE = "latitude";
     public static final String DRIVER_LOCATION_LONGITUDE = "longitude";
+
+    /**
+     * Request Service
+     */
+    public static final String REQUEST_SERVICE_LATLNG = "place_lat_lng";
+    public static final String REQUEST_SERVICE_NAME = "place_name";
+    public static final String REQUEST_SERVICE_ADDRESS = "place_address";
+    public static final String REQUEST_SERVICE_ID = "place_id";
 }
 
