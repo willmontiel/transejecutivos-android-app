@@ -20,7 +20,7 @@
             android:layout_height="80dp"
             android:contentDescription="@string/loginImage"
             android:id="@+id/imageView"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="14dp"
             android:src="@drawable/horizontal_logo"
             android:layout_gravity="center_horizontal" />
 
@@ -44,8 +44,8 @@
             android:verticalSpacing="8dp"
             android:layout_gravity="center_vertical"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
-
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"/>
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

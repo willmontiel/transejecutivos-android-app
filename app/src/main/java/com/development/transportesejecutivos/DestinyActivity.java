@@ -10,7 +10,6 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.development.transportesejecutivos.adapters.JsonKeys;
 import com.development.transportesejecutivos.misc.PlaceArrayAdapter;
 import com.google.android.gms.common.ConnectionResult;
@@ -20,7 +19,6 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
-import com.google.android.gms.maps.model.LatLng;
 
 
 public class DestinyActivity extends ActivityBase implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {

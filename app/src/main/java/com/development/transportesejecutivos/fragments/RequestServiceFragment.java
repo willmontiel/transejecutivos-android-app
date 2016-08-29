@@ -7,11 +7,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.development.transportesejecutivos.R;
+import com.development.transportesejecutivos.adapters.CarTypeAdapter;
 import com.development.transportesejecutivos.adapters.JsonKeys;
+import com.development.transportesejecutivos.models.CarType;
 import com.development.transportesejecutivos.models.User;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,10 +37,10 @@ public class RequestServiceFragment extends FragmentBase {
     private String placeAddress = null;
     private String placeId = null;
 
-    TextView txt_place_lat_lng;
     TextView txt_place_address;
     TextView txt_place_name;
-    TextView txt_place_id;
+    Spinner spnn_car_type;
+    EditText edittxt_date;
 
     private OnFragmentInteractionListener mListener;
 
@@ -62,10 +72,8 @@ public class RequestServiceFragment extends FragmentBase {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            placeLatLng = getArguments().getString(JsonKeys.REQUEST_SERVICE_LATLNG);
             placeName = getArguments().getString(JsonKeys.REQUEST_SERVICE_NAME);
             placeAddress = getArguments().getString(JsonKeys.REQUEST_SERVICE_ADDRESS);
-            placeId = getArguments().getString(JsonKeys.REQUEST_SERVICE_ID);
         }
     }
 
@@ -74,21 +82,54 @@ public class RequestServiceFragment extends FragmentBase {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_request, container, false);
 
-        txt_place_lat_lng = (TextView) view.findViewById(R.id.txt_place_lat_lng);
         txt_place_address = (TextView) view.findViewById(R.id.txt_place_address);
         txt_place_name = (TextView) view.findViewById(R.id.txt_place_name);
-        txt_place_id = (TextView) view.findViewById(R.id.txt_place_id);
+        edittxt_date = (EditText) view.findViewById(R.id.edittxt_date);
 
         setTxtData();
 
+        ArrayList<CarType> arrayList = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            CarType carType = new CarType();
+            carType.setIdCarType(i);
+            carType.setName("Tipo de carro " + i);
+            arrayList.add(carType);
+        }
+
+        setDataOnSpinners(arrayList);
         return view;
     }
 
     public void setTxtData() {
-        txt_place_lat_lng.setText(placeLatLng);
         txt_place_address.setText(placeAddress);
         txt_place_name.setText(placeName);
-        txt_place_id.setText(placeId);
+        edittxt_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    DateDialog dialog=new DateDialog(view);
+                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                    dialog.show(ft, "DatePicker");
+                    etDateReview.clearFocus();
+                }
+            }
+        });
+    }
+
+    private void setDataOnSpinners(ArrayList<CarType> clients) {
+        CarTypeAdapter carTypeAdapter = new CarTypeAdapter(this.context, android.R.layout.simple_dropdown_item_1line, clients);
+        spnn_car_type = (Spinner) view.findViewById(R.id.spnn_car_type);
+        spnn_car_type.setAdapter(carTypeAdapter);
+
+        /*
+        spnn_car_type.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+                CarType carType = (CarType) arg0.getItemAtPosition(arg2);
+                Toast.makeText(context, carType.getName() + ", was selected", Toast.LENGTH_LONG).show();
+            }
+        });
+        */
     }
 
     public void onButtonPressed(Uri uri) {
