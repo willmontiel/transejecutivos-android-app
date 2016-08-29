@@ -1,26 +1,23 @@
 package com.development.transportesejecutivos.fragments;
 
+import android.support.v4.app.FragmentTransaction;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.development.transportesejecutivos.R;
 import com.development.transportesejecutivos.adapters.CarTypeAdapter;
 import com.development.transportesejecutivos.adapters.JsonKeys;
+import com.development.transportesejecutivos.misc.DateDialog;
+import com.development.transportesejecutivos.misc.TimeDialog;
 import com.development.transportesejecutivos.models.CarType;
-import com.development.transportesejecutivos.models.User;
-
 import java.util.ArrayList;
 
 /**
@@ -41,6 +38,7 @@ public class RequestServiceFragment extends FragmentBase {
     TextView txt_place_name;
     Spinner spnn_car_type;
     EditText edittxt_date;
+    EditText edittxt_time;
 
     private OnFragmentInteractionListener mListener;
 
@@ -85,6 +83,7 @@ public class RequestServiceFragment extends FragmentBase {
         txt_place_address = (TextView) view.findViewById(R.id.txt_place_address);
         txt_place_name = (TextView) view.findViewById(R.id.txt_place_name);
         edittxt_date = (EditText) view.findViewById(R.id.edittxt_date);
+        edittxt_time = (EditText) view.findViewById(R.id.edittxt_time);
 
         setTxtData();
 
@@ -103,14 +102,25 @@ public class RequestServiceFragment extends FragmentBase {
     public void setTxtData() {
         txt_place_address.setText(placeAddress);
         txt_place_name.setText(placeName);
+
         edittxt_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    DateDialog dialog=new DateDialog(view);
-                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                    dialog.show(ft, "DatePicker");
-                    etDateReview.clearFocus();
+                    DateDialog dialog = new DateDialog(edittxt_date);
+                    dialog.show(getFragmentManager(), "date_picker");
+                    edittxt_date.clearFocus();
+                }
+            }
+        });
+
+        edittxt_time.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    TimeDialog dialog = new TimeDialog(edittxt_time);
+                    dialog.show(getFragmentManager(), "time_picker");
+                    edittxt_date.clearFocus();
                 }
             }
         });
