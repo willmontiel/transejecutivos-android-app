@@ -6,18 +6,33 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.development.transportesejecutivos.R;
 import com.development.transportesejecutivos.adapters.CarTypeAdapter;
 import com.development.transportesejecutivos.adapters.JsonKeys;
 import com.development.transportesejecutivos.misc.DateDialog;
+import com.development.transportesejecutivos.misc.PlaceArrayAdapter;
 import com.development.transportesejecutivos.misc.TimeDialog;
 import com.development.transportesejecutivos.models.CarType;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
+import com.google.android.gms.location.places.Places;
+
 import java.util.ArrayList;
 
 /**
@@ -28,7 +43,21 @@ import java.util.ArrayList;
  * Use the {@link RequestServiceFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RequestServiceFragment extends FragmentBase {
+public class RequestServiceFragment extends FragmentBase implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
+    private static final String LOG_TAG = "LALA";
+    private static final int GOOGLE_API_CLIENT_ID = 0;
+    private AutoCompleteTextView mAutocompleteTextView;
+    private GoogleApiClient mGoogleApiClient;
+    private PlaceArrayAdapter mPlaceArrayAdapter;
+
+    private Button button_request_service;
+
+    private String sourcePlaceLatLng = null;
+    private String sourcePlaceName = null;
+    private String sourcePlaceAddress = null;
+    private String sourcePlaceId = null;
+
+
     private String placeLatLng = null;
     private String placeName = null;
     private String placeAddress = null;
@@ -96,8 +125,61 @@ public class RequestServiceFragment extends FragmentBase {
         }
 
         setDataOnSpinners(arrayList);
+
+        buildGoogleApiClient();
+
+        mAutocompleteTextView = (AutoCompleteTextView) view.findViewById(R.id.autoCompleteTxtView_places);
+        mAutocompleteTextView.setThreshold(3);
+        mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
+        mPlaceArrayAdapter = new PlaceArrayAdapter(context, android.R.layout.simple_list_item_1, null, null);
+        mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
+
+        button_request_service = (Button) view.findViewById(R.id.button_request_service);
+        button_request_service.setEnabled(false);
+        button_request_service.setBackgroundColor(getResources().getColor(R.color.colorSecondaryText));
+
         return view;
     }
+
+    public synchronized void buildGoogleApiClient() {
+        if (mGoogleApiClient == null) {
+            mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+                    .addApi(Places.GEO_DATA_API)
+                    .enableAutoManage(getActivity(), GOOGLE_API_CLIENT_ID, this)
+                    .addConnectionCallbacks(this)
+                    .build();
+        }
+    }
+
+    private AdapterView.OnItemClickListener mAutocompleteClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final PlaceArrayAdapter.PlaceAutocomplete item = mPlaceArrayAdapter.getItem(position);
+            final String placeId = String.valueOf(item.placeId);
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(mGoogleApiClient, placeId);
+            placeResult.setResultCallback(mUpdatePlaceDetailsCallback);
+        }
+    };
+
+    private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback = new ResultCallback<PlaceBuffer>() {
+        @Override
+        public void onResult(PlaceBuffer places) {
+            if (!places.getStatus().isSuccess()) {
+                Log.e(LOG_TAG, "Place query did not complete. Error: " + places.getStatus().toString());
+                return;
+            }
+            final Place place = places.get(0);
+
+            placeLatLng = place.getLatLng() + "";
+            placeName = place.getName().toString();
+            placeAddress = place.getAddress().toString();
+            placeId = place.getId().toString();
+
+
+            button_request_service.setEnabled(true);
+            button_request_service.setBackgroundColor(getResources().getColor(R.color.green));
+        }
+    };
 
     public void setTxtData() {
         txt_place_address.setText(placeAddress);
@@ -140,6 +222,25 @@ public class RequestServiceFragment extends FragmentBase {
             }
         });
         */
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        mPlaceArrayAdapter.setGoogleApiClient(mGoogleApiClient);
+        Log.i(LOG_TAG, "Google Places API connected.");
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.e(LOG_TAG, "Google Places API connection failed with error code: " + connectionResult.getErrorCode());
+        Toast.makeText(context, "Google Places API connection failed with error code:" + connectionResult.getErrorCode(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        mPlaceArrayAdapter.setGoogleApiClient(null);
+        Log.e(LOG_TAG, "Google Places API connection suspended.");
     }
 
     public void onButtonPressed(Uri uri) {

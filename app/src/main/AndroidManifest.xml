@@ -61,14 +61,20 @@
             android:name=".ResetpassActivity"
             android:label="@string/title_activity_resetpass"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".Requestservice"
+            android:label="@string/title_request_service_activity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
         <activity
             android:name=".ServicerequestActivity"
             android:label="@string/title_request_service_activity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".DestinyActivity"
+        <activity
+            android:name=".DestinyActivity"
             android:label="@string/title_set_destiny"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
