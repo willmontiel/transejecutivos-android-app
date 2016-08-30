@@ -63,7 +63,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".Requestservice"
+            android:name=".RequestserviceActivity"
             android:label="@string/title_request_service_activity"
             android:theme="@style/AppTheme.NoActionBar"/>
 

@@ -145,7 +145,6 @@ public class RequestServiceFragment extends FragmentBase implements GoogleApiCli
         if (mGoogleApiClient == null) {
             mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                     .addApi(Places.GEO_DATA_API)
-                    .enableAutoManage(getActivity(), GOOGLE_API_CLIENT_ID, this)
                     .addConnectionCallbacks(this)
                     .build();
         }
@@ -189,9 +188,9 @@ public class RequestServiceFragment extends FragmentBase implements GoogleApiCli
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    DateDialog dialog = new DateDialog(edittxt_date);
-                    dialog.show(getFragmentManager(), "date_picker");
-                    edittxt_date.clearFocus();
+                    //DateDialog dialog = new DateDialog(edittxt_date);
+                    //dialog.show(getFragmentManager(), "date_picker");
+                    //edittxt_date.clearFocus();
                 }
             }
         });
@@ -200,9 +199,9 @@ public class RequestServiceFragment extends FragmentBase implements GoogleApiCli
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
-                    TimeDialog dialog = new TimeDialog(edittxt_time);
-                    dialog.show(getFragmentManager(), "time_picker");
-                    edittxt_date.clearFocus();
+                    //TimeDialog dialog = new TimeDialog(edittxt_time);
+                    //dialog.show(getFragmentManager(), "time_picker");
+                    //edittxt_date.clearFocus();
                 }
             }
         });
