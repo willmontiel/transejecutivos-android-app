@@ -9,4 +9,8 @@
     <dimen name="nl_text">16dp</dimen>
     <dimen name="sm_text">14dp</dimen>
     <dimen name="xs_text">10dp</dimen>
+
+    <dimen name="step_pager_tab_width">32dp</dimen>
+    <dimen name="step_pager_tab_height">3dp</dimen>
+    <dimen name="step_pager_tab_spacing">4dp</dimen>
 </resources>
