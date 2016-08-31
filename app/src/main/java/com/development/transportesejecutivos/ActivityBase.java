@@ -214,6 +214,8 @@ public class ActivityBase extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.action_profile) {
+            Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(i);
             return true;
         }
         else if (id == R.id.action_new_service) {

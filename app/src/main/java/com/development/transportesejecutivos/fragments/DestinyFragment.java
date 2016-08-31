@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 import com.development.transportesejecutivos.R;
+import com.development.transportesejecutivos.RequestserviceActivity;
 import com.development.transportesejecutivos.ServicerequestActivity;
 import com.development.transportesejecutivos.adapters.JsonKeys;
 import com.development.transportesejecutivos.misc.PlaceArrayAdapter;
@@ -28,7 +30,7 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 
 
-public class DestinyFragment extends FragmentBase implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
+public class DestinyFragment extends Fragment implements GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks{
     private static final String LOG_TAG = "LALA";
     private AutoCompleteTextView mAutocompleteTextView;
     private GoogleApiClient mGoogleApiClient;
@@ -41,24 +43,34 @@ public class DestinyFragment extends FragmentBase implements GoogleApiClient.OnC
     private String placeAddress = null;
     private String placeId = null;
 
-    private OnFragmentInteractionListener mListener;
+    View view;
+
+    User user;
+    Context context;
 
     public DestinyFragment() {
 
     }
 
-    public static DestinyFragment newInstance(Context context, User user, FragmentTransaction fragmentTransaction) {
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public static DestinyFragment newInstance(Context context) {
         DestinyFragment fragment = new DestinyFragment();
-        fragment.setUser(user);
+        //fragment.setUser(user);
         fragment.setContext(context);
-        fragment.setFragmentTransaction(fragmentTransaction);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        checkGooglePlayServices();
+        //checkGooglePlayServices();
         buildGoogleApiClient();
     }
 
@@ -71,13 +83,14 @@ public class DestinyFragment extends FragmentBase implements GoogleApiClient.OnC
         mAutocompleteTextView.setOnItemClickListener(mAutocompleteClickListener);
         mPlaceArrayAdapter = new PlaceArrayAdapter(this.context, android.R.layout.simple_list_item_1, null, null);
         mAutocompleteTextView.setAdapter(mPlaceArrayAdapter);
-getFragmentManager().beginTransaction();
+        getFragmentManager().beginTransaction();
         button_next = (Button) view.findViewById(R.id.button_next);
         button_next.setEnabled(false);
         button_next.setBackgroundColor(getResources().getColor(R.color.colorSecondaryText));
         button_next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                next();
             }
         });
 
@@ -171,13 +184,6 @@ getFragmentManager().beginTransaction();
             startActivity(i);
             getActivity().finish();
             */
-        }
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
         }
     }
 }
