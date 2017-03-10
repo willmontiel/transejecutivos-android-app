@@ -125,4 +125,8 @@
     <string name="hint_your_email">Optional</string>
     <string name="submit_confirm_message">Place the order with the deli? You will receive an email confirmation.</string>
     <string name="submit_confirm_button">Place order</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
