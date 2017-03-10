@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:background="@color/shadow"
     android:layout_height="wrap_content">
 
@@ -22,9 +24,42 @@
             android:layout_height="wrap_content"
             android:layout_margin="6dp">
 
+            <LinearLayout
+                android:id="@+id/pax_data_container"
+                android:background="@color/colorAccent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/general_container_padding"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtview_pax_name"
+                    android:text="lala"
+                    android:textColor="@color/colorPrimaryTextLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="22dp"/>
+
+                <TextView
+                    android:text="lala"
+                    android:id="@+id/txtview_pax_email1"
+                    android:textColor="@color/colorPrimaryTextLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:text="lala"
+                    android:id="@+id/txtview_pax_phone1"
+                    android:textColor="@color/colorPrimaryTextLight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/txtview_datetime"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/pax_data_container"
                 android:textColor="@color/colorPrimaryDark"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.development.transportesejecutivos.R;
 import com.development.transportesejecutivos.holders.ServiceHolder;
 import com.development.transportesejecutivos.models.ServiceData;
+import com.development.transportesejecutivos.models.User;
 
 
 /**
@@ -23,13 +24,15 @@ import com.development.transportesejecutivos.models.ServiceData;
  */
 public class ServiceExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
+    private User user;
     private List<String> header; // header titles
     // Child data in format of header title, child title
     private HashMap<String, ArrayList<ServiceData>> child;
 
-    public ServiceExpandableListAdapter(Context context, List<String> listDataHeader,
+    public ServiceExpandableListAdapter(Context context, User user, List<String> listDataHeader,
                                         HashMap<String, ArrayList<ServiceData>> listChildData) {
         this._context = context;
+        this.user = user;
         this.header = listDataHeader;
         this.child = listChildData;
     }
@@ -54,8 +57,6 @@ public class ServiceExpandableListAdapter extends BaseExpandableListAdapter {
         // Getting child text
         ServiceData currentService = (ServiceData) getChild(groupPosition, childPosition);
 
-        Log.d("Service", currentService.getReference());
-
         // Inflating child layout and setting textview
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -63,7 +64,7 @@ public class ServiceExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.services_list, parent, false);
         }
 
-        ServiceHolder serviceHolder = new ServiceHolder(convertView, this._context);
+        ServiceHolder serviceHolder = new ServiceHolder(convertView, this._context, this.user);
         serviceHolder.setServiceData(currentService);
 
         return serviceHolder.getItemView();

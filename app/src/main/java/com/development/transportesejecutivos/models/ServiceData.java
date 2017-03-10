@@ -4,6 +4,7 @@ package com.development.transportesejecutivos.models;
  * Created by developer on 3/21/16.
  */
 public class ServiceData {
+    //Service
     int idService;
     String reference;
     String createDate;
@@ -16,6 +17,7 @@ public class ServiceData {
     String source;
     String destiny;
     String observations;
+    //Driver
     int idDriver;
     String code;
     String name;
@@ -33,9 +35,55 @@ public class ServiceData {
     String status;
     int location;
     int shareLocation;
+    //Passenger
+    int idPassenger;
+    String passengerName;
+    String passengerLastname;
+    String passengerEmail1;
+    String passengerPhone1;
 
     public ServiceData() {
 
+    }
+
+    public int getIdPassenger() {
+        return idPassenger;
+    }
+
+    public void setIdPassenger(int idPassenger) {
+        this.idPassenger = idPassenger;
+    }
+
+    public String getPassengerName() {
+        return passengerName;
+    }
+
+    public void setPassengerName(String passengerName) {
+        this.passengerName = passengerName;
+    }
+
+    public String getPassengerLastname() {
+        return passengerLastname;
+    }
+
+    public void setPassengerLastname(String passengerLastname) {
+        this.passengerLastname = passengerLastname;
+    }
+
+    public String getPassengerEmail1() {
+        return passengerEmail1;
+    }
+
+    public void setPassengerEmail1(String passengerEmail1) {
+        this.passengerEmail1 = passengerEmail1;
+    }
+
+    public String getPassengerPhone1() {
+        return passengerPhone1;
+    }
+
+    public void setPassengerPhone1(String passengerPhone1) {
+        this.passengerPhone1 = passengerPhone1;
     }
 
     public int getLocation() {

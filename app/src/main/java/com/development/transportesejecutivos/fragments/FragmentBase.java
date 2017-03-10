@@ -24,6 +24,7 @@ import com.development.transportesejecutivos.adapters.JsonKeys;
 import com.development.transportesejecutivos.adapters.ServiceAdapter;
 import com.development.transportesejecutivos.adapters.ServiceExpandableListAdapter;
 import com.development.transportesejecutivos.api_config.ApiConstants;
+import com.development.transportesejecutivos.deserializers.Deserializer;
 import com.development.transportesejecutivos.deserializers.ServiceDeserializer;
 import com.development.transportesejecutivos.models.Date;
 import com.development.transportesejecutivos.models.ServiceData;
@@ -180,7 +181,7 @@ public class FragmentBase extends Fragment {
                 else {
                     ServiceDeserializer serviceDeserializer = new ServiceDeserializer();
                     serviceDeserializer.setResponseJsonArray(servicesData);
-                    serviceDeserializer.deserialize();
+                    serviceDeserializer.deserializeOneService();
 
                     serviceAdapter.addAll(serviceDeserializer.getServicesArrayList(), serviceDeserializer.getDriversArrayList());
                 }
@@ -201,18 +202,26 @@ public class FragmentBase extends Fragment {
             JSONObject resObj = new JSONObject(response);
             Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
             if (!error) {
-                JSONArray servicesData = resObj.getJSONArray(JsonKeys.SERVICES);
-                JSONArray datesData = resObj.getJSONArray(JsonKeys.DATES);
-                if (servicesData.length() <= 0) {
+                JSONArray servicesJsonArray = resObj.getJSONArray(JsonKeys.SERVICES);
+                JSONArray datesJsonArray = resObj.getJSONArray(JsonKeys.DATES);
+                if (servicesJsonArray.length() <= 0) {
                     setErrorSnackBar(getResources().getString(R.string.no_services));
                 }
                 else {
+                    /*
                     ServiceDeserializer serviceDeserializer = new ServiceDeserializer();
                     serviceDeserializer.setDatesJsonArray(datesData);
                     serviceDeserializer.setServicesJsonArray(servicesData);
                     serviceDeserializer.deserializeByGroup();
 
                     setItems(serviceDeserializer.getServices(), serviceDeserializer.getDatesArray());
+                    */
+                    Deserializer deserializer = new Deserializer();
+                    deserializer.setDatesJsonArray(datesJsonArray);
+                    deserializer.setServicesJsonArray(servicesJsonArray);
+                    deserializer.deserializeGroupedServices();
+
+                    setItems(deserializer.getServicesArray(), deserializer.getDatesArray());
                 }
             }
             else {
@@ -239,7 +248,7 @@ public class FragmentBase extends Fragment {
             hashMap.put(header.get(i), servicesData.get(i));
         }
 
-        serviceExpandableListAdapter = new ServiceExpandableListAdapter(getActivity(), header, hashMap);
+        serviceExpandableListAdapter = new ServiceExpandableListAdapter(getActivity(), user, header, hashMap);
 
         // Setting adpater over expandablelistview
         expandableListView.setAdapter(serviceExpandableListAdapter);
