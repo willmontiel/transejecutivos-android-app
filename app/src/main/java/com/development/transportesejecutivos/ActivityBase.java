@@ -15,11 +15,15 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.development.transportesejecutivos.misc.UserSessionManager;
 import com.development.transportesejecutivos.models.User;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 /**
  * Created by william.montiel on 11/03/2016.
@@ -29,6 +33,11 @@ public class ActivityBase extends AppCompatActivity {
     UserSessionManager session;
     User user;
 
+    /**
+     * Create a Snackbar
+     * @param view
+     * @param message
+     */
     public void setErrorSnackBar(View view, String message) {
         Snackbar snackbar = Snackbar
                 .make(view, message, Snackbar.LENGTH_LONG);
@@ -183,5 +192,48 @@ public class ActivityBase extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_logout) {
+            session.logoutUser();
+            return true;
+        }
+        else if (id == R.id.action_profile) {
+            Intent i = new Intent(getApplicationContext(), ProfileActivity.class);
+            startActivity(i);
+            return true;
+        }
+        else if (id == R.id.action_new_service) {
+            return true;
+        }
+        else if (id == R.id.action_dashboard) {
+            Intent i = new Intent(getApplicationContext(), DashboardActivity.class);
+            startActivity(i);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void checkGooglePlayServices(){
+        int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
+            GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,this, 200).show();
+        }
     }
 }

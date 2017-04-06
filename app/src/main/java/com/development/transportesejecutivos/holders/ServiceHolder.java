@@ -23,13 +23,21 @@ import com.development.transportesejecutivos.R;
 import com.development.transportesejecutivos.adapters.JsonKeys;
 import com.development.transportesejecutivos.api_config.ApiConstants;
 import com.development.transportesejecutivos.models.Driver;
+import com.development.transportesejecutivos.models.Passenger;
 import com.development.transportesejecutivos.models.Service;
 import com.development.transportesejecutivos.models.ServiceData;
+import com.development.transportesejecutivos.models.User;
+import com.google.android.gms.vision.text.Text;
 
 /**
  * Created by developer on 3/21/16.
  */
 public class ServiceHolder extends RecyclerView.ViewHolder {
+    View pax_data_container;
+    TextView txtview_pax_name;
+    TextView txtview_pax_email1;
+    TextView txtview_pax_phone1;
+
     TextView txtview_destiny;
     TextView txtview_source;
     TextView txtview_datetime;
@@ -66,11 +74,16 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
     Button btn_share_location;
 
     Context context;
-
+    User user;
     Service service;
 
-    public ServiceHolder(View itemView, Context context) {
+    public ServiceHolder(View itemView, Context context, User user) {
         super(itemView);
+        pax_data_container = itemView.findViewById(R.id.pax_data_container);
+        txtview_pax_name = (TextView) itemView.findViewById(R.id.txtview_pax_name);
+        txtview_pax_email1 = (TextView) itemView.findViewById(R.id.txtview_pax_email1);
+        txtview_pax_phone1 = (TextView) itemView.findViewById(R.id.txtview_pax_phone1);
+
         txtview_destiny = (TextView) itemView.findViewById(R.id.txtview_destiny);
         txtview_source = (TextView) itemView.findViewById(R.id.txtview_source);
         txtview_datetime = (TextView) itemView.findViewById(R.id.txtview_datetime);
@@ -109,6 +122,7 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         btn_share_location = (Button) itemView.findViewById(R.id.btn_share_location);
 
         this.context = context;
+        this.user = user;
 
         setClickListeners(itemView);
     }
@@ -163,11 +177,35 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
     }
 
     public void setServiceData(ServiceData serviceData) {
-        Service service = new Service(serviceData.getIdService(), serviceData.getReference(), serviceData.getCreateDate(), serviceData.getStartDate(), serviceData.getFly(), serviceData.getAeroline(), serviceData.getCompany(), serviceData.getPaxCant(), serviceData.getPax(), serviceData.getSource(), serviceData.getDestiny(), serviceData.getObservations(), serviceData.getStatus(), serviceData.getShareLocation());
+        Service service = new Service();
+        service.setIdService(serviceData.getIdService());
+        service.setReference(serviceData.getReference());
+        service.setCreateDate(serviceData.getCreateDate());
+        service.setStartDate(serviceData.getStartDate());
+        service.setFly(serviceData.getFly());
+        service.setAeroline(serviceData.getAeroline());
+        service.setCompany(serviceData.getCompany());
+        service.setPaxCant(serviceData.getPaxCant());
+        service.setPax(serviceData.getPax());
+        service.setSource(serviceData.getSource());
+        service.setDestiny(serviceData.getDestiny());
+        service.setObservations(serviceData.getObservations());
+        service.setStatus(serviceData.getStatus());
+        service.setShareLocation(serviceData.getShareLocation());
+
         setService(service);
 
         Driver driver = new Driver(serviceData.getIdDriver(), serviceData.getCode(), serviceData.getName(), serviceData.getLastName(), serviceData.getPhone1(), serviceData.getPhone2(), serviceData.getAddress(), serviceData.getCity(), serviceData.getEmail(), serviceData.getCarType(), serviceData.getCarBrand(), serviceData.getCarModel(), serviceData.getCarColor(), serviceData.getCarriagePlate(), serviceData.getStatus(), serviceData.getLocation());
         setDriver(driver);
+
+        Passenger passenger = new Passenger();
+        passenger.setIdPassenger(serviceData.getIdPassenger());
+        passenger.setName(serviceData.getName());
+        passenger.setLastName(serviceData.getLastName());
+        passenger.setEmail(serviceData.getEmail());
+        passenger.setPhone(serviceData.getPhone1());
+
+        setPassenger(passenger);
     }
 
     /**
@@ -312,6 +350,15 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         relativelayout_driver_details.setVisibility(View.GONE);
         relativelayout_general.setVisibility(View.GONE);
         layout.setVisibility(View.VISIBLE);
+    }
+
+    public void setPassenger(Passenger passenger) {
+        if (this.user.getRole().equals(JsonKeys.USER_COMPANY_ROLE)) {
+            txtview_pax_name.setText(passenger.getName() + " " + passenger.getLastName());
+            txtview_pax_email1.setText(passenger.getEmail());
+            txtview_pax_phone1.setText(passenger.getPhone());
+            pax_data_container.setVisibility(View.VISIBLE);
+        }
     }
 
     public View getItemView() {

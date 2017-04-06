@@ -56,13 +56,13 @@ public class JsonKeys {
     /**
      * Passenger Json Keys
      */
-    public static final String PASSENGER_ID = "admin_id";
+    public static final String PASSENGER_ID = "passenger_id";
     public static final String PASSENGER_CODE = "passenger_code";
-    public static final String PASSENGER_NAME = "admin_name";
-    public static final String PASSENGER_LASTNAME = "admin_lastname";
+    public static final String PASSENGER_NAME = "passenger_name";
+    public static final String PASSENGER_LASTNAME = "passenger_lastname";
     public static final String PASSENGER_COMPANY = "passenger_company";
-    public static final String PASSENGER_PHONE = "admin_phone1";
-    public static final String PASSENGER_EMAIL = "admin_email";
+    public static final String PASSENGER_PHONE = "passenger_phone1";
+    public static final String PASSENGER_EMAIL = "passenger_email1";
     public static final String PASSENGER_ADDRESS = "passenger_address";
     public static final String PASSENGER_CITY = "passenger_city";
 
@@ -98,5 +98,18 @@ public class JsonKeys {
     public static final String DRIVER_LOCATION = "location";
     public static final String DRIVER_LOCATION_LATITUDE = "latitude";
     public static final String DRIVER_LOCATION_LONGITUDE = "longitude";
+
+    /**
+     * Request Service
+     */
+    public static final String REQUEST_SERVICE_LATLNG = "place_lat_lng";
+    public static final String REQUEST_SERVICE_NAME = "place_name";
+    public static final String REQUEST_SERVICE_ADDRESS = "place_address";
+    public static final String REQUEST_SERVICE_ID = "place_id";
+
+    /**
+     * Role
+     */
+    public static final String USER_COMPANY_ROLE = "empresa";
 }
 

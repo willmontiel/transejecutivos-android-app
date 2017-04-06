@@ -47,14 +47,14 @@
                 android:text="@string/prompt_search_service"
                 android:background="@color/colorPrimary"
                 android:textColor="@color/colorPrimaryTextLight"
-                android:elevation="10dp"
-                />
+                android:elevation="10dp"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/filter_services_recycler_view"
-                android:layout_below="@+id/datePicker"
+            <ExpandableListView
+                android:id="@+id/service_expandable_filter_listview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content"
+                android:divider="@color/colorPrimary"
+                android:dividerHeight="1dp" />
 
         </LinearLayout>
     </ScrollView>

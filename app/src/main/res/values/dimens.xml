@@ -3,4 +3,17 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="xlg_text">50dp</dimen>
+    <dimen name="lg_text">25dp</dimen>
+    <dimen name="md_text">20dp</dimen>
+    <dimen name="nl_text">16dp</dimen>
+    <dimen name="sm_text">14dp</dimen>
+    <dimen name="xs_text">10dp</dimen>
+
+    <dimen name="step_pager_tab_width">32dp</dimen>
+    <dimen name="step_pager_tab_height">3dp</dimen>
+
+    <dimen name="step_pager_tab_spacing">4dp</dimen>
+
+    <dimen name="general_container_padding">10dp</dimen>
 </resources>

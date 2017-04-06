@@ -24,9 +24,10 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceHolder> {
     User user;
 
     //public ServiceAdapter(Context context, User user) {
-    public ServiceAdapter(Context context) {
+    public ServiceAdapter(Context context, User user) {
         //this.user = user;
         this.context = context;
+        this.user = user;
         this.services = new ArrayList<>();
         this.drivers = new ArrayList<>();
     }
@@ -36,7 +37,7 @@ public class ServiceAdapter extends RecyclerView.Adapter<ServiceHolder> {
         View itemView = LayoutInflater.from(context)
                 .inflate(R.layout.services_list, parent, false);
 
-        return new ServiceHolder(itemView, this.context);
+        return new ServiceHolder(itemView, this.context, this.user);
     }
 
     @Override

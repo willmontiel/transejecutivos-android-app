@@ -14,27 +14,43 @@ public class Passenger {
     String address;
     String city;
 
-    /**
-     * Crate a Passenger object
-     * @param idPassenger
-     * @param code
-     * @param name
-     * @param lastName
-     * @param company
-     * @param phone
-     * @param email
-     * @param address
-     * @param city
-     */
-    public Passenger(int idPassenger, String code, String name, String lastName, String company, String phone, String email, String address, String city) {
+    public Passenger() {
+
+    }
+
+    public void setIdPassenger(int idPassenger) {
         this.idPassenger = idPassenger;
+    }
+
+    public void setCode(String code) {
         this.code = code;
+    }
+
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public void setCompany(String company) {
         this.company = company;
+    }
+
+    public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setCity(String city) {
         this.city = city;
     }
 

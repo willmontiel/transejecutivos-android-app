@@ -19,37 +19,63 @@ public class Service {
     String status;
     int shareLocation;
 
-    /**
-     *
-     * @param idService
-     * @param reference
-     * @param createDate
-     * @param startDate
-     * @param fly
-     * @param aeroline
-     * @param company
-     * @param paxCant
-     * @param pax
-     * @param source
-     * @param destiny
-     * @param observations
-     * @param status
-     * @param shareLocation
-     */
-    public Service(int idService, String reference, String createDate, String startDate, String fly, String aeroline, String company, String paxCant, String pax, String source, String destiny, String observations, String status, int shareLocation) {
+    public Service() {
+
+    }
+
+    public void setIdService(int idService) {
         this.idService = idService;
+    }
+
+    public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public void setCreateDate(String createDate) {
         this.createDate = createDate;
+    }
+
+    public void setStartDate(String startDate) {
         this.startDate = startDate;
+    }
+
+    public void setFly(String fly) {
         this.fly = fly;
+    }
+
+    public void setAeroline(String aeroline) {
         this.aeroline = aeroline;
+    }
+
+    public void setCompany(String company) {
         this.company = company;
+    }
+
+    public void setPaxCant(String paxCant) {
         this.paxCant = paxCant;
+    }
+
+    public void setPax(String pax) {
         this.pax = pax;
+    }
+
+    public void setSource(String source) {
         this.source = source;
+    }
+
+    public void setDestiny(String destiny) {
         this.destiny = destiny;
+    }
+
+    public void setObservations(String observations) {
         this.observations = observations;
+    }
+
+    public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void setShareLocation(int shareLocation) {
         this.shareLocation = shareLocation;
     }
 

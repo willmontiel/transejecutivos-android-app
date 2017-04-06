@@ -3,17 +3,16 @@ package com.development.transportesejecutivos.fragments;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.app.Fragment;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,15 +24,17 @@ import com.development.transportesejecutivos.adapters.JsonKeys;
 import com.development.transportesejecutivos.adapters.ServiceAdapter;
 import com.development.transportesejecutivos.adapters.ServiceExpandableListAdapter;
 import com.development.transportesejecutivos.api_config.ApiConstants;
+import com.development.transportesejecutivos.deserializers.Deserializer;
 import com.development.transportesejecutivos.deserializers.ServiceDeserializer;
 import com.development.transportesejecutivos.models.Date;
 import com.development.transportesejecutivos.models.ServiceData;
 import com.development.transportesejecutivos.models.User;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,9 +53,14 @@ public class FragmentBase extends Fragment {
     View progressBar;
     View layout;
     User user;
+    Context context;
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -81,7 +87,8 @@ public class FragmentBase extends Fragment {
                 new com.android.volley.Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        processData(response);
+                        //processData(response);
+                        processDataForGroup(response);
                     }
                 },
                 new com.android.volley.Response.ErrorListener() {
@@ -175,7 +182,7 @@ public class FragmentBase extends Fragment {
                 else {
                     ServiceDeserializer serviceDeserializer = new ServiceDeserializer();
                     serviceDeserializer.setResponseJsonArray(servicesData);
-                    serviceDeserializer.deserialize();
+                    serviceDeserializer.deserializeOneService();
 
                     serviceAdapter.addAll(serviceDeserializer.getServicesArrayList(), serviceDeserializer.getDriversArrayList());
                 }
@@ -196,18 +203,26 @@ public class FragmentBase extends Fragment {
             JSONObject resObj = new JSONObject(response);
             Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
             if (!error) {
-                JSONArray servicesData = resObj.getJSONArray(JsonKeys.SERVICES);
-                JSONArray datesData = resObj.getJSONArray(JsonKeys.DATES);
-                if (servicesData.length() <= 0) {
+                JSONArray servicesJsonArray = resObj.getJSONArray(JsonKeys.SERVICES);
+                JSONArray datesJsonArray = resObj.getJSONArray(JsonKeys.DATES);
+                if (servicesJsonArray.length() <= 0) {
                     setErrorSnackBar(getResources().getString(R.string.no_services));
                 }
                 else {
+                    /*
                     ServiceDeserializer serviceDeserializer = new ServiceDeserializer();
                     serviceDeserializer.setDatesJsonArray(datesData);
                     serviceDeserializer.setServicesJsonArray(servicesData);
                     serviceDeserializer.deserializeByGroup();
 
                     setItems(serviceDeserializer.getServices(), serviceDeserializer.getDatesArray());
+                    */
+                    Deserializer deserializer = new Deserializer();
+                    deserializer.setDatesJsonArray(datesJsonArray);
+                    deserializer.setServicesJsonArray(servicesJsonArray);
+                    deserializer.deserializeGroupedServices();
+
+                    setItems(deserializer.getServicesArray(), deserializer.getDatesArray());
                 }
             }
             else {
@@ -234,7 +249,7 @@ public class FragmentBase extends Fragment {
             hashMap.put(header.get(i), servicesData.get(i));
         }
 
-        serviceExpandableListAdapter = new ServiceExpandableListAdapter(getActivity(), header, hashMap);
+        serviceExpandableListAdapter = new ServiceExpandableListAdapter(getActivity(), user, header, hashMap);
 
         // Setting adpater over expandablelistview
         expandableListView.setAdapter(serviceExpandableListAdapter);
@@ -303,34 +318,43 @@ public class FragmentBase extends Fragment {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show, final View formView, final View progressView) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        if (isAdded()) {
+            // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
+            // for very easy animations. If available, use these APIs to fade-in
+            // the progress spinner.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
+                int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            formView.setVisibility(show ? View.GONE : View.VISIBLE);
-            formView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    formView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+                formView.setVisibility(show ? View.GONE : View.VISIBLE);
+                formView.animate().setDuration(shortAnimTime).alpha(
+                        show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        formView.setVisibility(show ? View.GONE : View.VISIBLE);
+                    }
+                });
 
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            progressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            progressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            formView.setVisibility(show ? View.GONE : View.VISIBLE);
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                progressView.animate().setDuration(shortAnimTime).alpha(
+                        show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                    }
+                });
+            } else {
+                // The ViewPropertyAnimator APIs are not available, so simply show
+                // and hide the relevant UI components.
+                progressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                formView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        }
+    }
+
+    public void checkGooglePlayServices(){
+        int checkGooglePlayServices = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
+        if (checkGooglePlayServices != ConnectionResult.SUCCESS) {
+            GooglePlayServicesUtil.getErrorDialog(checkGooglePlayServices,getActivity(), 200).show();
         }
     }
 
@@ -340,8 +364,7 @@ public class FragmentBase extends Fragment {
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+            throw new RuntimeException(context.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -351,16 +374,6 @@ public class FragmentBase extends Fragment {
         mListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);

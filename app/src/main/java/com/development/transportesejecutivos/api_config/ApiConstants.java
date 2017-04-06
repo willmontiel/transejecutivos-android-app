@@ -28,4 +28,21 @@ public class ApiConstants {
     public static final String URL_RESET_PASSWORD = URL_BASE + "/" + API + "/" + API_VERSION + "/" + RESET_PASSWORD;
     public static final String URL_DRIVER_PHOTO = URL_BASE + "/" + DRIVER_PHOTO;
     public static final String URL_CAR_PHOTO = URL_BASE + "/" + CAR_PHOTO;
+
+
+
+    public static final String URL_GOOGLE_BASE = "https://maps.googleapis.com/maps/api";
+    public static final String URL_GOOGLE_KEY = "key";
+    public static final String URL_GOOGLE_INPUT = "input";
+    public static final String URL_GOOGLE_TYPES = "types";
+    public static final String URL_GOOGLE_PLACES_TYPE = "address";
+    public static final String URL_GOOGLE_SENSOR = "sensor";
+    public static final String URL_GOOGLE_SENSOR_ENABLE = "false";
+    public static final String URL_GOOGLE_OUTPUT = "json";
+    public static final String URL_GOOGLE_API_TYPE = "place";
+    public static final String URL_GOOGLE_API_PLACE_TYPE = "autocomplete";
+    public static final String GOOGLE_PLACES_API_KEY = "AIzaSyAa1bDK_oCzAnpDUbYm5vVJ84S4b01LDLc";
+
+    public static final String URL_GOOGLE_PLACES_API = URL_GOOGLE_BASE + "/" + URL_GOOGLE_API_TYPE + "/" + URL_GOOGLE_API_PLACE_TYPE + "/" + URL_GOOGLE_OUTPUT;
+
 }

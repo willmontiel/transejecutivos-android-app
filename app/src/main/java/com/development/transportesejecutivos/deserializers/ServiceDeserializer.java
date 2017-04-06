@@ -14,147 +14,86 @@ import java.util.ArrayList;
  * Created by william.montiel on 08/03/2016.
  */
 public class ServiceDeserializer extends DeserializerValidator{
+    public JSONObject jsonObject = new JSONObject();
+    public ServiceData service = new ServiceData();
 
-    public JSONArray servicesJsonArray;
-    public JSONArray datesJsonArray;
     public JSONArray responseJsonArray;
-    public ArrayList<ArrayList<ServiceData>> services = new ArrayList<ArrayList<ServiceData>>();
-    public ArrayList<Date> datesArrayList = new ArrayList<>();
-
     public ArrayList<Service> servicesArrayList = new ArrayList<>();
     public ArrayList<Driver> driversArrayList = new ArrayList<>();
 
-    public ServiceDeserializer() {
-
-    }
-
-    public void setServicesJsonArray(JSONArray services) {
-        this.servicesJsonArray = services;
-    }
-
-    public void setDatesJsonArray(JSONArray dates) {
-        this.datesJsonArray = dates;
+    public void setJsonObject(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
     }
 
     public void setResponseJsonArray(JSONArray responseJsonArray) {
         this.responseJsonArray = responseJsonArray;
     }
 
-    public void deserializeByGroup() {
-        try {
-            for (int i = 0; i < datesJsonArray.length(); i++) {
-                String d = (String) datesJsonArray.get(i);
-                Date date = new Date(d);
-                this.datesArrayList.add(date);
+    public void deserialize() {
+        int idService = validateInt(JsonKeys.SERVICE_ID, jsonObject);
 
-                JSONArray services = servicesJsonArray.getJSONArray(i);
+        if (idService != 0) {
+            service.setIdService(idService);
+            service.setReference(validateString(JsonKeys.SERVICE_REFERENCE, jsonObject));
+            service.setCreateDate(validateString(JsonKeys.SERVICE_CREATE_DATE, jsonObject));
+            service.setStartDate(validateString(JsonKeys.SERVICE_START_DATE, jsonObject));
+            service.setFly(validateString(JsonKeys.SERVICE_FLY, jsonObject));
+            service.setAeroline(validateString(JsonKeys.SERVICE_AEROLINE, jsonObject));
+            service.setCompany(validateString(JsonKeys.SERVICE_COMPANY, jsonObject));
+            service.setPaxCant(validateString(JsonKeys.SERVICE_PAX_CANT, jsonObject));
+            service.setPax(validateString(JsonKeys.SERVICE_PAX, jsonObject));
+            service.setSource(validateString(JsonKeys.SERVICE_SOURCE, jsonObject));
+            service.setDestiny(validateString(JsonKeys.SERVICE_DESTINY, jsonObject));
+            service.setObservations(validateString(JsonKeys.SERVICE_OBSERVATIONS, jsonObject));
+            service.setShareLocation(validateInt(JsonKeys.SERVICE_SHARE_LOCATION, jsonObject));
 
-                ArrayList<ServiceData> currentServicesArray = new ArrayList<>();
+            service.setIdDriver(validateInt(JsonKeys.DRIVER_ID, jsonObject));
+            service.setCode(validateString(JsonKeys.DRIVER_CODE, jsonObject));
+            service.setName(validateString(JsonKeys.DRIVER_NAME, jsonObject));
+            service.setLastName(validateString(JsonKeys.DRIVER_LASTNAME, jsonObject));
+            service.setPhone1(validateString(JsonKeys.DRIVER_PHONE1, jsonObject));
+            service.setPhone2(validateString(JsonKeys.DRIVER_PHONE2, jsonObject));
+            service.setAddress(validateString(JsonKeys.DRIVER_ADDRESS, jsonObject));
+            service.setCity(validateString(JsonKeys.DRIVER_CITY, jsonObject));
+            service.setEmail(validateString(JsonKeys.DRIVER_EMAIL, jsonObject));
+            service.setCarType(validateString(JsonKeys.DRIVER_CAR_TYPE, jsonObject));
+            service.setCarBrand(validateString(JsonKeys.DRIVER_CAR_BRAND, jsonObject));
+            service.setCarModel(validateString(JsonKeys.DRIVER_CAR_MODEL, jsonObject));
+            service.setCarColor(validateString(JsonKeys.DRIVER_CAR_COLOR, jsonObject));
+            service.setCarriagePlate(validateString(JsonKeys.DRIVER_CARRIAGE_PLATE, jsonObject));
+            service.setStatus(validateString(JsonKeys.DRIVER_STATUS, jsonObject));
+            service.setLocation(validateInt(JsonKeys.DRIVER_LOC, jsonObject));
 
-                for (int j = 0; j < services.length(); j++) {
-                    JSONObject jsonServiceObject = (JSONObject) services.get(j);
-
-                    int idService = validateInt(JsonKeys.SERVICE_ID, jsonServiceObject);
-
-                    if (idService != 0) {
-                        ServiceData serviceData = new ServiceData();
-
-                        String reference = validateString(JsonKeys.SERVICE_REFERENCE, jsonServiceObject);
-                        String createDate = validateString(JsonKeys.SERVICE_CREATE_DATE, jsonServiceObject);
-                        String startDate = validateString(JsonKeys.SERVICE_START_DATE, jsonServiceObject);
-                        String fly = validateString(JsonKeys.SERVICE_FLY, jsonServiceObject);
-                        String aeroline = validateString(JsonKeys.SERVICE_AEROLINE, jsonServiceObject);
-                        String company = validateString(JsonKeys.SERVICE_COMPANY, jsonServiceObject);
-                        String paxCant = validateString(JsonKeys.SERVICE_PAX_CANT, jsonServiceObject);
-                        String pax = validateString(JsonKeys.SERVICE_PAX, jsonServiceObject);
-                        String source = validateString(JsonKeys.SERVICE_SOURCE, jsonServiceObject);
-                        String destiny = validateString(JsonKeys.SERVICE_DESTINY, jsonServiceObject);
-                        String observations = validateString(JsonKeys.SERVICE_OBSERVATIONS, jsonServiceObject);
-                        int shareLocation = validateInt(JsonKeys.SERVICE_SHARE_LOCATION, jsonServiceObject);
-
-                        serviceData.setIdService(idService);
-                        serviceData.setReference(reference);
-                        serviceData.setCreateDate(createDate);
-                        serviceData.setStartDate(startDate);
-                        serviceData.setFly(fly);
-                        serviceData.setAeroline(aeroline);
-                        serviceData.setCompany(company);
-                        serviceData.setPaxCant(paxCant);
-                        serviceData.setPax(pax);
-                        serviceData.setSource(source);
-                        serviceData.setDestiny(destiny);
-                        serviceData.setObservations(observations);
-                        serviceData.setShareLocation(shareLocation);
-
-                        int idDriver = validateInt(JsonKeys.DRIVER_ID, jsonServiceObject);
-                        String dcode = validateString(JsonKeys.DRIVER_CODE, jsonServiceObject);
-                        String dname = validateString(JsonKeys.DRIVER_NAME, jsonServiceObject);
-                        String dlastname = validateString(JsonKeys.DRIVER_LASTNAME, jsonServiceObject);
-                        String dphone1 = validateString(JsonKeys.DRIVER_PHONE1, jsonServiceObject);
-                        String dphone2 = validateString(JsonKeys.DRIVER_PHONE2, jsonServiceObject);
-                        String daddress = validateString(JsonKeys.DRIVER_ADDRESS, jsonServiceObject);
-                        String dcity = validateString(JsonKeys.DRIVER_CITY, jsonServiceObject);
-                        String demail = validateString(JsonKeys.DRIVER_EMAIL, jsonServiceObject);
-                        String carType = validateString(JsonKeys.DRIVER_CAR_TYPE, jsonServiceObject);
-                        String carBrand = validateString(JsonKeys.DRIVER_CAR_BRAND, jsonServiceObject);
-                        String carModel = validateString(JsonKeys.DRIVER_CAR_MODEL, jsonServiceObject);
-                        String carColor = validateString(JsonKeys.DRIVER_CAR_COLOR, jsonServiceObject);
-                        String carriagePlate = validateString(JsonKeys.DRIVER_CARRIAGE_PLATE, jsonServiceObject);
-                        String dstatus = validateString(JsonKeys.DRIVER_STATUS, jsonServiceObject);
-                        int location = validateInt(JsonKeys.DRIVER_LOC, jsonServiceObject);
-
-                        serviceData.setIdDriver(idDriver);
-                        serviceData.setCode(dcode);
-                        serviceData.setName(dname);
-                        serviceData.setLastName(dlastname);
-                        serviceData.setPhone1(dphone1);
-                        serviceData.setPhone2(dphone2);
-                        serviceData.setAddress(daddress);
-                        serviceData.setCity(dcity);
-                        serviceData.setEmail(demail);
-                        serviceData.setCarType(carType);
-                        serviceData.setCarBrand(carBrand);
-                        serviceData.setCarModel(carModel);
-                        serviceData.setCarColor(carColor);
-                        serviceData.setCarriagePlate(carriagePlate);
-                        serviceData.setStatus(dstatus);
-                        serviceData.setLocation(location);
-
-
-                        currentServicesArray.add(serviceData);
-                    }
-
-                    this.services.add(currentServicesArray);
-                }
-            }
-        }
-        catch(JSONException ex) {
-            ex.printStackTrace();
+            service.setIdPassenger(validateInt(JsonKeys.PASSENGER_ID, jsonObject));
+            service.setPassengerName(validateString(JsonKeys.PASSENGER_NAME, jsonObject));
+            service.setPassengerLastname(validateString(JsonKeys.PASSENGER_LASTNAME, jsonObject));
+            service.setPassengerPhone1(validateString(JsonKeys.PASSENGER_PHONE, jsonObject));
+            service.setPassengerEmail1(validateString(JsonKeys.PASSENGER_EMAIL, jsonObject));
         }
     }
 
-    public void deserialize() {
+    public void deserializeOneService() {
         try {
             for (int i = 0; i < responseJsonArray.length(); i++) {
                 JSONObject jsonObject = (JSONObject) responseJsonArray.get(i);
                 int idService = validateInt(JsonKeys.SERVICE_ID, jsonObject);
 
                 if (idService != 0) {
-                    String reference = validateString(JsonKeys.SERVICE_REFERENCE, jsonObject);
-                    String createDate = validateString(JsonKeys.SERVICE_CREATE_DATE, jsonObject);
-                    String startDate = validateString(JsonKeys.SERVICE_START_DATE, jsonObject);
-                    String fly = validateString(JsonKeys.SERVICE_FLY, jsonObject);
-                    String aeroline = validateString(JsonKeys.SERVICE_AEROLINE, jsonObject);
-                    String company = validateString(JsonKeys.SERVICE_COMPANY, jsonObject);
-                    String paxCant = validateString(JsonKeys.SERVICE_PAX_CANT, jsonObject);
-                    String pax = validateString(JsonKeys.SERVICE_PAX, jsonObject);
-                    String source = validateString(JsonKeys.SERVICE_SOURCE, jsonObject);
-                    String destiny = validateString(JsonKeys.SERVICE_DESTINY, jsonObject);
-                    String observations = validateString(JsonKeys.SERVICE_OBSERVATIONS, jsonObject);
-                    String status = validateString(JsonKeys.SERVICE_STATUS, jsonObject);
-                    int shareLocation = validateInt(JsonKeys.SERVICE_SHARE_LOCATION, jsonObject);
-
-                    Service service = new Service(idService, reference, createDate, startDate, fly, aeroline, company, paxCant, pax, source, destiny, observations, status, shareLocation);
+                    Service service = new Service();
+                    service.setIdService(idService);
+                    service.setReference(validateString(JsonKeys.SERVICE_REFERENCE, jsonObject));
+                    service.setCreateDate(validateString(JsonKeys.SERVICE_CREATE_DATE, jsonObject));
+                    service.setStartDate(validateString(JsonKeys.SERVICE_START_DATE, jsonObject));
+                    service.setFly(validateString(JsonKeys.SERVICE_FLY, jsonObject));
+                    service.setAeroline(validateString(JsonKeys.SERVICE_AEROLINE, jsonObject));
+                    service.setCompany(validateString(JsonKeys.SERVICE_COMPANY, jsonObject));
+                    service.setPaxCant(validateString(JsonKeys.SERVICE_PAX_CANT, jsonObject));
+                    service.setPax(validateString(JsonKeys.SERVICE_PAX, jsonObject));
+                    service.setSource(validateString(JsonKeys.SERVICE_SOURCE, jsonObject));
+                    service.setDestiny(validateString(JsonKeys.SERVICE_DESTINY, jsonObject));
+                    service.setObservations(validateString(JsonKeys.SERVICE_OBSERVATIONS, jsonObject));
+                    service.setStatus(validateString(JsonKeys.SERVICE_STATUS, jsonObject));
+                    service.setShareLocation(validateInt(JsonKeys.SERVICE_SHARE_LOCATION, jsonObject));
 
                     int idDriver = validateInt(JsonKeys.DRIVER_ID, jsonObject);
                     String dcode = validateString(JsonKeys.DRIVER_CODE, jsonObject);
@@ -185,12 +124,8 @@ public class ServiceDeserializer extends DeserializerValidator{
         }
     }
 
-    public ArrayList<ArrayList<ServiceData>> getServices() {
-        return this.services;
-    }
-
-    public ArrayList<Date> getDatesArray() {
-        return datesArrayList;
+    public ServiceData getService() {
+        return this.service;
     }
 
     public ArrayList<Driver> getDriversArrayList() {

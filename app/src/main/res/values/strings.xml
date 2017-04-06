@@ -85,7 +85,7 @@
     <string name="prompt_see_driver_data">Detalle de Conductor</string>
     <string name="prompt_see_service_details">Detalle de servicio</string>
     <string name="prompt_back_to_general">Regresar</string>
-    <string name="prompt_version">Versión 1.1.1</string>
+    <string name="prompt_version">Versión 1.1.3</string>
     <string name="prompt_call_driver">Llamar conductor</string>
     <string name="prompt_share_location">Compartir mi ubicación</string>
 
@@ -93,4 +93,40 @@
     <string name="share_location_subject">Estoy viajando con Transportes Ejecutivos</string>
     <string name="share_location_content">Estoy viajando con Transportes Ejecutivos, para ver mi ubicación visita: http://www.transportesejecutivos.com/getlocation.php?id=</string>
     <string name="share_location_title">Compartir en</string>
+
+    <!-- Service destiny -->
+    <string name="title_request_service_activity">Solicitar servicio</string>
+    <string name="prompt_find_address">Escribe la dirección o el lugar</string>
+    <string name="prompt_request_service1_button">Siguiente</string>
+    <string name="prompt_request_service1_title">¿A donde quieres ir?</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="title_set_destiny">Seleccionar destino</string>
+
+    <!-- Request Service -->
+    <string name="error_empty_destiny">Por favor selecciona un destino</string>
+    <string name="prompt_destiny_selected">Destino</string>
+    <string name="prompt_source">¿En donde quieres que te recogamos?</string>
+    <string name="prompt_car_type">Tipo de vehículo</string>
+    <string name="prompt_pax">Cantidad de pasajeros</string>
+    <string name="prompt_aeroline">Aerolínea</string>
+    <string name="prompt_fly_code">Código de vuelo</string>
+    <string name="prompt_date">Fecha</string>
+    <string name="prompt_time">Hora</string>
+    <string name="prompt_button_request_service">Solicitar</string>
+
+    <!-- Wizard -->
+    <string name="next">Next</string>
+    <string name="prev">Previous</string>
+    <string name="finish">Submit order</string>
+    <string name="review">Review</string>
+    <string name="label_your_name">Name</string>
+    <string name="label_your_email">Email</string>
+    <string name="hint_your_name">e.g. Larry</string>
+    <string name="hint_your_email">Optional</string>
+    <string name="submit_confirm_message">Place the order with the deli? You will receive an email confirmation.</string>
+    <string name="submit_confirm_button">Place order</string>
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
