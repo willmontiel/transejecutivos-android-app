@@ -38,20 +38,20 @@ public class FilterServicesFragment extends FragmentBase {
 
         progressBar = view.findViewById(R.id.filter_service_progress);
 
-        expandableListView = (ExpandableListView) view.findViewById(R.id.service_expandable_filter_listview);
+        //expandableListView = (ExpandableListView) view.findViewById(R.id.service_expandable_filter_listview);
 
         // Setting group indicator null for custom indicator
-        expandableListView.setGroupIndicator(null);
+        //expandableListView.setGroupIndicator(null);
 
 
-        Button btn_search_service = (Button) view.findViewById(R.id.btn_search_service);
+        //Button btn_search_service = (Button) view.findViewById(R.id.btn_search_service);
 
-        btn_search_service.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                searchService();
-            }
-        });
+        //btn_search_service.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
+        //        searchService();
+        //    }
+        //});
 
         return view;
     }
