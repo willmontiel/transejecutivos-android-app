@@ -30,10 +30,10 @@ public class ServicesFragment extends FragmentBase {
 
         layout = view.findViewById(R.id.service_expandable_listview);
 
-        expandableListView = (ExpandableListView) view.findViewById(R.id.service_expandable_listview);
+        //expandableListView = (ExpandableListView) view.findViewById(R.id.service_expandable_listview);
 
         // Setting group indicator null for custom indicator
-        expandableListView.setGroupIndicator(null);
+        //expandableListView.setGroupIndicator(null);
 
 
         progressBar = view.findViewById(R.id.service_progress);

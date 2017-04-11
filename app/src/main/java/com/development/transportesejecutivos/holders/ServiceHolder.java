@@ -200,10 +200,10 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
 
         Passenger passenger = new Passenger();
         passenger.setIdPassenger(serviceData.getIdPassenger());
-        passenger.setName(serviceData.getName());
-        passenger.setLastName(serviceData.getLastName());
-        passenger.setEmail(serviceData.getEmail());
-        passenger.setPhone(serviceData.getPhone1());
+        passenger.setName(serviceData.getPassengerName());
+        passenger.setLastName(serviceData.getPassengerLastname());
+        passenger.setEmail(serviceData.getPassengerEmail1());
+        passenger.setPhone(serviceData.getPassengerPhone1());
 
         setPassenger(passenger);
     }

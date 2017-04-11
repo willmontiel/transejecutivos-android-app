@@ -44,14 +44,14 @@ public class FilterServicesFragment extends FragmentBase {
         //expandableListView.setGroupIndicator(null);
 
 
-        //Button btn_search_service = (Button) view.findViewById(R.id.btn_search_service);
+        Button btn_search_service = (Button) view.findViewById(R.id.btn_search_service);
 
-        //btn_search_service.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
-        //        searchService();
-        //    }
-        //});
+        btn_search_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchService();
+            }
+        });
 
         return view;
     }
