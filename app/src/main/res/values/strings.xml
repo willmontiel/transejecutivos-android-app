@@ -93,4 +93,6 @@
     <string name="share_location_subject">Estoy viajando con Transportes Ejecutivos</string>
     <string name="share_location_content">Estoy viajando con Transportes Ejecutivos, para ver mi ubicación visita: http://www.transportesejecutivos.com/getlocation.php?id=</string>
     <string name="share_location_title">Compartir en</string>
+
+    <string name="cancel_permission_location">Esta aplicación necesita permiso para realizar llamadas telefónicas, al no aceptar la solicitud, no podrá usar esta funcionalidad.</string>
 </resources>

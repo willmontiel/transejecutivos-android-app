@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -33,6 +35,7 @@ import com.google.android.gms.vision.text.Text;
  * Created by developer on 3/21/16.
  */
 public class ServiceHolder extends RecyclerView.ViewHolder {
+    View rootView;
     View pax_data_container;
     TextView txtview_pax_name;
     TextView txtview_pax_email1;
@@ -124,10 +127,11 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
         this.context = context;
         this.user = user;
 
-        setClickListeners(itemView);
+        this.rootView = itemView;
+        setClickListeners();
     }
 
-    public void setClickListeners(final View itemView) {
+    public void setClickListeners() {
         btn_see_service_details.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -298,6 +302,10 @@ public class ServiceHolder extends RecyclerView.ViewHolder {
                     }
                     catch (SecurityException ex) {
                         Log.d("LALA", ex.toString());
+
+                        CharSequence text = "Debes aceptar el permiso para realizar llamadas";
+                        Toast toast = Toast.makeText(context, text, Toast.LENGTH_SHORT);
+                        toast.show();
                     }
 
                 }
