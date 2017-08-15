@@ -2,6 +2,7 @@ package com.development.transportesejecutivos;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
 import android.app.Activity;
 import android.support.v7.widget.Toolbar;
@@ -12,21 +13,23 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
 
 public class RequestserviceActivity extends ActivityBase {
-    AutoCompleteTextView carType;
+    Spinner carType;
     AutoCompleteTextView source_city;
     AutoCompleteTextView destiny_city;
-    AutoCompleteTextView aeroline;
+    Spinner aeroline;
     EditText passengers;
     TextView start_date;
     ImageButton start_date_button;
     TextView start_time;
     ImageButton start_time_button;
+    Button request_service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +48,16 @@ public class RequestserviceActivity extends ActivityBase {
         start_date_button = (ImageButton) findViewById(R.id.start_date_button);
         start_time = (TextView) findViewById(R.id.start_time);
         start_time_button = (ImageButton) findViewById(R.id.start_time_button);
+        request_service = (Button) findViewById(R.id.request_service);
         setDateAndTimePicker();
+        setListeners();
     }
 
 
     protected void setCarTypes() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        carType = (AutoCompleteTextView) findViewById(R.id.car_type);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, COUNTRIES);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        carType = (Spinner) findViewById(R.id.car_type);
         carType.setAdapter(adapter);
     }
 
@@ -68,8 +74,9 @@ public class RequestserviceActivity extends ActivityBase {
     }
 
     protected void setAerolínes() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        aeroline = (AutoCompleteTextView) findViewById(R.id.aeroline);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, COUNTRIES);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        aeroline = (Spinner) findViewById(R.id.aeroline);
         aeroline.setAdapter(adapter);
     }
 
@@ -110,6 +117,15 @@ public class RequestserviceActivity extends ActivityBase {
                 }, mHour, mMinute, true);
 
                 tpd.show();
+            }
+        });
+    }
+
+    public void setListeners() {
+        request_service.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

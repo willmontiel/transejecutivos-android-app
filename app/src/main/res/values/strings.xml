@@ -109,4 +109,5 @@
     <string name="prompt_destiny_address">Dirección de destino</string>
     <string name="prompt_destiny_city">Ciudad de destino</string>
     <string name="prompt_observations">Observaciones (opcional</string>
+    <string name="prompt_request_service">Solicitar</string>
 </resources>
