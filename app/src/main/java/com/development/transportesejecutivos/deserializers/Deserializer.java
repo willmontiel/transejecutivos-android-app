@@ -1,12 +1,9 @@
 package com.development.transportesejecutivos.deserializers;
 
-import com.development.transportesejecutivos.adapters.JsonKeys;
 import com.development.transportesejecutivos.models.Date;
-import com.development.transportesejecutivos.models.Driver;
 import com.development.transportesejecutivos.models.Passenger;
 import com.development.transportesejecutivos.models.Service;
 import com.development.transportesejecutivos.models.ServiceData;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

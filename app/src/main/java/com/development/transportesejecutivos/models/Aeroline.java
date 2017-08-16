@@ -1,11 +1,12 @@
 package com.development.transportesejecutivos.models;
 
 /**
- * Created by william.montiel on 29/08/2016.
+ * Created by Will Montiel on 08/15/2017.
  */
-public class CarType {
-    int id;
-    String name;
+
+public class Aeroline {
+    public int id;
+    public String name;
 
     public int getId() {
         return id;

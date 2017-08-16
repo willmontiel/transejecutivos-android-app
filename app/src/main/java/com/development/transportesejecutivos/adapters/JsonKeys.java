@@ -32,6 +32,7 @@ public class JsonKeys {
     public static final String MESSAGE = "message";
     public static final String ERROR = "error";
     public static final String DATE = "date";
+    public static final String DATA = "data";
 
     /**
      * Services Json Keys
@@ -111,5 +112,17 @@ public class JsonKeys {
      * Role
      */
     public static final String USER_COMPANY_ROLE = "empresa";
+
+    /**
+     * Car Type
+     */
+    public static final String CAR_TYPE_ID = "id";
+    public static final String CAR_TYPE_NAME = "name";
+
+    /**
+     * Aeroline
+     */
+    public static final String AEROLINE_ID = "id";
+    public static final String AEROLINE_NAME = "name";
 }
 

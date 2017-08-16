@@ -12,6 +12,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:gravity="center"
     tools:context=".ResetpassActivity"
     tools:showIn="@layout/activity_requestservice">
 
@@ -25,7 +26,7 @@
         android:visibility="gone"/>
 
     <ScrollView
-        android:id="@+id/profile_form"
+        android:id="@+id/request_service_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center">
@@ -36,15 +37,68 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-
-            <!-- Car Type -->
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/spinner_layout_car_type"
-                app:errorTextAppearance="@style/ErrorText"
+            <!-- Source address -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                app:errorEnabled="true" >
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_source_address" />
+
+                <fragment
+                    android:id="@+id/place_autocomplete_fragment_source_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <!-- Destiny address -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_destiny_address" />
+
+                <fragment
+                    android:id="@+id/place_autocomplete_fragment_destiny_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <!-- Car Type -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_car_type" />
 
                 <Spinner
                     android:id="@+id/car_type"
@@ -52,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_car_type"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <!-- Passengers -->
             <android.support.design.widget.TextInputLayout
@@ -67,6 +121,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
+                    android:focusable="false"
                     android:hint="@string/prompt_passengers"
                     android:inputType="number" />
 
@@ -80,17 +135,14 @@
                 android:layout_height="wrap_content"
                 app:errorEnabled="true">
 
-                <TextView
+                <EditText
                     android:id="@+id/start_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:inputType="date"
                     android:hint="@string/prompt_set_start_date" />
-
-                <ImageButton
-                    android:id="@+id/start_date_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_today" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -102,91 +154,29 @@
                 android:layout_height="wrap_content"
                 app:errorEnabled="true">
 
-                <TextView
+                <EditText
                     android:id="@+id/start_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:clickable="true"
+                    android:inputType="date"
                     android:hint="@string/prompt_set_start_time" />
-
-                <ImageButton
-                    android:id="@+id/start_time_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@android:drawable/ic_menu_today" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <!-- Source city -->
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/autocomplettxtview_layout_source_city"
-                app:errorTextAppearance="@style/ErrorText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:errorEnabled="true">
-
-                <AutoCompleteTextView
-                    android:id="@+id/source_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_source_city" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <!-- Source address -->
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_layout_source_address"
-                app:errorTextAppearance="@style/ErrorText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:errorEnabled="true">
-
-                <EditText
-                    android:id="@+id/source_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_source_address" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <!-- Destiny city -->
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/autocomplettxtview_layout_destiny_city"
-                app:errorTextAppearance="@style/ErrorText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:errorEnabled="true">
-
-                <AutoCompleteTextView
-                    android:id="@+id/destiny_city"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_destiny_city" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <!-- Destiny address -->
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/txt_layout_destiny_address"
-                app:errorTextAppearance="@style/ErrorText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:errorEnabled="true">
-
-                <EditText
-                    android:id="@+id/destiny_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_destiny_address" />
 
             </android.support.design.widget.TextInputLayout>
 
             <!-- Aeroline -->
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/autocomplettxtview_layout_aeroline"
-                app:errorTextAppearance="@style/ErrorText"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorEnabled="true">
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_aeroline" />
 
                 <Spinner
                     android:id="@+id/aeroline"
@@ -194,7 +184,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_aeroline"/>
 
-            </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
 
             <!-- Fly -->
             <android.support.design.widget.TextInputLayout
@@ -208,6 +198,7 @@
                     android:id="@+id/fly"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:hint="@string/prompt_fly" />
 
             </android.support.design.widget.TextInputLayout>
@@ -224,6 +215,7 @@
                     android:id="@+id/observations"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:focusable="false"
                     android:hint="@string/prompt_observations" />
 
             </android.support.design.widget.TextInputLayout>

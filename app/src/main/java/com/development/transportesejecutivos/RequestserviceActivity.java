@@ -2,34 +2,53 @@ package com.development.transportesejecutivos;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.inputmethodservice.KeyboardView;
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.development.transportesejecutivos.adapters.AerolineAdapter;
+import com.development.transportesejecutivos.adapters.CarTypeAdapter;
+import com.development.transportesejecutivos.adapters.JsonKeys;
+import com.development.transportesejecutivos.api_config.ApiConstants;
+import com.development.transportesejecutivos.deserializers.AerolineDeserializer;
+import com.development.transportesejecutivos.deserializers.CarTypeDeserializer;
+import com.development.transportesejecutivos.models.Aeroline;
+import com.development.transportesejecutivos.models.CarType;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
+import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class RequestserviceActivity extends ActivityBase {
     Spinner carType;
-    AutoCompleteTextView source_city;
-    AutoCompleteTextView destiny_city;
     Spinner aeroline;
     EditText passengers;
     TextView start_date;
-    ImageButton start_date_button;
     TextView start_time;
-    ImageButton start_time_button;
     Button request_service;
+    ProgressBar progressBar;
+    View form;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,43 +58,29 @@ public class RequestserviceActivity extends ActivityBase {
         setSupportActionBar(toolbar);
 
         validateSession();
-        setCarTypes();
-        setSourceCities();
-        setDestinyities();
-        setAerolínes();
+
+        progressBar = (ProgressBar) findViewById(R.id.request_service_progress);
+        form = findViewById(R.id.request_service_form);
         passengers = (EditText) findViewById(R.id.passengers);
         start_date = (TextView) findViewById(R.id.start_date);
-        start_date_button = (ImageButton) findViewById(R.id.start_date_button);
         start_time = (TextView) findViewById(R.id.start_time);
-        start_time_button = (ImageButton) findViewById(R.id.start_time_button);
         request_service = (Button) findViewById(R.id.request_service);
+
+        getAerolines();
+        getCarTypes();
         setDateAndTimePicker();
         setListeners();
     }
 
 
-    protected void setCarTypes() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, COUNTRIES);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    protected void setCarTypes(ArrayList<CarType> carTypeArrayList) {
+        CarTypeAdapter adapter = new CarTypeAdapter(getApplicationContext(), android.R.layout.simple_dropdown_item_1line,carTypeArrayList);
         carType = (Spinner) findViewById(R.id.car_type);
         carType.setAdapter(adapter);
     }
 
-    protected void setSourceCities() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        source_city = (AutoCompleteTextView) findViewById(R.id.source_city);
-        source_city.setAdapter(adapter);
-    }
-
-    protected void setDestinyities() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, COUNTRIES);
-        destiny_city = (AutoCompleteTextView) findViewById(R.id.destiny_city);
-        destiny_city.setAdapter(adapter);
-    }
-
-    protected void setAerolínes() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, COUNTRIES);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    protected void setAerolínes(ArrayList<Aeroline> aerolineArrayList) {
+        AerolineAdapter adapter = new AerolineAdapter(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, aerolineArrayList);
         aeroline = (Spinner) findViewById(R.id.aeroline);
         aeroline.setAdapter(adapter);
     }
@@ -83,9 +88,9 @@ public class RequestserviceActivity extends ActivityBase {
     protected void setDateAndTimePicker() {
         final ActivityBase self = this;
 
-        start_date_button.setOnClickListener(new View.OnClickListener() {
+        start_date.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 final Calendar c = Calendar.getInstance();
                 int day = c.get(Calendar.DAY_OF_MONTH);
                 int month = c.get(Calendar.MONTH);
@@ -102,7 +107,8 @@ public class RequestserviceActivity extends ActivityBase {
             }
         });
 
-        start_time_button.setOnClickListener(new View.OnClickListener() {
+
+        start_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Calendar c = Calendar.getInstance();
@@ -128,6 +134,160 @@ public class RequestserviceActivity extends ActivityBase {
 
             }
         });
+
+        PlaceAutocompleteFragment sourceAddress = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_source_address);
+        sourceAddress.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i("LALA", "Place: " + place.getName());
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("LALA", "An error occurred: " + status);
+            }
+        });
+
+        PlaceAutocompleteFragment destinyAddress = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment_destiny_address);
+        destinyAddress.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(Place place) {
+                // TODO: Get info about the selected place.
+                Log.i("LALA", "Place: " + place.getName());
+            }
+
+            @Override
+            public void onError(Status status) {
+                // TODO: Handle the error.
+                Log.i("LALA", "An error occurred: " + status);
+            }
+        });
+    }
+
+    public void getCarTypes() {
+        showProgress(true, form, progressBar);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
+                ApiConstants.URL_GET_CAR_TYPES,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject resObj = new JSONObject(response);
+                            Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
+                            if (!error) {
+                                JSONArray data = (JSONArray) resObj.get(JsonKeys.DATA);
+                                CarTypeDeserializer deserializer = new CarTypeDeserializer();
+                                deserializer.setJson(data);
+                                deserializer.deserialize();
+                                setCarTypes(deserializer.getCarTypeArrayList());
+                            }
+                            else {
+                                setErrorSnackBar(form, getResources().getString(R.string.error_invalid_profile_update));
+                            }
+                        }
+                        catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        showProgress(false, form, progressBar);
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        setErrorSnackBar(form, getResources().getString(R.string.error_general));
+                        showProgress(false, form, progressBar);
+                    }
+                }) {
+
+            @Override
+            public Map<String, String> getParams() {
+                Map<String,String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                headers.put("Authorization", user.getApikey());
+                return headers;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(10),//time out in 10second
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,//DEFAULT_MAX_RETRIES = 1;
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(stringRequest);
+    }
+
+    public void getAerolines() {
+        showProgress(true, form, progressBar);
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
+                ApiConstants.URL_GET_AEROLINES,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject resObj = new JSONObject(response);
+                            Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
+                            if (!error) {
+                                JSONArray data = (JSONArray) resObj.get(JsonKeys.DATA);
+                                AerolineDeserializer deserializer = new AerolineDeserializer();
+                                deserializer.setJson(data);
+                                deserializer.deserialize();
+                                setAerolínes(deserializer.getAerolineArrayList());
+                            }
+                            else {
+                                setErrorSnackBar(form, getResources().getString(R.string.error_invalid_profile_update));
+                            }
+                        }
+                        catch (JSONException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        showProgress(false, form, progressBar);
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        setErrorSnackBar(form, getResources().getString(R.string.error_general));
+                        showProgress(false, form, progressBar);
+                    }
+                }) {
+
+            @Override
+            public Map<String, String> getParams() {
+                Map<String,String> params = new HashMap<String, String>();
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String,String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/x-www-form-urlencoded");
+                headers.put("Authorization", user.getApikey());
+                return headers;
+            }
+        };
+
+        stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                (int) TimeUnit.SECONDS.toMillis(10),//time out in 10second
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,//DEFAULT_MAX_RETRIES = 1;
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+        requestQueue.add(stringRequest);
     }
 
     private static final String[] COUNTRIES = new String[] {
