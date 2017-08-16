@@ -103,10 +103,17 @@ public class JsonKeys {
     /**
      * Request Service
      */
-    public static final String REQUEST_SERVICE_LATLNG = "place_lat_lng";
-    public static final String REQUEST_SERVICE_NAME = "place_name";
-    public static final String REQUEST_SERVICE_ADDRESS = "place_address";
-    public static final String REQUEST_SERVICE_ID = "place_id";
+    public static final String REQUEST_SERVICE_CAR_TYPE = "carType";
+    public static final String REQUEST_SERVICE_PASSENGERS = "passengers";
+    public static final String REQUEST_SERVICE_DATE = "date";
+    public static final String REQUEST_SERVICE_TIME = "time";
+    public static final String REQUEST_SERVICE_START_CITY = "startCity";
+    public static final String REQUEST_SERVICE_START_ADDRESS = "startAddress";
+    public static final String REQUEST_SERVICE_END_CITY = "endCity";
+    public static final String REQUEST_SERVICE_END_ADDRESS = "endAddress";
+    public static final String REQUEST_SERVICE_AEROLINE = "aeroline";
+    public static final String REQUEST_SERVICE_FLY = "fly";
+    public static final String REQUEST_SERVICE_OBSERVATIONS = "observations";
 
     /**
      * Role
@@ -124,5 +131,10 @@ public class JsonKeys {
      */
     public static final String AEROLINE_ID = "id";
     public static final String AEROLINE_NAME = "name";
+
+    /**
+     * Messages
+     */
+    public static final String error404 = "Recurso no encontrado";
 }
 

@@ -20,6 +20,11 @@ public class AerolineDeserializer {
     }
 
     public void deserialize() {
+        Aeroline ae = new Aeroline();
+        ae.setId(0);
+        ae.setName("Sin aerolínea");
+        this.aerolineArrayList.add(ae);
+
         try {
             for (int i = 0; i < this.jsonArray.length(); i++) {
                 JSONObject jsonServiceObject = (JSONObject) this.jsonArray.get(i);

@@ -19,6 +19,7 @@ public class ApiConstants {
     public static final String CAR_PHOTO = "app/conductores/logos/redimensionar_logo.php?imagen=";
     public static final String GET_CAR_TYPES = "getcartypes";
     public static final String GET_AEROLINES = "getaerolines";
+    public static final String REQUEST_SERVICE = "requestservice";
 
     public static final String URL_LOGIN = URL_BASE + "/" + API + "/" + API_VERSION + "/" + LOGIN;
     public static final String URL_SERVICE = URL_BASE + "/" + API + "/" + API_VERSION + "/" + SERVICE;
@@ -32,6 +33,7 @@ public class ApiConstants {
     public static final String URL_CAR_PHOTO = URL_BASE + "/" + CAR_PHOTO;
     public static final String URL_GET_CAR_TYPES = URL_BASE + "/" + API + "/" + API_VERSION + "/" + GET_CAR_TYPES;
     public static final String URL_GET_AEROLINES = URL_BASE + "/" + API + "/" + API_VERSION + "/" + GET_AEROLINES;
+    public static final String URL_REQUEST_SERVICE = URL_BASE + "/" + API + "/" + API_VERSION + "/" + REQUEST_SERVICE;
 
 
 

@@ -3,9 +3,12 @@ package com.development.transportesejecutivos;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -25,6 +28,8 @@ import com.development.transportesejecutivos.adapters.JsonKeys;
 import com.development.transportesejecutivos.api_config.ApiConstants;
 import com.development.transportesejecutivos.deserializers.AerolineDeserializer;
 import com.development.transportesejecutivos.deserializers.CarTypeDeserializer;
+import com.development.transportesejecutivos.misc.DialogCreator;
+import com.development.transportesejecutivos.misc.VolleyErrorHandler;
 import com.development.transportesejecutivos.models.Aeroline;
 import com.development.transportesejecutivos.models.CarType;
 import com.google.android.gms.common.api.Status;
@@ -46,9 +51,19 @@ public class RequestserviceActivity extends ActivityBase {
     EditText passengers;
     TextView start_date;
     TextView start_time;
+    TextView fly;
+    TextView observations;
     Button request_service;
     ProgressBar progressBar;
     View form;
+
+    TextInputLayout inputLayoutPassengers;
+    TextInputLayout inputLayoutFly;
+
+    String start_city;
+    String start_address;
+    String end_city;
+    String end_address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +77,16 @@ public class RequestserviceActivity extends ActivityBase {
         progressBar = (ProgressBar) findViewById(R.id.request_service_progress);
         form = findViewById(R.id.request_service_form);
         passengers = (EditText) findViewById(R.id.passengers);
+        passengers.setText("1");
         start_date = (TextView) findViewById(R.id.start_date);
         start_time = (TextView) findViewById(R.id.start_time);
+        fly = (TextView) findViewById(R.id.fly);
+        observations = (TextView) findViewById(R.id.observations);
         request_service = (Button) findViewById(R.id.request_service);
+
+        inputLayoutPassengers  = (TextInputLayout) findViewById(R.id.number_layout_passengers);
+        inputLayoutFly  = (TextInputLayout) findViewById(R.id.txt_layout_fly);
+        inputLayoutFly.setVisibility(View.GONE);
 
         getAerolines();
         getCarTypes();
@@ -83,6 +105,23 @@ public class RequestserviceActivity extends ActivityBase {
         AerolineAdapter adapter = new AerolineAdapter(getApplicationContext(), android.R.layout.simple_dropdown_item_1line, aerolineArrayList);
         aeroline = (Spinner) findViewById(R.id.aeroline);
         aeroline.setAdapter(adapter);
+
+        aeroline.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                if (position != 0) {
+                    inputLayoutFly.setVisibility(View.VISIBLE);
+                } else {
+                    inputLayoutFly.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                inputLayoutFly.setVisibility(View.GONE);
+            }
+
+        });
     }
 
     protected void setDateAndTimePicker() {
@@ -115,7 +154,7 @@ public class RequestserviceActivity extends ActivityBase {
                 int mHour = c.get(Calendar.HOUR_OF_DAY);
                 int mMinute = c.get(Calendar.MINUTE);
 
-                TimePickerDialog tpd = new TimePickerDialog(self, 2,  new TimePickerDialog.OnTimeSetListener() {
+                TimePickerDialog tpd = new TimePickerDialog(self, 2, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         start_time.setText(formatTime(hourOfDay) + ":" + formatTime(minute));
@@ -131,7 +170,7 @@ public class RequestserviceActivity extends ActivityBase {
         request_service.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                requestService();
             }
         });
 
@@ -139,13 +178,14 @@ public class RequestserviceActivity extends ActivityBase {
         sourceAddress.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.i("LALA", "Place: " + place.getName());
+                start_city = place.getName().toString();
+                start_address = place.getAddress().toString();
+                Log.i("LALA", "Name: " + place.getName());
+                Log.i("LALA", "Address: " + place.getAddress());
             }
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
                 Log.i("LALA", "An error occurred: " + status);
             }
         });
@@ -154,13 +194,14 @@ public class RequestserviceActivity extends ActivityBase {
         destinyAddress.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.i("LALA", "Place: " + place.getName());
+                end_city = place.getName().toString();
+                end_address = place.getAddress().toString();
+                Log.i("LALA", "Name: " + place.getName());
+                Log.i("LALA", "Address: " + place.getAddress());
             }
 
             @Override
             public void onError(Status status) {
-                // TODO: Handle the error.
                 Log.i("LALA", "An error occurred: " + status);
             }
         });
@@ -290,9 +331,104 @@ public class RequestserviceActivity extends ActivityBase {
         requestQueue.add(stringRequest);
     }
 
-    private static final String[] COUNTRIES = new String[] {
-            "Belgium", "France", "Italy", "Germany", "Spain"
-    };
+    private void requestService() {
+        boolean validate = validateInputField(passengers.getText().toString(), inputLayoutPassengers, passengers, getString(R.string.error_empty_passengers));
+
+        TextView ctTextView = (TextView) carType.getSelectedView();
+        final String ct = ctTextView.getText().toString();
+
+        TextView aTextView = (TextView) aeroline.getSelectedView();
+        final String aer = aTextView.getText().toString();
+
+        if (validate &&
+                validateField(start_address, getString(R.string.error_empty_start_address)) &&
+                validateField(end_address, getString(R.string.error_empty_start_address)) &&
+                validateField(start_date.getText().toString(), getString(R.string.error_empty_start_date)) &&
+                validateField(start_time.getText().toString(), getString(R.string.error_empty_start_time))
+                ) {
+
+
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.POST,
+                    ApiConstants.URL_REQUEST_SERVICE,
+                    new com.android.volley.Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            Log.d("LALA", response);
+                        }
+                    },
+                    new com.android.volley.Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            VolleyErrorHandler voleyErrorHandler = new VolleyErrorHandler();
+                            voleyErrorHandler.setVolleyError(error);
+                            voleyErrorHandler.process();
+                            String msg = voleyErrorHandler.getMessage();
+                            String message = (TextUtils.isEmpty(msg) ? getResources().getString(R.string.server_error) : msg);
+
+                            setErrorSnackBar(form, message);
+                            showProgress(false, form, progressBar);
+                        }
+                    }) {
+
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String,String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/x-www-form-urlencoded");
+                    headers.put("Authorization", user.getApikey());
+                    return headers;
+                }
+
+                @Override
+                protected Map<String,String> getParams(){
+                    Map<String,String> params = new HashMap<String, String>();
+                    params.put(JsonKeys.REQUEST_SERVICE_CAR_TYPE, ct);
+                    params.put(JsonKeys.REQUEST_SERVICE_PASSENGERS, passengers.getText().toString());
+                    params.put(JsonKeys.REQUEST_SERVICE_DATE, start_date.getText().toString());
+                    params.put(JsonKeys.REQUEST_SERVICE_TIME, start_time.getText().toString());
+                    params.put(JsonKeys.REQUEST_SERVICE_START_CITY, start_city);
+                    params.put(JsonKeys.REQUEST_SERVICE_START_ADDRESS, start_address);
+                    params.put(JsonKeys.REQUEST_SERVICE_END_CITY, end_city);
+                    params.put(JsonKeys.REQUEST_SERVICE_END_ADDRESS, end_address);
+                    params.put(JsonKeys.REQUEST_SERVICE_AEROLINE, aer);
+                    params.put(JsonKeys.REQUEST_SERVICE_FLY, fly.getText().toString());
+                    params.put(JsonKeys.REQUEST_SERVICE_OBSERVATIONS, observations.getText().toString());
+
+                    return params;
+                }
+            };
+
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(
+                    (int) TimeUnit.SECONDS.toMillis(10),//time out in 10second
+                    DefaultRetryPolicy.DEFAULT_MAX_RETRIES,//DEFAULT_MAX_RETRIES = 1;
+                    DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
+            requestQueue.add(stringRequest);
+        }
+    }
+
+
+    protected boolean validateInputField(String value, TextInputLayout input, EditText editText, String message) {
+        if (TextUtils.isEmpty(value)) {
+            input.setError(message);
+            editText.requestFocus();
+            return false;
+        }
+
+        return true;
+    }
+
+    protected boolean validateField(String value, String message) {
+        if (TextUtils.isEmpty(value)) {
+            DialogCreator dialogCreator = new DialogCreator(this);
+            dialogCreator.createCustomDialog(message, getString(R.string.accept_button));
+            return false;
+        }
+
+        return true;
+    }
 
     private String formatTime(int number) {
         String h;

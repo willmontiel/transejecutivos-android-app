@@ -8,10 +8,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:gravity="center"
     tools:context=".ResetpassActivity"
     tools:showIn="@layout/activity_requestservice">
@@ -22,7 +18,6 @@
         android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:visibility="gone"/>
 
     <ScrollView
@@ -37,18 +32,45 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <!-- Source address -->
+            <!-- Instructions -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_source_address" />
+                    android:textSize="@dimen/activity_vertical_margin"
+                    android:text="@string/prompt_request_service_instructions" />
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/darker_gray"/>
+
+            <!-- Source address -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/blue"
+                    android:textSize="17dp"
+                    android:text="@string/prompt_source_address" />
 
                 <fragment
                     android:id="@+id/place_autocomplete_fragment_source_address"
@@ -66,14 +88,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/activity_vertical_margin"
+                android:background="@color/lightShadow"
                 android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_destiny_address" />
+                    android:textColor="@color/green"
+                    android:textSize="17dp"
+                    android:text="@string/prompt_destiny_address" />
 
                 <fragment
                     android:id="@+id/place_autocomplete_fragment_destiny_address"
@@ -87,18 +114,31 @@
                 android:layout_height="1dp"
                 android:background="@android:color/darker_gray"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
             <!-- Car Type -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_car_type" />
+                    android:text="@string/prompt_car_type" />
 
                 <Spinner
                     android:id="@+id/car_type"
@@ -114,6 +154,10 @@
                 app:errorTextAppearance="@style/ErrorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 app:errorEnabled="true">
 
                 <EditText
@@ -121,7 +165,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:focusable="false"
+                    android:maxLength="3"
+                    android:focusableInTouchMode="true"
                     android:hint="@string/prompt_passengers"
                     android:inputType="number" />
 
@@ -133,6 +178,10 @@
                 app:errorTextAppearance="@style/ErrorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 app:errorEnabled="true">
 
                 <EditText
@@ -152,6 +201,10 @@
                 app:errorTextAppearance="@style/ErrorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 app:errorEnabled="true">
 
                 <EditText
@@ -169,20 +222,21 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_aeroline" />
+                    android:text="@string/prompt_aeroline" />
 
                 <Spinner
                     android:id="@+id/aeroline"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_aeroline"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
 
@@ -192,13 +246,19 @@
                 app:errorTextAppearance="@style/ErrorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 app:errorEnabled="true">
 
                 <EditText
                     android:id="@+id/fly"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
+                    android:focusableInTouchMode="true"
+                    android:inputType="text"
+                    android:maxLength="20"
                     android:hint="@string/prompt_fly" />
 
             </android.support.design.widget.TextInputLayout>
@@ -209,27 +269,45 @@
                 app:errorTextAppearance="@style/ErrorText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
                 app:errorEnabled="true">
 
                 <EditText
                     android:id="@+id/observations"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:focusable="false"
+                    android:focusableInTouchMode="true"
+                    android:inputType="textMultiLine"
+                    android:maxLength="400"
                     android:hint="@string/prompt_observations" />
 
             </android.support.design.widget.TextInputLayout>
 
-            <Button
-                android:id="@+id/request_service"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="15dp"
-                android:elevation="10dp"
-                android:text="@string/prompt_request_service"
-                android:background="@color/green"
-                android:textColor="@color/colorPrimaryTextLight" />
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/request_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="15dp"
+                    android:elevation="10dp"
+                    android:text="@string/prompt_request_service"
+                    android:background="@color/green"
+                    android:textColor="@color/colorPrimaryTextLight" />
+
+            </LinearLayout>
+
         </LinearLayout>
     </ScrollView>
 

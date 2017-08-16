@@ -110,4 +110,10 @@
     <string name="prompt_destiny_city">Ciudad de destino</string>
     <string name="prompt_observations">Observaciones (opcional</string>
     <string name="prompt_request_service">Solicitar</string>
+    <string name="prompt_request_service_instructions">Desde aquí podrás solicitar un servicio de transporte. Por favor busca la dirección de recogida y de destino. El vuelo y las observaciones son opcionales.</string>
+    <string name="error_empty_passengers">Debes ingresar la cantidad de pasajeros</string>
+    <string name="error_empty_start_address">Debes ingresar la dirección de recogida</string>
+    <string name="error_empty_start_date">Debes ingresar la fecha del servicio</string>
+    <string name="error_empty_start_time">Debes ingresar la hora del servicio</string>
+    <string name="server_error">Ha ocurrido un error, por favor contacta al administrador</string>
 </resources>
