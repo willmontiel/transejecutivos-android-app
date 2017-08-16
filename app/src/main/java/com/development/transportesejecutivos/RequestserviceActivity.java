@@ -2,6 +2,7 @@ package com.development.transportesejecutivos;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -44,6 +47,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import static android.R.attr.duration;
 
 public class RequestserviceActivity extends ActivityBase {
     Spinner carType;
@@ -138,7 +143,7 @@ public class RequestserviceActivity extends ActivityBase {
                 DatePickerDialog dpd = new DatePickerDialog(self, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        start_date.setText(day + "/" + month + "/" + year);
+                        start_date.setText(formatTime(month + 1) + "/" + formatTime(day) + "/" + year);
                     }
                 }, year, month, day);
 
@@ -332,6 +337,8 @@ public class RequestserviceActivity extends ActivityBase {
     }
 
     private void requestService() {
+        showProgress(true, form, progressBar);
+
         boolean validate = validateInputField(passengers.getText().toString(), inputLayoutPassengers, passengers, getString(R.string.error_empty_passengers));
 
         TextView ctTextView = (TextView) carType.getSelectedView();
@@ -347,7 +354,6 @@ public class RequestserviceActivity extends ActivityBase {
                 validateField(start_time.getText().toString(), getString(R.string.error_empty_start_time))
                 ) {
 
-
             RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
 
             StringRequest stringRequest = new StringRequest(
@@ -356,7 +362,26 @@ public class RequestserviceActivity extends ActivityBase {
                     new com.android.volley.Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
-                            Log.d("LALA", response);
+                            try {
+                                JSONObject resObj = new JSONObject(response);
+                                Boolean error = (Boolean) resObj.get(JsonKeys.ERROR);
+                                if (!error) {
+                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                    i.putExtra("tab", 0);
+                                    startActivity(i);
+
+                                    Toast toast = Toast.makeText(getApplicationContext(), getString(R.string.request_service_successfully), Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                                else {
+                                    setErrorSnackBar(form, getResources().getString(R.string.error_invalid_profile_update));
+                                }
+                            }
+                            catch (JSONException ex) {
+                                ex.printStackTrace();
+                            }
+
+                            showProgress(false, form, progressBar);
                         }
                     },
                     new com.android.volley.Response.ErrorListener() {

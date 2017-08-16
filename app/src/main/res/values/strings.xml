@@ -116,4 +116,5 @@
     <string name="error_empty_start_date">Debes ingresar la fecha del servicio</string>
     <string name="error_empty_start_time">Debes ingresar la hora del servicio</string>
     <string name="server_error">Ha ocurrido un error, por favor contacta al administrador</string>
+    <string name="request_service_successfully">Se ha solicitado el servicio exitosamente</string>
 </resources>

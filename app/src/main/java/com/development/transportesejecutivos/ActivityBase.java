@@ -219,6 +219,8 @@ public class ActivityBase extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.action_new_service) {
+            Intent i = new Intent(getApplicationContext(), RequestserviceActivity.class);
+            startActivity(i);
             return true;
         }
         else if (id == R.id.action_dashboard) {
